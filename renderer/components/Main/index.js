@@ -1,5 +1,10 @@
+import { connect } from 'react-redux';
 import React from 'react';
 
-export default function Main() {
-  return <div>Hello!</div>;
+function Main({ notifications }) {
+  return <div>There are {notifications.length} notifications!</div>;
 }
+
+export default connect(
+  state => state
+)(Main);
