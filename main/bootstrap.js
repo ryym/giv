@@ -1,4 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import loadUserConfig from './storage/user-config';
+import * as ipc from '../shared/ipc-messages';
 
 // TODO: What about security?
 // https://electron.atom.io/docs/tutorial/security/
@@ -18,5 +20,11 @@ module.exports = function bootstrap() {
     if (process.env.NODE_ENV === 'development') {
       window.webContents.openDevTools();
     }
+  });
+
+  loadUserConfig().then(config => {
+    ipcMain.on(ipc.UPDATE_TOKEN, (event, token) => {
+      config.setAccessToken(token);
+    });
   });
 };
