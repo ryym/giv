@@ -38,17 +38,20 @@
     "postcss-nested": "^1.0.0",
     "postcss-scss": "^0.4.1",
     "postcss-simple-vars": "^3.0.0",
+    "react-router-dom": "^4.0.0",
     "style-loader": "^0.14.1",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
+    "history": "^4.6.1",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
     "redux": "^3.6.0",
     "redux-saga": "^0.14.3"
   }

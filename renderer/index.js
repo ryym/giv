@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import Main from './components/Main';
+import Root from './components/Root';
+import createHashHistory from 'history/createHashHistory';
 import store from './store';
-import { fetchNotifsStart } from './actions';
 
 import './global.scss';
 
-store.dispatch(fetchNotifsStart());
+const history = createHashHistory();
 
 window.onload = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <Main />
+      <Root history={history} />
     </Provider>,
     document.getElementById('root')
   );
