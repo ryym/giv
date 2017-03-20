@@ -9,7 +9,7 @@ module.exports = function bootstrap() {
     const window = new BrowserWindow({
       x: 0,
       y: 0,
-      width: 1000,
+      width: 600,
       height: 1000,
     });
 
