@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+import { app, BrowserWindow } from 'electron';
 
 // TODO: What about security?
 // https://electron.atom.io/docs/tutorial/security/
