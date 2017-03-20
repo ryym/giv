@@ -3,26 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Giv - GitHub Notification Viewer</title>
-  <script>
-    (() => {
-      const config = require('./config');
-
-      // Load CSS
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = `${config.assetPath}/styles.css`;
-      document.getElementsByTagName('head')[0].appendChild(link);
-
-      // Load JS
-      requestAnimationFrame(() => {
-        const script = document.createElement('script');
-        script.src = `${config.assetPath}/renderer.js`;
-        document.body.appendChild(script);
-      })
-    })()
-  </script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="root">Now loading...</div>
+  <script src="renderer.js"></script>
 </body>
 </html>

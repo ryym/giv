@@ -1,16 +1,21 @@
 {
   "name": "giv",
+  "productName": "Giv",
   "private": true,
   "version": "0.0.0",
   "description": "GitHub Notification Viewer",
-  "main": "index.js",
+  "main": "main.js",
   "author": "ryym <ryym.64@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development run-p webpack electron",
-    "electron": "sleep 1 && electron index.js",
-    "webpack": "webpack-dev-server",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "clean-dist": "rm -rf dist",
+    "release": "NODE_ENV=production run-s build install-dist-deps package",
+    "install-dist-deps": "cd dist && yarn install --prod && cd ../",
+    "build": "yarn clean-dist && run-p build:main build:rend",
+    "build:main": "webpack --config webpack/webpack.main.js",
+    "build:rend": "webpack --config webpack/webpack.renderer.js",
+    "package": "electron-packager --overwrite dist"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
