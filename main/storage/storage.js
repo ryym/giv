@@ -15,6 +15,16 @@ class Storage {
     this._json[key] = value;
     return this._s.set(this._storageKey, this._json);
   }
+
+  clear() {
+    this._json = {};
+    return this._s.clear();
+  }
+
+  toJSON() {
+    const clone = JSON.parse(JSON.stringify(this._json));
+    return Promise.resolve(clone);
+  }
 }
 
 export default function loadStorage(

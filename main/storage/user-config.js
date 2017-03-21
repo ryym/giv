@@ -8,11 +8,19 @@ class UserConfig {
   }
 
   getAccessToken() {
-    return this._s.get('access-token');
+    return this._s.get('accessToken');
   }
 
   setAccessToken(token) {
-    return this._s.set('access-token', token);
+    return this._s.set('accessToken', token);
+  }
+
+  clear() {
+    return this._s.clear();
+  }
+
+  toJSON() {
+    return this._s.toJSON();
   }
 }
 

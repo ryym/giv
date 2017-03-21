@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Root from './components/Root';
-import createHashHistory from 'history/createHashHistory';
+import history from './history';
 import store from './store';
+import { loadUserConfig } from './actions';
 
 import './global.scss';
 
-const history = createHashHistory();
+store.dispatch(loadUserConfig());
 
 window.onload = () => {
   ReactDOM.render(

@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import React from 'react';
 
-function Main({ notifications }) {
-  return <div>There are {notifications.length} notifications!</div>;
+function Main({ token }) {
+  return <div>Your token is {token}!</div>;
 }
 
 export default connect(
-  state => state
+  state => ({
+    token: state.userConfig.get('accessToken'),
+  })
 )(Main);

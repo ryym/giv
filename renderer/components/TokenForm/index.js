@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { updateToken } from '../../actions';
 
-const TokenForm = ({ token: currentToken, dispatch }) => {
+const TokenForm = (props) => {
+  const { token: currentToken, dispatch } = props;
   let token = currentToken;
   const handleSubmit = event => {
     event.preventDefault();

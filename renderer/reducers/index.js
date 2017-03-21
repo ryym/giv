@@ -1,16 +1,22 @@
-import { List } from 'immutable';
+import { Map, List } from 'immutable';
 import { combineReducers } from 'redux';
 import {
   UPDATE_TOKEN,
   FETCH_NOTIFS_SUCCESS,
+  LOAD_USER_CONFIG,
+  LOAD_USER_CONFIG_SUCCESS,
 } from '../actions';
 
-const token = (token = null, action) => {
+const userConfig = (config = Map(), action) => {
   switch (action.type) {
-  case UPDATE_TOKEN:
-    return action.payload.token;
-  default:
+  case LOAD_USER_CONFIG:
     return null;
+  case LOAD_USER_CONFIG_SUCCESS:
+    return Map(action.payload);
+  case UPDATE_TOKEN:
+    return config.set('accessToken', action.payload.token);
+  default:
+    return config;
   }
 };
 
@@ -24,6 +30,6 @@ const notifications = (notifs = List(), action) => {
 };
 
 export default combineReducers({
-  token,
+  userConfig,
   notifications,
 });
