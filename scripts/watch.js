@@ -5,7 +5,7 @@ const mainConf = require('../webpack/webpack.main.js');
 const rendConf = require('../webpack/webpack.renderer.js');
 
 const runElectron = (mainFile, argv = []) => {
-  const args = [mainFile, ...argv.slice(2)]
+  const args = [mainFile, ...argv.slice(2)];
   return childProcess.spawn(electron, args, { stdio: 'inherit' });
 };
 

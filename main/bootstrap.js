@@ -6,8 +6,12 @@ import * as ipc from '../shared/ipc-messages';
 // https://electron.atom.io/docs/tutorial/security/
 // http://utf-8.jp/public/2016/0629/electron.pdf
 
-async function handleUserConfigRequests(ipcMain) {
+async function handleUserConfigRequests(ipcMain, shouldInit) {
   const config = await loadUserConfig();
+
+  if (shouldInit) {
+    await config.clear();
+  }
 
   ipcMain.on(ipc.UPDATE_TOKEN, (event, token) => {
     config.setAccessToken(token);
@@ -19,7 +23,7 @@ async function handleUserConfigRequests(ipcMain) {
   });
 }
 
-module.exports = function bootstrap() {
+module.exports = function bootstrap(options) {
   app.on('ready', () => {
     const window = new BrowserWindow({
       x: 0,
@@ -35,5 +39,5 @@ module.exports = function bootstrap() {
     }
   });
 
-  handleUserConfigRequests(ipcMain);
+  handleUserConfigRequests(ipcMain, options.initConfig);
 };
