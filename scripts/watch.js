@@ -4,8 +4,9 @@ const webpack = require('webpack');
 const mainConf = require('../webpack/webpack.main.js');
 const rendConf = require('../webpack/webpack.renderer.js');
 
-const runElectron = mainFile => {
-  return childProcess.spawn(electron, [mainFile], { stdio: 'inherit' });
+const runElectron = (mainFile, argv = []) => {
+  const args = [mainFile, ...argv.slice(2)]
+  return childProcess.spawn(electron, args, { stdio: 'inherit' });
 };
 
 const webpackWatch = (compiler, options, callback) => {
@@ -20,7 +21,7 @@ const webpackWatch = (compiler, options, callback) => {
 
 const runElectronIfWatchStarted = (isStarted, onClosed) => {
   if (isStarted()) {
-    runElectron('dist/main.js').on('close', onClosed);
+    runElectron('dist/main.js', process.argv).on('close', onClosed);
   }
   else {
     setTimeout(() => runElectronIfWatchStarted(isStarted, onClosed), 10);
