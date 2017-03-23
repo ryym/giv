@@ -2,8 +2,6 @@ import {
   fork, take, takeEvery,
   put, call,
 } from 'redux-saga/effects';
-import { ipcRenderer } from 'electron';
-import * as ipc from '../../shared/ipc-messages';
 import {
   UPDATE_TOKEN,
   FETCH_NOTIFS_START,
@@ -11,17 +9,10 @@ import {
   LOAD_USER_CONFIG,
   loadUserConfigSuccess,
 } from '../actions';
-
-const sendNewToken = token => {
-  ipcRenderer.send(ipc.UPDATE_TOKEN, token);
-};
-
-const fetchUserConfig = () => new Promise((resolve) => {
-  ipcRenderer.once(ipc.LOAD_USER_CONFIG_SUCCESS, (event, config) => {
-    resolve(config);
-  });
-  ipcRenderer.send(ipc.LOAD_USER_CONFIG);
-});
+import {
+  sendNewToken,
+  fetchUserConfig,
+} from '../lib/ipc';
 
 function* loadUserConfig() {
   yield take(LOAD_USER_CONFIG);
