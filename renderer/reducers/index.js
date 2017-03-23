@@ -1,5 +1,6 @@
 import { Map, List } from 'immutable';
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 import {
   UPDATE_TOKEN,
   FETCH_NOTIFS_SUCCESS,
@@ -29,4 +30,5 @@ const notifications = (notifs = List(), action) => {
 export default combineReducers({
   userConfig,
   notifications,
+  router: routerReducer,
 });

@@ -1,3 +1,8 @@
+import { push as pushHistory } from 'react-router-redux';
+
+// react-router-redux
+export const push = pushHistory;
+
 const action = (type, payload) => ({ type, payload });
 
 export const UPDATE_TOKEN = 'UPDATE_TOKEN';

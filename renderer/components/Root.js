@@ -3,14 +3,15 @@ import { Router, Route } from 'react-router';
 import { connect } from 'react-redux';
 import TokenForm from './TokenForm';
 import Main from './Main';
+import { push } from '../actions';
 
-function Root({ history, userConfig }) {
+function Root({ history, userConfig, dispatch }) {
   // TODO: Push history via Redux action.
   const token = userConfig.get('accessToken');
   requestAnimationFrame(() => {
     const path = token ? '/notifications' : '/';
     if (history.location.pathname !== path) {
-      history.push(path);
+      dispatch(push(path));
     }
   });
 
