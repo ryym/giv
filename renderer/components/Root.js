@@ -5,10 +5,6 @@ import TokenForm from './TokenForm';
 import Main from './Main';
 
 function Root({ history, userConfig }) {
-  if (!userConfig) {
-    return <div>Loading user config..</div>;
-  }
-
   // TODO: Push history via Redux action.
   const token = userConfig.get('accessToken');
   requestAnimationFrame(() => {

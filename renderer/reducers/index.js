@@ -3,14 +3,11 @@ import { combineReducers } from 'redux';
 import {
   UPDATE_TOKEN,
   FETCH_NOTIFS_SUCCESS,
-  LOAD_USER_CONFIG,
   LOAD_USER_CONFIG_SUCCESS,
 } from '../actions';
 
-const userConfig = (config = Map(), action) => {
+const userConfig = (config = null, action) => {
   switch (action.type) {
-  case LOAD_USER_CONFIG:
-    return null;
   case LOAD_USER_CONFIG_SUCCESS:
     return Map(action.payload);
   case UPDATE_TOKEN:

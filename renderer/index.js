@@ -8,9 +8,7 @@ import { loadUserConfig } from './actions';
 
 import './global.scss';
 
-store.dispatch(loadUserConfig());
-
-window.onload = () => {
+const renderView = () => {
   ReactDOM.render(
     <Provider store={store}>
       <Root history={history} />
@@ -18,3 +16,18 @@ window.onload = () => {
     document.getElementById('root')
   );
 };
+
+store.dispatch(loadUserConfig());
+
+store.subscribe(() => {
+  if (!store.getState().userConfig) {
+    return;
+  }
+
+  if (document.readyState === 'pending') {
+    document.addEventListener('DOMContentLoaded', renderView);
+  }
+  else {
+    renderView();
+  }
+});
