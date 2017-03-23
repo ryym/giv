@@ -39,6 +39,7 @@
     "postcss-scss": "^0.4.1",
     "postcss-simple-vars": "^3.0.0",
     "react-router-dom": "^4.0.0",
+    "react-router-redux": "next",
     "style-loader": "^0.14.1",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
