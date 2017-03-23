@@ -9,20 +9,22 @@ import history from './history';
 import reducers from './reducers';
 import sagas from './sagas';
 
-const sagaMiddleware = createSagaMiddleware();
+export default function configureStore() {
+  const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
-  reducers,
-  applyMiddleware(
-    sagaMiddleware,
-    createLogger(),
+  const store = createStore(
+    reducers,
+    applyMiddleware(
+      sagaMiddleware,
+      createLogger(),
 
-    // Apply router middleware after the logger
-    // to log router actions.
-    routerMiddleware(history),
-  )
-);
+      // Apply router middleware after the logger
+      // to log router actions.
+      routerMiddleware(history),
+    )
+  );
 
-sagaMiddleware.run(sagas);
+  sagaMiddleware.run(sagas);
 
-export default store;
+  return store;
+}

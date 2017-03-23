@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Root from './components/Root';
 import history from './history';
-import store from './store';
+import configureStore from './store';
 import { loadUserConfig } from './actions';
 
 import './global.scss';
@@ -16,6 +16,8 @@ const renderView = () => {
     document.getElementById('root')
   );
 };
+
+const store = configureStore();
 
 store.dispatch(loadUserConfig());
 
