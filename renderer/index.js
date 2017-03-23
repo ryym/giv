@@ -22,7 +22,7 @@ const store = configureStore();
 store.dispatch(loadUserConfig());
 
 store.subscribe(() => {
-  if (!store.getState().userConfig) {
+  if (!store.getReader().userConfig.isLoaded) {
     return;
   }
 

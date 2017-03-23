@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connectWithReader } from '../../redux';
 import { updateToken } from '../../actions';
 
 const TokenForm = (props) => {
@@ -23,8 +23,8 @@ const TokenForm = (props) => {
   );
 };
 
-export default connect(
-  state => ({
-    token: state.token,
+export default connectWithReader(
+  ({ userConfig }) => ({
+    token: userConfig.accessToken,
   })
 )(TokenForm);

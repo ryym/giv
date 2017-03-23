@@ -6,14 +6,16 @@ import createSagaMiddleware from 'redux-saga';
 import createLogger from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
 import history from './history';
-import reducers from './reducers';
 import sagas from './sagas';
+import createReader from './state/reader';
+import createReducer from './state/reducer';
+import createReadableStore from './redux/readable-store';
 
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
 
   const store = createStore(
-    reducers,
+    createReducer(),
     applyMiddleware(
       sagaMiddleware,
       createLogger(),
@@ -26,5 +28,5 @@ export default function configureStore() {
 
   sagaMiddleware.run(sagas);
 
-  return store;
+  return createReadableStore(store, createReader);
 }

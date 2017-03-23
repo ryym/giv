@@ -1,12 +1,12 @@
-import { connect } from 'react-redux';
+import { connectWithReader } from '../../redux';
 import React from 'react';
 
 function Main({ token }) {
   return <div>Your token is {token}!</div>;
 }
 
-export default connect(
-  state => ({
-    token: state.userConfig.get('accessToken'),
+export default connectWithReader(
+  ({ userConfig }) => ({
+    token: userConfig.accessToken,
   })
 )(Main);

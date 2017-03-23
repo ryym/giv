@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route } from 'react-router';
-import { connect } from 'react-redux';
+import { connectWithReader } from '../redux';
 import TokenForm from './TokenForm';
 import Main from './Main';
 import { push } from '../actions';
@@ -25,10 +25,9 @@ class Root extends React.Component {
   }
 }
 
-export default connect(
-  (state, { history }) => {
-    const token = state.userConfig.get('accessToken');
-    const path = token ? '/notifications' : '/';
+export default connectWithReader(
+  ({ userConfig }, { history }) => {
+    const path = userConfig.accessToken ? '/notifications' : '/';
     return { history, path };
   }
 )(Root);
