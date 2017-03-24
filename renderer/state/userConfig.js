@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 import {
   UPDATE_TOKEN,
   LOAD_USER_CONFIG_SUCCESS,
@@ -7,9 +6,11 @@ import {
 export const updateUserConfig = (config = null, action) => {
   switch (action.type) {
   case LOAD_USER_CONFIG_SUCCESS:
-    return Map(action.payload);
+    return Object.assign({}, action.payload);
   case UPDATE_TOKEN:
-    return config.set('accessToken', action.payload.token);
+    return Object.assign({}, config, {
+      accessToken: action.payload.token,
+    });
   default:
     return config;
   }
@@ -27,6 +28,6 @@ class UserConfigReader {
   }
 
   get accessToken() {
-    return this.config.get('accessToken');
+    return this.config.accessToken;
   }
 }
