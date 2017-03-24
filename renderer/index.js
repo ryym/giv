@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Root from './components/Root';
 import history from './history';
 import configureStore from './store';
-import { loadUserConfig } from './actions';
+import { loadUserConfig, push } from './actions';
 
 import './global.scss';
 
@@ -22,8 +22,14 @@ const store = configureStore();
 store.dispatch(loadUserConfig());
 
 store.subscribe(() => {
-  if (!store.getReader().userConfig.isLoaded) {
+  const { userConfig } = store.getReader();
+
+  if (!userConfig.isLoaded) {
     return;
+  }
+
+  if (userConfig.accessToken && history.location.pathname !== '/notifications') {
+    store.dispatch(push('/notifications'));
   }
 
   if (document.readyState === 'pending') {
