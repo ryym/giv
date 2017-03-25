@@ -13,14 +13,7 @@ export default function* notificationsSaga() {
   let token;
   while (!token) {
     const action = yield take([LOAD_USER_CONFIG_SUCCESS, UPDATE_TOKEN]);
-    switch (action.type) {
-    case LOAD_USER_CONFIG_SUCCESS:
-      token = action.payload.accessToken;
-      break;
-    case UPDATE_TOKEN:
-      token = action.payload.token;
-      break;
-    }
+    token = action.payload.accessToken;
   }
 
   yield fork(runNotificationFetchers(token));

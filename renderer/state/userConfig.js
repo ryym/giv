@@ -9,7 +9,7 @@ export const updateUserConfig = (config = null, action) => {
     return Object.assign({}, action.payload);
   case UPDATE_TOKEN:
     return Object.assign({}, config, {
-      accessToken: action.payload.token,
+      accessToken: action.payload.accessToken,
     });
   default:
     return config;

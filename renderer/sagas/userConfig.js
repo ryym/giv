@@ -21,5 +21,5 @@ function* loadUserConfig() {
 }
 
 function* saveAccessToken(action) {
-  yield call(sendNewToken, action.payload.token);
+  yield call(sendNewToken, action.payload.accessToken);
 }

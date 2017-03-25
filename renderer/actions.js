@@ -6,7 +6,7 @@ export const push = pushHistory;
 const action = (type, payload) => ({ type, payload });
 
 export const UPDATE_TOKEN = 'UPDATE_TOKEN';
-export const updateToken = token => action(UPDATE_TOKEN, { token });
+export const updateToken = accessToken => action(UPDATE_TOKEN, { accessToken });
 
 export const LOAD_USER_CONFIG = 'LOAD_USER_CONFIG';
 export const loadUserConfig = () => action(LOAD_USER_CONFIG);
