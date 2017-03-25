@@ -14,11 +14,14 @@ module.exports = {
     extensions: ['.js', '.react.js'],
   },
 
-  entry: path.join(conf.rootPath, 'renderer'),
+  entry: {
+    renderer: conf.rendererPath,
+    vendor: 'bulma/css/bulma.css',
+  },
 
   output: {
     path: conf.distPath,
-    filename: 'renderer.js',
+    filename: '[name].js',
     libraryTarget: 'commonjs2',
   },
 
@@ -26,15 +29,18 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        include: conf.rendererPath,
         use: [
           { loader: 'babel-loader' },
         ],
       },
 
       {
-        test: /\.scss$/,
-        exclude: /node_modules/,
+        test: /\.s?css$/,
+        include: [
+          conf.rendererPath,
+          path.join(conf.nodeModulesPath, 'bulma'),
+        ],
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -47,7 +53,7 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('[name].css'),
 
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(conf.env),
