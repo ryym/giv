@@ -1,15 +1,8 @@
-import { fork, put, takeEvery } from 'redux-saga/effects';
+import { fork } from 'redux-saga/effects';
 import userConfigSaga from './userConfig';
-import {
-  FETCH_NOTIFS_START,
-  fetchNotifsSuccess,
-} from '../actions';
-
-function* fetchNotifications() {
-  yield put(fetchNotifsSuccess([]));
-}
+import notificationsSaga from './notifications';
 
 export default function* rootSaga() {
   yield fork(userConfigSaga);
-  yield takeEvery(FETCH_NOTIFS_START, fetchNotifications);
+  yield fork(notificationsSaga);
 }
