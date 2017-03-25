@@ -19,8 +19,8 @@ class Root extends React.Component {
     return (
       <Router history={props.history}>
         <Layout>
-          <Route exact path={paths.tokenRegistration} component={TokenForm} />
-          <Route path={paths.notifications} component={Notifications} />
+          <Route exact path={paths.notifications} component={Notifications} />
+          <Route path={paths.tokenRegistration} component={TokenForm} />
         </Layout>
       </Router>
     );

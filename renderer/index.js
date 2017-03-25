@@ -29,8 +29,8 @@ const unsubscribe = store.subscribe(() => {
     return;
   }
 
-  if (userConfig.accessToken && history.location.pathname !== paths.notifications) {
-    store.dispatch(push(paths.notifications));
+  if (!userConfig.accessToken && history.location.pathname !== paths.tokenRegistration) {
+    store.dispatch(push(paths.tokenRegistration));
   }
 
   if (document.readyState === 'pending') {
