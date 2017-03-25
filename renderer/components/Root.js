@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route } from 'react-router';
 import { connectWithReader } from '../redux';
 import TokenForm from './TokenForm';
-import Main from './Main';
+import Notifications from './Notifications';
 import { push } from '../actions';
 
 class Root extends React.Component {
@@ -18,7 +18,7 @@ class Root extends React.Component {
       <Router history={props.history}>
         <div>
           <Route exact path="/" component={TokenForm} />
-          <Route path="/notifications" component={Main} />
+          <Route path="/notifications" component={Notifications} />
         </div>
       </Router>
     );
