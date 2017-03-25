@@ -14,8 +14,11 @@ export const loadUserConfig = () => action(LOAD_USER_CONFIG);
 export const LOAD_USER_CONFIG_SUCCESS = 'LOAD_USER_CONFIG_SUCCESS';
 export const loadUserConfigSuccess = config => action(LOAD_USER_CONFIG_SUCCESS, config);
 
-export const FETCH_NOTIFS_START = 'FETCH_NOTIFS_START';
-export const fetchNotifsStart = () => action(FETCH_NOTIFS_START);
+export const FETCH_UNREAD_NOTIFS = 'FETCH_UNREAD_NOTIFS';
+export const fetchNotifs = () => action(FETCH_UNREAD_NOTIFS);
 
-export const FETCH_NOTIFS_SUCCESS = 'FETCH_NOTIFS_SUCCESS';
-export const fetchNotifsSuccess = data => action(FETCH_NOTIFS_SUCCESS, data);
+export const FETCH_UNREAD_NOTIFS_START = 'FETCH_UNREAD_NOTIFS_START';
+export const fetchNotifsStart = () => action(FETCH_UNREAD_NOTIFS_START);
+
+export const FETCH_UNREAD_NOTIFS_SUCCESS = 'FETCH_UNREAD_NOTIFS_SUCCESS';
+export const fetchNotifsSuccess = data => action(FETCH_UNREAD_NOTIFS_SUCCESS, data);
