@@ -21,7 +21,7 @@ const store = configureStore();
 
 store.dispatch(loadUserConfig());
 
-store.subscribe(() => {
+const unsubscribe = store.subscribe(() => {
   const { userConfig } = store.getReader();
 
   if (!userConfig.isLoaded) {
@@ -38,4 +38,6 @@ store.subscribe(() => {
   else {
     renderView();
   }
+
+  unsubscribe();
 });
