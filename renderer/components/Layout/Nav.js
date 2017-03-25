@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as paths from '../../const/paths';
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class Nav extends React.Component {
     return (
       <nav className="nav">
         <div className="nav-left">
-          <Link to="/" className="nav-item">
+          <Link to={paths.root} className="nav-item">
             Giv
           </Link>
         </div>
@@ -31,10 +32,10 @@ export default class Nav extends React.Component {
         </span>
 
         <div className={`nav-right nav-menu ${state.isMenuOpen ? 'is-active' : ''}`}>
-          <Link to="/notifications" className="nav-item">
+          <Link to={paths.notifications} className="nav-item">
             Notifications
           </Link>
-          <Link to="/" className="nav-item">
+          <Link to={paths.tokenRegistration} className="nav-item">
             Access Token
           </Link>
         </div>

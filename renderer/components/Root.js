@@ -5,6 +5,7 @@ import Layout from './Layout';
 import TokenForm from './TokenForm';
 import Notifications from './Notifications';
 import { push } from '../actions';
+import * as paths from '../const/paths';
 
 class Root extends React.Component {
   componentWillReceiveProps({ path, dispatch }) {
@@ -18,8 +19,8 @@ class Root extends React.Component {
     return (
       <Router history={props.history}>
         <Layout>
-          <Route exact path="/" component={TokenForm} />
-          <Route path="/notifications" component={Notifications} />
+          <Route exact path={paths.tokenRegistration} component={TokenForm} />
+          <Route path={paths.notifications} component={Notifications} />
         </Layout>
       </Router>
     );
@@ -28,7 +29,7 @@ class Root extends React.Component {
 
 export default connectWithReader(
   ({ userConfig }, { history }) => {
-    const path = userConfig.accessToken ? '/notifications' : '/';
+    const path = userConfig.accessToken ? paths.notifications : paths.tokenRegistration;
     return { history, path };
   }
 )(Root);
