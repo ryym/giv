@@ -1,6 +1,7 @@
 import { makeUserConfigReader } from './userConfig';
 import makeEntitiesReader from './entities/reader';
 import makePaginationReader from './pagination/reader';
+import makeUIReader from './ui/reader';
 
 export default function createStateReader(state) {
   return new StateReader(state);
@@ -31,5 +32,9 @@ class StateReader {
     return this._getOrMake('pagination', state =>
       makePaginationReader(state, this.entities)
     );
+  }
+
+  get ui() {
+    return this._getOrMake('ui', makeUIReader);
   }
 }
