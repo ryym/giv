@@ -13,4 +13,8 @@ class EntitiesReader {
   getNotification(id) {
     return this.entities.notifications.byID[id];
   }
+
+  getRepository(fullName) {
+    return this.entities.repositories.byFullName[fullName];
+  }
 }

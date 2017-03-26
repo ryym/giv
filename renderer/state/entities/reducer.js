@@ -6,11 +6,17 @@ const initialState = {
   notifications: {
     byID: {},
   },
+  repositories: {
+    byFullName: {},
+  },
 };
 
-const cloneEntities = ({ notifications }) => ({
+const cloneEntities = ({ notifications, repositories }) => ({
   notifications: {
     byID: Object.assign({}, notifications.byID),
+  },
+  repositories: {
+    byFullName: Object.assign({}, repositories.byFullName),
   },
 });
 
@@ -26,5 +32,6 @@ export default function updateEntities(entities = initialState, action) {
 const handleFetchNotifsSuccess = (entities, { entities: newEntities }) => {
   const cloned = cloneEntities(entities);
   Object.assign(cloned.notifications.byID, newEntities.notification);
+  Object.assign(cloned.repositories.byFullName, newEntities.repository);
   return cloned;
 };
