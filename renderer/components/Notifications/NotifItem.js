@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function NotifItem({ notif, getRepository }) {
+export default function NotifItem({ notif, getRepository, onClick }) {
   const repo = getRepository(notif.repository);
   return (
     <div className="notifs_notif-wrapper">
-      <a className="notifs_notif">
+      <a className="notifs_notif" onClick={() => onClick(notif)}>
         <div className="notifs_notif-body">
           <div className="notifs_notif-title">
             {notif.subject.title}

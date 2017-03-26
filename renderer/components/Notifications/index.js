@@ -1,10 +1,15 @@
 import React from 'react';
 import { connectWithReader } from '../../redux';
 import NotifItem from './NotifItem';
-import { push } from '../../actions';
+import { push, selectNotif } from '../../actions';
 import './styles.scss';
 
 class Notifications extends React.Component {
+  constructor(props) {
+    super(props);
+    this.showNotification = this.showNotification.bind(this);
+  }
+
   componentDidMount() {
     const { hasAccessToken, dispatch } = this.props;
     if (!hasAccessToken) {
@@ -12,8 +17,13 @@ class Notifications extends React.Component {
     }
   }
 
+  showNotification(notif) {
+    this.props.dispatch(selectNotif(notif));
+  }
+
   render() {
-    const { notifs = [], getRepository } = this.props;
+    const { notifs = [], getRepository, shownURL } = this.props;
+
     return (
       <div className="c_page-root">
 
@@ -33,13 +43,18 @@ class Notifications extends React.Component {
             </div>
             <div className="notifs_notifs">
               {notifs.map(nt => (
-                <NotifItem key={nt.id} notif={nt} getRepository={getRepository} />
+                <NotifItem
+                  key={nt.id}
+                  notif={nt}
+                  getRepository={getRepository}
+                  onClick={this.showNotification}
+                />
               ))}
             </div>
           </div>
 
           <div className="notifs_github">
-            <webview />
+            <webview src={shownURL} />
           </div>
         </main>
       </div>
@@ -48,9 +63,10 @@ class Notifications extends React.Component {
 }
 
 export default connectWithReader(
-  ({ userConfig, pagination, entities }) => ({
+  ({ userConfig, pagination, entities, ui }) => ({
     hasAccessToken: Boolean(userConfig.accessToken),
     notifs: pagination.unreadNotifications,
     getRepository: entities.getRepository,
+    shownURL: ui.shownNotificationURL,
   })
 )(Notifications);

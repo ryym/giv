@@ -9,4 +9,8 @@ class UIReader {
     this.ui = uiState;
     bindMethodContext(this);
   }
+
+  get shownNotificationURL() {
+    return this.ui.notifications.shownURL;
+  }
 }
