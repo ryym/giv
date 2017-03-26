@@ -1,6 +1,5 @@
 /* Webpack configuration for Electron renderer process */
 
-const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const conf = require('./conf');
@@ -16,7 +15,6 @@ module.exports = {
 
   entry: {
     renderer: conf.rendererPath,
-    vendor: 'bulma/css/bulma.css',
   },
 
   output: {
@@ -37,10 +35,7 @@ module.exports = {
 
       {
         test: /\.s?css$/,
-        include: [
-          conf.rendererPath,
-          path.join(conf.nodeModulesPath, 'bulma'),
-        ],
+        include: conf.rendererPath,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
