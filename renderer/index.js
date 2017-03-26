@@ -7,7 +7,7 @@ import configureStore from './store';
 import { loadUserConfig, push } from './actions';
 import * as paths from './const/paths';
 
-import './global.scss';
+import './common.scss';
 
 const renderView = () => {
   ReactDOM.render(

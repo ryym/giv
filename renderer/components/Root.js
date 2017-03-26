@@ -17,7 +17,7 @@ class Root extends React.Component {
     const { props } = this;
     return (
       <Router history={props.history}>
-        <div>
+        <div className="c_route-container">
           <Route exact path={paths.notifications} component={Notifications} />
           <Route path={paths.tokenRegistration} component={TokenForm} />
         </div>
