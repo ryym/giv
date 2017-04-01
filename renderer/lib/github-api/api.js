@@ -1,4 +1,4 @@
-const actualFetch = require('isomorphic-fetch');
+import actualFetch from 'isomorphic-fetch';
 
 export default class GitHubAPI {
   constructor(accessToken, {
