@@ -8,6 +8,7 @@ class Notifications extends React.Component {
   constructor(props) {
     super(props);
     this.showNotification = this.showNotification.bind(this);
+    this.renderNotif = this.renderNotif.bind(this);
   }
 
   componentDidMount() {
@@ -21,8 +22,23 @@ class Notifications extends React.Component {
     this.props.dispatch(selectNotif(notif));
   }
 
+  renderNotif(notif) {
+    const { props } = this;
+    const repo = props.getRepository(notif.repository);
+    const issue = props.getIssue(notif.subject.url);
+    return (
+      <NotifItem
+        key={notif.id}
+        notif={notif}
+        repo={repo}
+        issue={issue}
+        onClick={this.showNotification}
+      />
+    );
+  }
+
   render() {
-    const { notifs = [], getRepository, shownURL } = this.props;
+    const { notifs = [], shownURL } = this.props;
 
     return (
       <div className="c_page-root">
@@ -42,14 +58,7 @@ class Notifications extends React.Component {
               { /* TODO: Show repository names with notification count */ }
             </div>
             <div className="notifs_notifs">
-              {notifs.map(nt => (
-                <NotifItem
-                  key={nt.id}
-                  notif={nt}
-                  getRepository={getRepository}
-                  onClick={this.showNotification}
-                />
-              ))}
+              {notifs.map(this.renderNotif)}
             </div>
           </div>
 
@@ -67,6 +76,7 @@ export default connectWithReader(
     hasAccessToken: Boolean(userConfig.accessToken),
     notifs: pagination.unreadNotifications,
     getRepository: entities.getRepository,
+    getIssue: entities.getIssue,
     shownURL: ui.shownNotificationURL,
   })
 )(Notifications);
