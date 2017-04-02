@@ -1,14 +1,23 @@
 import actualFetch from 'isomorphic-fetch';
 import runWithLimit from '../async/run-with-limit';
 
+/**
+ * NOTE: Actually GitHub doesn't allow any concurrent requests as abuse rate limit.
+ * But it seems that small number of concurrent requests don't hit the limit soon.
+ * (https://developer.github.com/guides/best-practices-for-integrators)
+ */
+const MAX_CONCURRENT_REQUESTS_COUNT = 5;
+
 export default class GitHubAPI {
   constructor(accessToken, {
     apiHost,
     fetch = actualFetch,
+    withLimit = runWithLimit,
   } = {}) {
     this._token = accessToken;
     this._apiHost = apiHost;
-    this._fetch = fetch;
+    const limit = withLimit(MAX_CONCURRENT_REQUESTS_COUNT);
+    this._fetchGently = (url, options) => limit(() => fetch(url, options));
   }
 
   async request(rawPath, options = {}) {
@@ -21,7 +30,7 @@ export default class GitHubAPI {
       Authorization: `token ${this._token}`,
     });
     try {
-      const response = await this._fetch(url, options);
+      const response = await this._fetchGently(url, options);
       const json = await response.json();
       return { response, json };
     }
