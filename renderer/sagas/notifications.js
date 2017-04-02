@@ -5,6 +5,7 @@ import {
   FETCH_UNREAD_NOTIFS,
   fetchNotifsStart,
   fetchNotifsSuccess,
+  fetchIssueSuccess,
 } from '../actions';
 import createGitHubClient from '../lib/github-api';
 import normalizeNotifications from '../lib/normalizers/notifications';
@@ -32,6 +33,18 @@ const fetchUnreadNotifications = api => function*() {
 
   const { notifications: notifs } = yield call(api.notifications.listUnread);
   const normalizedNotifs = yield call(normalizeNotifications, notifs);
-
   yield put(fetchNotifsSuccess(normalizedNotifs));
+
+  yield fork(fetchIssues, api, notifs);
 };
+
+function* fetchIssues(api, notifs) {
+  for (const notif of notifs) {
+    yield fork(fetchIssue, api, notif);
+  }
+}
+
+function* fetchIssue(api, notif) {
+  const { issue } = yield call(api.issues.getIssue, notif.subject.url);
+  yield put(fetchIssueSuccess(issue));
+}

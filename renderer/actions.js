@@ -25,3 +25,6 @@ export const fetchNotifsSuccess = data => action(FETCH_UNREAD_NOTIFS_SUCCESS, da
 
 export const SELECT_NOTIF = 'SELECT_NOTIF';
 export const selectNotif = notif => action(SELECT_NOTIF, { notif });
+
+export const FETCH_ISSUE_SUCCESS = 'FETCH_ISSUE_SUCCESS';
+export const fetchIssueSuccess = issue => action(FETCH_ISSUE_SUCCESS, { issue });

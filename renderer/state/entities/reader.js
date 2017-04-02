@@ -17,4 +17,8 @@ class EntitiesReader {
   getRepository(fullName) {
     return this.entities.repositories.byFullName[fullName];
   }
+
+  getIssue(url) {
+    return this.entities.issues.byURL[url];
+  }
 }
