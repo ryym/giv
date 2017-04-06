@@ -25,6 +25,7 @@
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-react": "^6.23.0",
     "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
