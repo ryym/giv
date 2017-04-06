@@ -96,6 +96,29 @@
     right: 4px;
   }
 
+  &_notif-kind {
+    display: inline;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+
+    &.is-open {
+      fill: #28a745;
+    }
+
+    &.is-closed {
+      fill: #cb2431;
+    }
+
+    &.is-merged {
+      fill: #6f42c1;
+    }
+
+    &.is-unknown {
+      fill: #666;
+    }
+  }
+
   &_github {
     flex: 1;
 
