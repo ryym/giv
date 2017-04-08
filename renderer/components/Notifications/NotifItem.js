@@ -1,5 +1,6 @@
 import React from 'react';
 import Octicon from '../shared/Octicon';
+import { NotifReader as NotifR } from '../../state/entities/reader';
 
 /* eslint-disable camelcase */
 const iconMap = {
@@ -30,8 +31,7 @@ const getIconDataFor = (issue, isPR) => {
 };
 
 export default function NotifItem({ notif, repo, issue, onClick }) {
-  const isPR = notif.subject.type === 'PullRequest';
-  const [iconName, iconStateClass] = getIconDataFor(issue, isPR);
+  const [iconName, iconStateClass] = getIconDataFor(issue, NotifR.isPR(notif));
   return (
     <div className="notifs_notif-wrapper">
       <a className="notifs_notif" onClick={() => onClick(notif)}>

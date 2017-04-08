@@ -2,6 +2,7 @@ import React from 'react';
 import { connectWithReader } from '../../redux';
 import NotifItem from './NotifItem';
 import { push, selectNotif } from '../../actions';
+import { NotifReader as NotifR } from '../../state/entities/reader';
 import './styles.scss';
 
 class Notifications extends React.Component {
@@ -25,7 +26,7 @@ class Notifications extends React.Component {
   renderNotif(notif) {
     const { props } = this;
     const repo = props.getRepository(notif.repository);
-    const issue = props.getIssue(notif.subject.url);
+    const issue = props.getIssue(NotifR.getIssueURL(notif));
     return (
       <NotifItem
         key={notif.id}

@@ -22,3 +22,11 @@ class EntitiesReader {
     return this.entities.issues.byURL[url];
   }
 }
+
+export const NotifReader = {
+  getIssueURL: notif => notif.subject.url,
+
+  getTitle: notif => notif.subject.title,
+
+  isPR: notif => notif.subject.type === 'PullRequest',
+};
