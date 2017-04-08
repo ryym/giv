@@ -17,18 +17,18 @@ export default function* notificationsSaga() {
     token = action.payload.accessToken;
   }
 
-  yield fork(runNotificationFetchers(token));
+  yield fork(runNotificationFetchers, token);
 }
 
-const runNotificationFetchers = accessToken => function*() {
+function* runNotificationFetchers(accessToken) {
   const api = createGitHubClient(accessToken);
 
   // Fetch notifications for first view.
-  yield call(fetchUnreadNotifications(api));
-  yield takeEvery(FETCH_UNREAD_NOTIFS, fetchUnreadNotifications(api));
-};
+  yield call(fetchUnreadNotifications, api);
+  yield takeEvery(FETCH_UNREAD_NOTIFS, fetchUnreadNotifications, api);
+}
 
-const fetchUnreadNotifications = api => function*() {
+function* fetchUnreadNotifications(api) {
   yield put(fetchNotifsStart());
 
   const { notifications: notifs } = yield call(api.notifications.listUnread);
@@ -36,7 +36,7 @@ const fetchUnreadNotifications = api => function*() {
   yield put(fetchNotifsSuccess(normalizedNotifs));
 
   yield fork(fetchIssues, api, notifs);
-};
+}
 
 function* fetchIssues(api, notifs) {
   for (const notif of notifs) {
