@@ -10,12 +10,16 @@ const MAX_CONCURRENT_REQUESTS_COUNT = 5;
 
 export default class GitHubAPI {
   constructor(accessToken, {
-    apiHost,
+    apiRoot,
     fetch = actualFetch,
     withLimit = runWithLimit,
   } = {}) {
+    if (apiRoot == null) {
+      throw new Error('apiRoot is required');
+    }
+
     this._token = accessToken;
-    this._apiHost = apiHost;
+    this._apiRoot = apiRoot;
     const limit = withLimit(MAX_CONCURRENT_REQUESTS_COUNT);
     this._fetchGently = (url, options) => limit(() => fetch(url, options));
   }
@@ -41,9 +45,9 @@ export default class GitHubAPI {
 
   normalizeURL(path) {
     if (! path.startsWith('http')) {
-      return `https://${this._apiHost}/${path}`;
+      return `${this._apiRoot}/${path}`;
     }
-    if (path.indexOf(`://${this._apiHost}`) >= 0) {
+    if (path.indexOf(this._apiRoot) >= 0) {
       return path;
     }
     return null;

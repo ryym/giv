@@ -10,6 +10,11 @@ module.exports = {
 
   "plugins": ["react"],
 
+  "globals": {
+    // Replaced by webpack.
+    "$$API_ROOT": true,
+  },
+
   "rules": {
     "new-cap": [0, {
       // Exclude Immutable library objects.

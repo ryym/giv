@@ -5,6 +5,7 @@ const rootPath = path.join(__dirname, '..');
 
 module.exports = {
   env: process.env.NODE_ENV || 'development',
+  apiRoot: 'https://api.github.com',
   rootPath,
   nodeModulesPath: path.join(rootPath, 'node_modules'),
   rendererPath: path.join(rootPath, 'renderer'),

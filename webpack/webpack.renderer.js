@@ -52,6 +52,7 @@ module.exports = {
 
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(conf.env),
+      '$$API_ROOT': JSON.stringify(conf.apiRoot),
     }),
   ],
 
