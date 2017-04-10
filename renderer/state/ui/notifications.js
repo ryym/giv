@@ -1,13 +1,25 @@
-import { SELECT_NOTIF } from '../../actions';
+import {
+  SELECT_NOTIF,
+  FETCH_UNREAD_NOTIFS_START,
+  FETCH_UNREAD_NOTIFS_SUCCESS,
+} from '../../actions';
 
 const initialState = {
   shownURL: null,
+  isLoading: false,
 };
 
 export const updateNotifications = (state = initialState, action) => {
   switch (action.type) {
   case SELECT_NOTIF:
     return handleSelectNotif(state, action.payload);
+
+  case FETCH_UNREAD_NOTIFS_START:
+    return Object.assign({}, state, { isLoading: true });
+
+  case FETCH_UNREAD_NOTIFS_SUCCESS:
+    return Object.assign({}, state, { isLoading: false });
+
   default:
     return state;
   }

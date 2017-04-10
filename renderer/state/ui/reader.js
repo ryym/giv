@@ -10,6 +10,10 @@ class UIReader {
     bindMethodContext(this);
   }
 
+  get isLoadingNotifs() {
+    return this.ui.notifications.isLoading;
+  }
+
   get shownNotificationURL() {
     return this.ui.notifications.shownURL;
   }
