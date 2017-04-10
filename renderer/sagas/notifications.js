@@ -1,4 +1,4 @@
-import { fork, take, takeEvery, call, put } from 'redux-saga/effects';
+import { fork, spawn, take, takeEvery, call, put } from 'redux-saga/effects';
 import {
   LOAD_USER_CONFIG_SUCCESS,
   UPDATE_TOKEN,
@@ -28,14 +28,15 @@ function* runNotificationFetchers(accessToken) {
   yield takeEvery(FETCH_UNREAD_NOTIFS, fetchUnreadNotifications, api);
 }
 
-function* fetchUnreadNotifications(api) {
+function* fetchUnreadNotifications(api, action) {
   yield put(fetchNotifsStart());
 
-  const { notifications: notifs } = yield call(api.notifications.listUnread);
+  const oldestUpdatedAt = action ? action.payload.oldestUpdatedAt : null;
+  const { notifications: notifs } = yield call(api.notifications.listUnread, oldestUpdatedAt);
   const normalizedNotifs = yield call(normalizeNotifications, notifs);
   yield put(fetchNotifsSuccess(normalizedNotifs));
 
-  yield fork(fetchIssues, api, notifs);
+  yield spawn(fetchIssues, api, notifs);
 }
 
 function* fetchIssues(api, notifs) {
