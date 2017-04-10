@@ -20,11 +20,21 @@ export default class GitHubAPI {
 
     this._token = accessToken;
     this._apiRoot = apiRoot;
+    this._fetch = fetch;
+
     const limit = withLimit(MAX_CONCURRENT_REQUESTS_COUNT);
     this._fetchGently = (url, options) => limit(() => fetch(url, options));
   }
 
-  async request(rawPath, options = {}) {
+  async request(rawPath, options) {
+    return this._request(this.fetchGently, rawPath, options);
+  }
+
+  async requestSoon(rawPath, options) {
+    return this._request(this.fetch, rawPath, options);
+  }
+
+  async _request(fetch, rawPath, options = {}) {
     const url = this.normalizeURL(rawPath);
     if (url == null) {
       throw new Error(`Invalid path: ${rawPath}`);

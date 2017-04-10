@@ -6,13 +6,11 @@ export default class GitHubNotifications {
     bindMethodContext(this);
   }
 
-  request(path, options) {
-    return this._api.request(path, options);
-  }
-
   // TODO: pagination
-  async listUnread() {
-    const { json, err } = await this.request('notifications');
+  async listUnread(oldestDate) {
+    const query = oldestDate ? `?before=${oldestDate}` : '';
+    const { json, err } = await this._api.requestSoon(`notifications${query}`);
+
     return { notifications: json, err };
   }
 }
