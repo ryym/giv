@@ -1,5 +1,7 @@
 import React from 'react';
 import { connectWithReader } from '../../redux';
+import Webview from '../shared/Webview';
+import LoadingBars from '../shared/LoadingBars';
 import NotifItem from './NotifItem';
 import {
   push,
@@ -15,6 +17,7 @@ class Notifications extends React.Component {
 
     this.state = {
       atScrollEnd: false,
+      nowViewLoading: false,
     };
 
     this.showNotification = this.showNotification.bind(this);
@@ -90,13 +93,28 @@ class Notifications extends React.Component {
             <div className="notifs_notifs" onScroll={this.loadOnScrollEnd}>
               {notifs.map(this.renderNotif)}
               {isLoading && (
-                <div>now loading..</div>
+                <div className="notifs_notif-loading">
+                  <LoadingBars />
+                </div>
               )}
             </div>
           </div>
 
           <div className="notifs_github">
-            <webview src={shownURL} />
+            <Webview src={shownURL} on={{
+              'did-start-loading': () => {
+                this.setState({ nowViewLoading: true });
+              },
+              'dom-ready': () => {
+                this.setState({ nowViewLoading: false });
+              },
+            }}
+            />
+            {this.state.nowViewLoading && (
+            <div className="notifs_view-mask">
+              <LoadingBars />
+            </div>
+          )}
           </div>
         </main>
       </div>
