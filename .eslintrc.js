@@ -24,6 +24,10 @@ module.exports = {
         "Set", "OrderedSet",
         "Record", "Seq", "Collection",
       ]
-    }]
+    }],
+
+    "no-unused-vars": [2, {
+      "ignoreRestSiblings": true,
+    }],
   }
 }
