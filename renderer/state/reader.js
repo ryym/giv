@@ -1,4 +1,4 @@
-import { makeUserConfigReader } from './userConfig';
+import { makeUserConfigReader } from './user-config';
 import makeEntitiesReader from './entities/reader';
 import makePaginationReader from './pagination/reader';
 import makeUIReader from './ui/reader';
