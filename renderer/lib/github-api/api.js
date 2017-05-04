@@ -1,4 +1,3 @@
-import actualFetch from 'isomorphic-fetch';
 import runWithLimit from '../async/run-with-limit';
 
 /**
@@ -11,7 +10,7 @@ const MAX_CONCURRENT_REQUESTS_COUNT = 5;
 export default class GitHubAPI {
   constructor(accessToken, {
     apiRoot,
-    fetch = actualFetch,
+    fetch = global.fetch,
     withLimit = runWithLimit,
   } = {}) {
     if (apiRoot == null) {
