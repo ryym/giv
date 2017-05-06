@@ -1,4 +1,5 @@
 import { normalize, schema } from 'normalizr';
+import { NotificationJSON, NormalizedNotifs } from '../../models/types'
 
 const { Entity } = schema;
 
@@ -18,6 +19,8 @@ const notificationSchema = new Entity('notification', {
 
 // XXX: Should we convert snake_case to camelCase?
 // camelCase is common in JS but convertion may be a performance cost.
-export default function normalizeNotifications(notifications) {
-  return normalize(notifications, [notificationSchema]);
+export default function normalizeNotifications(
+  notifications: NotificationJSON[]
+): NormalizedNotifs {
+  return <NormalizedNotifs>normalize(notifications, [notificationSchema]);
 }

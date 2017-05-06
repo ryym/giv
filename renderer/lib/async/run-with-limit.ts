@@ -4,7 +4,7 @@
  * (XXX: There may be more better implementation?)
  */
 export default function runWithLimit(max = 1, {
-  nextTick = f => setTimeout(f, 50),
+  nextTick = (f: () => void) => setTimeout(f, 50),
 } = {}) {
   let nSpaces = max;
 
@@ -19,7 +19,7 @@ export default function runWithLimit(max = 1, {
     check();
   });
 
-  return function waitAndRun(makePromise) {
+  return function waitAndRun<T>(makePromise: () => Promise<T>): Promise<T> {
     return waitIfNecessary().then(() => {
       return makePromise()
         .then(value => {
