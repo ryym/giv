@@ -1,6 +1,14 @@
-import React from 'react';
+import * as React from 'react';
 
-export default class Webview extends React.Component {
+export type Props = JSX.WebViewAttributes & {
+  on: {
+    [eventName: string]: (event: Event) => void
+  }
+}
+
+export default class Webview extends React.Component<Props, {}> {
+  private webview: Electron.WebViewElement
+
   componentDidMount() {
     const { on: handlers = {} } = this.props;
     Object.keys(handlers).forEach(eventName => {

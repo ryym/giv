@@ -1,9 +1,17 @@
-import React from 'react';
+import * as React from 'react';
 import Octicon from '../shared/Octicon';
 import { NotifReader as NotifR } from '../../state/entities/reader';
+import { Notification, Issue, Repository } from '../../models/types'
+
+export type Props = {
+  notif: Notification,
+  repo: Repository,
+  issue: Issue,
+  onClick: (notif: Notification) => void
+}
 
 /* eslint-disable camelcase */
-const iconMap = {
+const iconMap: { [iconType: string]: [string, string] } = {
   issue_unknown: ['issue-opened', 'is-unknown'],
   issue_open: ['issue-opened', 'is-open'],
   issue_closed: ['issue-closed', 'is-closed'],
@@ -14,7 +22,7 @@ const iconMap = {
 };
 /* eslint-enable camelcase */
 
-const getIconDataFor = (issue, isPR) => {
+const getIconDataFor = (issue: Issue, isPR: boolean): [string, string] => {
   const type = isPR ? 'pull' : 'issue';
 
   if (issue == null) {
@@ -30,7 +38,7 @@ const getIconDataFor = (issue, isPR) => {
   return iconMap[`pull_${state}`];
 };
 
-export default function NotifItem({ notif, repo, issue, onClick }) {
+export default function NotifItem({ notif, repo, issue, onClick }: Props) {
   const [iconName, iconStateClass] = getIconDataFor(issue, NotifR.isPR(notif));
   return (
     <div className="notifs_notif-wrapper">

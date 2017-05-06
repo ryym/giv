@@ -1,5 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { connectWithReader } from '../../redux';
+import { DispatchProps } from '../../redux/react';
 import Webview from '../shared/Webview';
 import LoadingBars from '../shared/LoadingBars';
 import NotifItem from './NotifItem';
@@ -9,10 +10,26 @@ import {
   FetchNotifs,
 } from '../../actions';
 import { NotifReader as NotifR } from '../../state/entities/reader';
+import { Notification, Issue, Repository } from '../../models/types'
 import './styles.scss';
 
-class Notifications extends React.Component {
-  constructor(props) {
+export type Props = {
+  hasAccessToken: boolean,
+  notifs: Notification[],
+  getRepository: (fullName: string) => Repository | null,
+  getIssue: (url: string) => Issue | null,
+  shownURL: string | undefined,
+  isLoading: boolean,
+}
+type AllProps = Props & DispatchProps
+
+type State = {
+  atScrollEnd: boolean,
+  nowViewLoading: boolean
+}
+
+class Notifications extends React.Component<AllProps, State> {
+  constructor(props: AllProps) {
     super(props);
 
     this.state = {
@@ -32,15 +49,15 @@ class Notifications extends React.Component {
     }
   }
 
-  showNotification(notif) {
+  showNotification(notif: Notification) {
     this.props.dispatch(SelectNotif(notif));
   }
 
-  loadOnScrollEnd(event) {
+  loadOnScrollEnd(event: React.UIEvent<Element>) {
     if (this.props.isLoading) {
       return;
     }
-    const t = event.target;
+    const t = event.target as Element;
     const nowAtScrollEnd = t.scrollTop === t.scrollHeight - t.clientHeight;
     const { atScrollEnd } = this.state;
 
@@ -48,17 +65,17 @@ class Notifications extends React.Component {
       const { notifs, dispatch } = this.props;
       const oldestNotif = notifs[notifs.length - 1];
       dispatch(FetchNotifs(oldestNotif.updated_at));
-      this.setSTate({ atScrollEnd: true });
+      this.setState({ atScrollEnd: true });
     }
     else if (atScrollEnd) {
       this.setState({ atScrollEnd: false });
     }
   }
 
-  renderNotif(notif) {
+  renderNotif(notif: Notification) {
     const { props } = this;
-    const repo = props.getRepository(notif.repository);
-    const issue = props.getIssue(NotifR.getIssueURL(notif));
+    const repo = props.getRepository(notif.repository)!;
+    const issue = props.getIssue(NotifR.getIssueURL(notif))!;
     return (
       <NotifItem
         key={notif.id}
@@ -123,7 +140,7 @@ class Notifications extends React.Component {
 }
 
 export default connectWithReader(
-  ({ userConfig, pagination, entities, ui }) => ({
+  ({ userConfig, pagination, entities, ui }): Props => ({
     hasAccessToken: Boolean(userConfig.accessToken),
     notifs: pagination.unreadNotifications,
     getRepository: entities.getRepository,

@@ -1,11 +1,17 @@
-import React from 'react';
+import * as React from 'react';
 import { connectWithReader } from '../../redux';
+import { DispatchProps } from '../../redux/react';
 import { UpdateToken } from '../../actions';
 
-const TokenForm = (props) => {
+export interface Props {
+  token: string
+}
+type AllProps = Props & DispatchProps
+
+const TokenForm = (props: AllProps) => {
   const { token: currentToken, dispatch } = props;
   let token = currentToken;
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent<any>) => {
     event.preventDefault();
     dispatch(UpdateToken(token));
   };
@@ -24,7 +30,7 @@ const TokenForm = (props) => {
 };
 
 export default connectWithReader(
-  ({ userConfig }) => ({
+  ({ userConfig }): Props => ({
     token: userConfig.accessToken,
   })
 )(TokenForm);

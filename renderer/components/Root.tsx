@@ -1,14 +1,26 @@
-import React from 'react';
+import * as React from 'react';
 import { Router, Route } from 'react-router';
 import { connectWithReader } from '../redux';
 import TokenForm from './TokenForm';
 import Notifications from './Notifications';
 import { Push } from '../actions';
 import * as paths from '../const/paths';
+import { History } from 'history'
+import { DispatchProps } from '../redux/react'
 
-class Root extends React.Component {
-  componentWillReceiveProps({ path, dispatch }) {
-    if (this.props.path !== path) {
+export type Props = {
+  path?: string,
+  history: History,
+}
+type AllProps = DispatchProps & Props
+
+type WrapperProps = {
+  history: History,
+}
+
+class Root extends React.Component<AllProps, {}> {
+  componentWillReceiveProps({ path, dispatch }: AllProps) {
+    if (path && this.props.path !== path) {
       dispatch(Push(path));
     }
   }
@@ -27,7 +39,7 @@ class Root extends React.Component {
 }
 
 export default connectWithReader(
-  ({ userConfig }, { history }) => {
+  ({ userConfig }, { history }: WrapperProps): Props => {
     const path = userConfig.accessToken ? paths.notifications : paths.tokenRegistration;
     return { history, path };
   }
