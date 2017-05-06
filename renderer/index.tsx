@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Root from './components/Root';
 import history from './history';
@@ -10,7 +10,7 @@ import * as paths from './const/paths';
 import './common.scss';
 
 const renderView = () => {
-  ReactDOM.render(
+  render(
     <Provider store={store}>
       <Root history={history} />
     </Provider>,
