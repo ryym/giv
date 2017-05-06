@@ -1,11 +1,11 @@
 import { fork, spawn, take, takeEvery, call, put } from 'redux-saga/effects';
 import {
-  LOAD_USER_CONFIG_SUCCESS,
-  UPDATE_TOKEN,
-  FETCH_UNREAD_NOTIFS,
-  fetchNotifsStart,
-  fetchNotifsSuccess,
-  fetchIssueSuccess,
+  LoadUserConfigSuccess,
+  UpdateToken,
+  FetchNotifs,
+  FetchNotifsStart,
+  FetchNotifsSuccess,
+  FetchIssueSuccess,
 } from '../actions';
 import createGitHubClient from '../lib/github-api';
 import normalizeNotifications from '../lib/normalizers/notifications';
@@ -13,7 +13,7 @@ import normalizeNotifications from '../lib/normalizers/notifications';
 export default function* notificationsSaga() {
   let token;
   while (!token) {
-    const action = yield take([LOAD_USER_CONFIG_SUCCESS, UPDATE_TOKEN]);
+    const action = yield take([LoadUserConfigSuccess.type, UpdateToken.type]);
     token = action.payload.accessToken;
   }
 
@@ -25,16 +25,16 @@ function* runNotificationFetchers(accessToken) {
 
   // Fetch notifications for first view.
   yield call(fetchUnreadNotifications, api);
-  yield takeEvery(FETCH_UNREAD_NOTIFS, fetchUnreadNotifications, api);
+  yield takeEvery(FetchNotifs.type, fetchUnreadNotifications, api);
 }
 
 function* fetchUnreadNotifications(api, action) {
-  yield put(fetchNotifsStart());
+  yield put(FetchNotifsStart());
 
   const oldestUpdatedAt = action ? action.payload.oldestUpdatedAt : null;
   const { notifications: notifs } = yield call(api.notifications.listUnread, oldestUpdatedAt);
   const normalizedNotifs = yield call(normalizeNotifications, notifs);
-  yield put(fetchNotifsSuccess(normalizedNotifs));
+  yield put(FetchNotifsSuccess(normalizedNotifs));
 
   yield spawn(fetchIssues, api, notifs);
 }
@@ -47,5 +47,5 @@ function* fetchIssues(api, notifs) {
 
 function* fetchIssue(api, notif) {
   const { issue } = yield call(api.issues.getIssue, notif.subject.url);
-  yield put(fetchIssueSuccess(issue));
+  yield put(FetchIssueSuccess(issue));
 }

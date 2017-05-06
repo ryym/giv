@@ -3,13 +3,13 @@ import { Router, Route } from 'react-router';
 import { connectWithReader } from '../redux';
 import TokenForm from './TokenForm';
 import Notifications from './Notifications';
-import { push } from '../actions';
+import { Push } from '../actions';
 import * as paths from '../const/paths';
 
 class Root extends React.Component {
   componentWillReceiveProps({ path, dispatch }) {
     if (this.props.path !== path) {
-      dispatch(push(path));
+      dispatch(Push(path));
     }
   }
 

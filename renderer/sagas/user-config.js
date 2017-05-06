@@ -1,8 +1,8 @@
 import { fork, take, takeEvery, put, call } from 'redux-saga/effects';
 import {
-  UPDATE_TOKEN,
-  LOAD_USER_CONFIG,
-  loadUserConfigSuccess,
+  UpdateToken,
+  LoadUserConfig,
+  LoadUserConfigSuccess,
 } from '../actions';
 import {
   sendNewToken,
@@ -11,13 +11,13 @@ import {
 
 export default function* userConfigSaga() {
   yield fork(loadUserConfig);
-  yield takeEvery(UPDATE_TOKEN, saveAccessToken);
+  yield takeEvery(UpdateToken.type, saveAccessToken);
 }
 
 function* loadUserConfig() {
-  yield take(LOAD_USER_CONFIG);
+  yield take(LoadUserConfig.type);
   const config = yield call(fetchUserConfig);
-  yield put(loadUserConfigSuccess(config));
+  yield put(LoadUserConfigSuccess(config));
 }
 
 function* saveAccessToken(action) {

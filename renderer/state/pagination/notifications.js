@@ -1,5 +1,5 @@
 import {
-  FETCH_UNREAD_NOTIFS_SUCCESS,
+  FetchNotifsSuccess,
 } from '../../actions';
 
 const initialState = {
@@ -10,8 +10,9 @@ const initialState = {
 
 export const updateNotifications = (notifs = initialState, action) => {
   switch (action.type) {
-  case FETCH_UNREAD_NOTIFS_SUCCESS:
+  case FetchNotifsSuccess.type:
     return handleFetchNotifsSuccess(notifs, action.payload);
+
   default:
     return notifs;
   }

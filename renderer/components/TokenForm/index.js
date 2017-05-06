@@ -1,13 +1,13 @@
 import React from 'react';
 import { connectWithReader } from '../../redux';
-import { updateToken } from '../../actions';
+import { UpdateToken } from '../../actions';
 
 const TokenForm = (props) => {
   const { token: currentToken, dispatch } = props;
   let token = currentToken;
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(updateToken(token));
+    dispatch(UpdateToken(token));
   };
   return (
     <form onSubmit={handleSubmit}>

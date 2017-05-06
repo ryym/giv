@@ -1,7 +1,7 @@
 import {
-  SELECT_NOTIF,
-  FETCH_UNREAD_NOTIFS_START,
-  FETCH_UNREAD_NOTIFS_SUCCESS,
+  SelectNotif,
+  FetchNotifsStart,
+  FetchNotifsSuccess,
 } from '../../actions';
 
 const initialState = {
@@ -11,13 +11,13 @@ const initialState = {
 
 export const updateNotifications = (state = initialState, action) => {
   switch (action.type) {
-  case SELECT_NOTIF:
+  case SelectNotif.type:
     return handleSelectNotif(state, action.payload);
 
-  case FETCH_UNREAD_NOTIFS_START:
+  case FetchNotifsStart.type:
     return Object.assign({}, state, { isLoading: true });
 
-  case FETCH_UNREAD_NOTIFS_SUCCESS:
+  case FetchNotifsSuccess.type:
     return Object.assign({}, state, { isLoading: false });
 
   default:

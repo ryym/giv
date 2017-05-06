@@ -1,16 +1,18 @@
 import {
-  UPDATE_TOKEN,
-  LOAD_USER_CONFIG_SUCCESS,
+  UpdateToken,
+  LoadUserConfigSuccess,
 } from '../actions';
 
 export const updateUserConfig = (config = null, action) => {
   switch (action.type) {
-  case LOAD_USER_CONFIG_SUCCESS:
+  case LoadUserConfigSuccess.type:
     return Object.assign({}, action.payload);
-  case UPDATE_TOKEN:
+
+  case UpdateToken.type:
     return Object.assign({}, config, {
       accessToken: action.payload.accessToken,
     });
+
   default:
     return config;
   }

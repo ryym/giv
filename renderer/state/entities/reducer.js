@@ -1,6 +1,6 @@
 import {
-  FETCH_UNREAD_NOTIFS_SUCCESS,
-  FETCH_ISSUE_SUCCESS,
+  FetchNotifsSuccess,
+  FetchIssueSuccess,
 } from '../../actions';
 
 const initialState = {
@@ -30,10 +30,10 @@ const cloneEntities = ({ notifications, repositories, issues }) => ({
 
 export default function updateEntities(entities = initialState, action) {
   switch (action.type) {
-  case FETCH_UNREAD_NOTIFS_SUCCESS:
+  case FetchNotifsSuccess.type:
     return handleFetchNotifsSuccess(entities, action.payload);
 
-  case FETCH_ISSUE_SUCCESS:
+  case FetchIssueSuccess.type:
     return handleFetchIssueSuccess(entities, action.payload);
 
   default:

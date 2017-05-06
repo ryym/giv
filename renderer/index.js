@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Root from './components/Root';
 import history from './history';
 import configureStore from './store';
-import { loadUserConfig, push } from './actions';
+import { LoadUserConfig, Push } from './actions';
 import * as paths from './const/paths';
 
 import './common.scss';
@@ -20,7 +20,7 @@ const renderView = () => {
 
 const store = configureStore();
 
-store.dispatch(loadUserConfig());
+store.dispatch(LoadUserConfig());
 
 const unsubscribe = store.subscribe(() => {
   const { userConfig } = store.getReader();
@@ -30,7 +30,7 @@ const unsubscribe = store.subscribe(() => {
   }
 
   if (!userConfig.accessToken && history.location.pathname !== paths.tokenRegistration) {
-    store.dispatch(push(paths.tokenRegistration));
+    store.dispatch(Push(paths.tokenRegistration));
   }
 
   if (document.readyState === 'pending') {

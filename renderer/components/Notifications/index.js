@@ -4,9 +4,9 @@ import Webview from '../shared/Webview';
 import LoadingBars from '../shared/LoadingBars';
 import NotifItem from './NotifItem';
 import {
-  push,
-  selectNotif,
-  fetchNotifs,
+  Push,
+  SelectNotif,
+  FetchNotifs,
 } from '../../actions';
 import { NotifReader as NotifR } from '../../state/entities/reader';
 import './styles.scss';
@@ -28,12 +28,12 @@ class Notifications extends React.Component {
   componentDidMount() {
     const { hasAccessToken, dispatch } = this.props;
     if (!hasAccessToken) {
-      dispatch(push('/access-token'));
+      dispatch(Push('/access-token'));
     }
   }
 
   showNotification(notif) {
-    this.props.dispatch(selectNotif(notif));
+    this.props.dispatch(SelectNotif(notif));
   }
 
   loadOnScrollEnd(event) {
@@ -47,8 +47,8 @@ class Notifications extends React.Component {
     if (nowAtScrollEnd && !atScrollEnd) {
       const { notifs, dispatch } = this.props;
       const oldestNotif = notifs[notifs.length - 1];
-      dispatch(fetchNotifs(oldestNotif.updated_at));
-      this.setState({ atScrollEnd: true });
+      dispatch(FetchNotifs(oldestNotif.updated_at));
+      this.setSTate({ atScrollEnd: true });
     }
     else if (atScrollEnd) {
       this.setState({ atScrollEnd: false });
