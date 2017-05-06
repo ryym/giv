@@ -10,7 +10,7 @@ module.exports = {
   externals: conf.externalModules,
 
   resolve: {
-    extensions: ['.js', '.react.js'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
 
   entry: {
@@ -26,10 +26,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|tsx?)$/,
         include: conf.rendererPath,
         use: [
-          { loader: 'babel-loader' },
+          { loader: 'awesome-typescript-loader' },
         ],
       },
 
