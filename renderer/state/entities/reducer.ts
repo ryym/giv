@@ -41,18 +41,16 @@ const initialState: EntitiesState = {
   },
 };
 
-// XXX: We don't need to clone unchanged entity sections.
-const cloneEntities = ({ notifications, repositories, issues }: EntitiesState): EntitiesState => ({
-  notifications: {
-    byID: Object.assign({}, notifications.byID),
-  },
-  repositories: {
-    byFullName: Object.assign({}, repositories.byFullName),
-  },
-  issues: {
-    byURL: Object.assign({}, issues.byURL),
-  },
-});
+// Example: replaceState({ a:1 }, ['a', n => n + 1])
+const replaceState = <T extends {}, K extends keyof T>(
+  original: T,
+  replacers: Array<[K, (v: T[K]) => T[K]]>
+): T => {
+  return replacers.reduce((clone: T, [key, replace]) => {
+    clone[key] = replace(original[key])
+    return clone
+  }, Object.assign({}, original))
+}
 
 const updateEntities = composeReducer(initialState, [
   on(FetchNotifsSuccess, handleFetchNotifsSuccess),
@@ -64,17 +62,19 @@ function handleFetchNotifsSuccess(
   entities: EntitiesState,
   { entities: newEntities }: FetchNotifsSuccessParam
 ): EntitiesState {
-  const cloned = cloneEntities(entities);
-  Object.assign(cloned.notifications.byID, newEntities.notification);
-  Object.assign(cloned.repositories.byFullName, newEntities.repository);
-  return cloned;
+  return replaceState(entities, [
+    ['notifications', () => ({ byID: newEntities.notification })],
+    ['repositories', () => ({ byFullName: newEntities.repository })]
+  ])
 };
 
 function handleFetchIssueSuccess(
   entities: EntitiesState,
   { issue }: FetchIssueSuccessParam
 ): EntitiesState {
-  const cloned = cloneEntities(entities);
-  cloned.issues.byURL[issue.url] = issue;
-  return cloned;
+  return replaceState(entities, [
+    ['issues', ({ byURL }) => ({
+      byURL: Object.assign({}, byURL, { [issue.url]: issue })
+    })],
+  ])
 };
