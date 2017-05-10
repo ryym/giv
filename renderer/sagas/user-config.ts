@@ -1,6 +1,6 @@
-import { call, fork, spawn, take, takeEvery, put } from '../redux/saga'
-import { Action } from '../redux/actions'
-import { UserConfig } from '../models/types'
+import { call, fork, spawn, take, takeEvery, put } from '../redux/saga';
+import { Action } from '../redux/actions';
+import { UserConfig } from '../models/types';
 import {
   UpdateToken,
   UpdateTokenParam,
@@ -19,7 +19,7 @@ export default function* userConfigSaga() {
 
 function* loadUserConfig() {
   yield take(LoadUserConfig.type);
-  const config = <UserConfig>(yield call(fetchUserConfig));
+  const config = (yield call(fetchUserConfig)) as UserConfig;
   yield put(LoadUserConfigSuccess(config));
 }
 

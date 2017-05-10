@@ -20,7 +20,7 @@ export default function configureStore() {
       // Apply router middleware after the logger
       // to log router actions.
       routerMiddleware(history),
-    )
+    ),
   );
 
   sagaMiddleware.run(sagas);

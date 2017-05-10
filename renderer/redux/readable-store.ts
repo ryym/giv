@@ -1,6 +1,6 @@
 import bindMethodContext from '../lib/utils/bind-method-context';
-import { Store, Reducer, Unsubscribe } from 'redux'
-import { Action } from './actions'
+import { Store, Reducer, Unsubscribe } from 'redux';
+import { Action } from './actions';
 
 /**
  * ReadableStore provides same API with Redux Store.
@@ -20,11 +20,11 @@ import { Action } from './actions'
  * an enhanced store couldn't be statically typed.
  */
 class ReadableStore<S, R> {
-  private readonly store:  Store<S>
-  private readonly createReader: (state: S) => R
-  private _shouldUpdateReader: boolean
+  private readonly store:  Store<S>;
+  private readonly createReader: (state: S) => R;
+  private _shouldUpdateReader: boolean;
   private _activated: boolean;
-  private _reader: R
+  private _reader: R;
 
   constructor(store: Store<S>, createReader: (state: S) => R) {
     this.store = store;
@@ -70,7 +70,7 @@ class ReadableStore<S, R> {
 
 export default function createReadableStore<S, R>(
   store: Store<S>,
-  createReader: (state: S) => R
+  createReader: (state: S) => R,
 ): ReadableStore<S, R> {
   return new ReadableStore(store, createReader).activate();
 }

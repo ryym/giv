@@ -1,18 +1,18 @@
-import { Action, AnyActionCreator } from './actions'
+import { Action, AnyActionCreator } from './actions';
 
-export type Handler<S, P> = (state: S, payload: P, action: Action<P>) => S
+export type Handler<S, P> = (state: S, payload: P, action: Action<P>) => S;
 
 interface ActionHandler<S, P> {
-    type: string
-    handle: Handler<S, P>
+  type: string;
+  handle: Handler<S, P>;
 }
 
 export const on = <S, P>(
     creator: AnyActionCreator<P>,
-    handler: Handler<S, P>
+    handler: Handler<S, P>,
 ): ActionHandler<S, P> => {
-    return { type: creator.type, handle: handler }
-}
+  return { type: creator.type, handle: handler };
+};
 
 /**
  * You can compose a reducer type-safely by this `composeReducer` and `on`.
@@ -30,20 +30,20 @@ export const on = <S, P>(
  */
 export const composeReducer = <S>(
     initialState: S,
-    handlers: ActionHandler<S, any>[] = []
+    handlers: Array<ActionHandler<S, any>> = [],
 ): (state: S, action: Action<any>) => S => {
-    type ByType = { [type: string]: Handler<S, any> }
+  type ByType = { [type: string]: Handler<S, any> };
 
-    const handlerByType: ByType = handlers.reduce((hbt: ByType, handler) => {
-        hbt[handler.type] = handler.handle
-        return hbt
-    }, {})
+  const handlerByType: ByType = handlers.reduce((hbt: ByType, handler) => {
+      hbt[handler.type] = handler.handle;
+      return hbt;
+    }, {});
 
-    return function reduce(state: S = initialState, action: Action<any>): S {
-        const handler = handlerByType[action.type]
-        if (handler != null) {
-            return handler(state, action.payload, action)
+  return function reduce(state: S = initialState, action: Action<any>): S {
+      const handler = handlerByType[action.type];
+      if (handler != null) {
+          return handler(state, action.payload, action);
         }
-        return state
-    }
-}
+      return state;
+    };
+};

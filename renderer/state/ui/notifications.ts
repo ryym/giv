@@ -1,4 +1,4 @@
-import { composeReducer, on } from '../../redux/reducer'
+import { composeReducer, on } from '../../redux/reducer';
 import {
   SelectNotif,
   SelectNotifParam,
@@ -9,7 +9,7 @@ import {
 export type NotificationsState = {
   shownURL: string | undefined,
   isLoading: boolean,
-}
+};
 
 const initialState: NotificationsState = {
   shownURL: undefined,
@@ -22,11 +22,11 @@ export const updateNotifications = composeReducer(initialState, [
   on(FetchNotifsStart, (state) => Object.assign({}, state, { isLoading: true })),
 
   on(FetchNotifsSuccess, (state) => Object.assign({}, state, { isLoading: false })),
-])
+]);
 
 function handleSelectNotif(
   state: NotificationsState,
-  { notif }: SelectNotifParam
+  { notif }: SelectNotifParam,
 ): NotificationsState {
   // TODO: Do not parse URL by hand!
   // To get a proper URL, we need to fetch the issue JSON via API..
@@ -36,4 +36,4 @@ function handleSelectNotif(
   const url = `https://github.com/${notif.repository}/${type}/${id}`;
 
   return Object.assign({}, state, { shownURL: url });
-};
+}

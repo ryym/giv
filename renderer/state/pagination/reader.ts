@@ -1,7 +1,7 @@
 import bindMethodContext from '../../lib/utils/bind-method-context';
-import { PaginationState } from './reducer'
-import { EntitiesReader } from '../entities/reader'
-import { Notification } from '../../models/types'
+import { PaginationState } from './reducer';
+import { EntitiesReader } from '../entities/reader';
+import { Notification } from '../../models/types';
 
 export default function makePaginationReader(
   pagination: PaginationState,
@@ -12,7 +12,7 @@ export default function makePaginationReader(
 
 export class PaginationReader {
   private readonly pagination: PaginationState;
-  private readonly entities: EntitiesReader
+  private readonly entities: EntitiesReader;
 
   constructor(pagination: PaginationState, entitiesReader: EntitiesReader) {
     this.pagination = pagination;
@@ -23,6 +23,6 @@ export class PaginationReader {
   get unreadNotifications(): Notification[] {
     const { pagination, entities } = this;
     const unreadIDs = pagination.notifications.unread.ids;
-    return unreadIDs.map(id => entities.getNotification(id)!);
+    return unreadIDs.map((id) => entities.getNotification(id)!);
   }
 }

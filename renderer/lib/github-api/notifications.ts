@@ -1,7 +1,7 @@
 import bindMethodContext from '../utils/bind-method-context';
-import { GitHubAPI } from './types'
-import { NotificationJSON } from '../../models/types'
-import { Failable } from '../../models/result'
+import { GitHubAPI } from './types';
+import { NotificationJSON } from '../../models/types';
+import { Failable } from '../../models/result';
 
 export default class GitHubNotifications {
   private readonly _api: GitHubAPI;
@@ -15,6 +15,6 @@ export default class GitHubNotifications {
   async listUnread(oldestDate?: string): Promise<Failable<NotificationJSON[]>> {
     const query = oldestDate ? `?before=${oldestDate}` : '';
     const { json, err } = await this._api.requestSoon<NotificationJSON[]>(`notifications${query}`);
-    return [json, err]
+    return [json, err];
   }
 }

@@ -1,7 +1,7 @@
 import bindMethodContext from '../utils/bind-method-context';
-import { GitHubAPI } from './types'
-import { Issue } from '../../models/types'
-import { Failable } from '../../models/result'
+import { GitHubAPI } from './types';
+import { Issue } from '../../models/types';
+import { Failable } from '../../models/result';
 
 export default class GitHubIssues {
   private readonly _api: GitHubAPI;
@@ -12,6 +12,6 @@ export default class GitHubIssues {
 
   async getIssue(url: string): Promise<Failable<Issue>> {
     const { json, err } = await this._api.request<Issue>(url);
-    return [json, err]
+    return [json, err];
   }
 }

@@ -1,13 +1,13 @@
 import runWithLimit from '../async/run-with-limit';
-import { GitHubAPI, APIResponse, FetchOptions } from './types'
+import { GitHubAPI, APIResponse, FetchOptions } from './types';
 
-type Fetch = typeof window.fetch
+type Fetch = typeof window.fetch;
 
 export type ClientOptions = {
   apiRoot: string,
   fetch?: Fetch,
-  withLimit?: (n: number) => <T>(process: () => Promise<T>) => Promise<T>
-}
+  withLimit?: (n: number) => <T>(process: () => Promise<T>) => Promise<T>,
+};
 
 /**
  * NOTE: Actually GitHub doesn't allow any concurrent requests as abuse rate limit.
@@ -54,7 +54,7 @@ export default class GitHubAPIBase implements GitHubAPI {
     });
     try {
       const response = await this._fetchGently(url, options);
-      const json = <T>(await response.json());
+      const json = (await response.json()) as T;
       return { response, json };
     }
     catch (err) {

@@ -1,4 +1,4 @@
-import { composeReducer, on, Handler } from '../../redux/reducer'
+import { composeReducer, on, Handler } from '../../redux/reducer';
 import {
   FetchNotifsSuccess,
   FetchNotifsSuccessParam,
@@ -7,8 +7,8 @@ import {
 export type NotificationsState = {
   unread: {
     ids: string[],
-  }
-}
+  },
+};
 
 const initialState: NotificationsState = {
   unread: {
@@ -18,7 +18,7 @@ const initialState: NotificationsState = {
 
 export const updateNotifications = composeReducer(initialState, [
   on(FetchNotifsSuccess, handleFetchNotifsSuccess),
-])
+]);
 
 function handleFetchNotifsSuccess(
   notifs: NotificationsState,
@@ -29,14 +29,14 @@ function handleFetchNotifsSuccess(
       ids: concatUniq(notifs.unread.ids, ids),
     },
   };
-};
+}
 
 const concatUniq = (ids1: string[], ids2: string[]): string[] => {
-  type ExistIDs = { [id: string]: boolean }
+  type ExistIDs = { [id: string]: boolean };
   const exists: ExistIDs = ids1.reduce((ex: ExistIDs, id) => {
     ex[id] = true;
     return ex;
   }, {});
-  const uniqIds2 = ids2.filter(id => ! exists[id]);
+  const uniqIds2 = ids2.filter((id) => ! exists[id]);
   return ids1.concat(uniqIds2);
 };

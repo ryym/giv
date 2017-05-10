@@ -9,7 +9,7 @@ export type State = {
   entities: EntitiesState,
   pagination: PaginationState,
   ui: UIState,
-}
+};
 
 export default function createStateReducer(): Reducer<State> {
   return combineReducers<State>({

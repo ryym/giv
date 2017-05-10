@@ -16,7 +16,7 @@ function createConnectWithReader<R, S>(makeReader: (state: S) => R) {
       undefined,
       options,
     );
-  }
+  };
 }
 
-export default createConnectWithReader(createReader)
+export default createConnectWithReader(createReader);

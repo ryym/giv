@@ -1,17 +1,17 @@
 import bindMethodContext from '../../lib/utils/bind-method-context';
-import { EntitiesState } from './reducer'
+import { EntitiesState } from './reducer';
 import {
   Notification,
   Repository,
   Issue,
-} from '../../models/types'
+} from '../../models/types';
 
 export default function makeEntitiesReader(entities: EntitiesState) {
   return new EntitiesReader(entities);
 }
 
 export class EntitiesReader {
-  private readonly entities: EntitiesState
+  private readonly entities: EntitiesState;
 
   constructor(entities: EntitiesState) {
     this.entities = entities;

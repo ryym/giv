@@ -1,5 +1,5 @@
-import { call, fork, spawn, take, takeEvery, put } from '../redux/saga'
-import { Action } from '../redux/actions'
+import { call, fork, spawn, take, takeEvery, put } from '../redux/saga';
+import { Action } from '../redux/actions';
 import {
   LoadUserConfigSuccess,
   LoadUserConfigSuccessParam,
@@ -13,16 +13,16 @@ import {
 } from '../actions';
 import createGitHubClient, { GitHubClient } from '../lib/github-api';
 import normalizeNotifications from '../lib/normalizers/notifications';
-import { Issue, NotificationJSON, NormalizedNotifs } from '../models/types'
-import { Failable } from '../models/result'
+import { Issue, NotificationJSON, NormalizedNotifs } from '../models/types';
+import { Failable } from '../models/result';
 
 export default function* notificationsSaga() {
-  type AccessTokenAction = Action<LoadUserConfigSuccessParam> | Action<UpdateTokenParam>
+  type AccessTokenAction = Action<LoadUserConfigSuccessParam> | Action<UpdateTokenParam>;
 
   let token;
   while (!token) {
     const action: AccessTokenAction = yield take(
-      [LoadUserConfigSuccess.type, UpdateToken.type]
+      [LoadUserConfigSuccess.type, UpdateToken.type],
     );
     token = action.payload.accessToken;
   }
@@ -43,7 +43,7 @@ function* fetchUnreadNotifications(api: GitHubClient, action?: Action<FetchNotif
 
   const [notifs, _]: Failable<NotificationJSON[]> = yield call(
     api.notifications.listUnread,
-    action ? action.payload.oldestUpdatedAt : null
+    action ? action.payload.oldestUpdatedAt : null,
   );
 
   if (notifs != null) {

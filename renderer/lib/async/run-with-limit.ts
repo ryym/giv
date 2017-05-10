@@ -8,7 +8,7 @@ export default function runWithLimit(max = 1, {
 } = {}) {
   let nSpaces = max;
 
-  const waitIfNecessary = () => new Promise(resolve => {
+  const waitIfNecessary = () => new Promise((resolve) => {
     const check = () => {
       if (nSpaces > 0) {
         nSpaces -= 1;
@@ -22,11 +22,11 @@ export default function runWithLimit(max = 1, {
   return function waitAndRun<T>(makePromise: () => Promise<T>): Promise<T> {
     return waitIfNecessary().then(() => {
       return makePromise()
-        .then(value => {
+        .then((value) => {
           nSpaces += 1;
           return value;
         })
-        .catch(err => {
+        .catch((err) => {
           nSpaces += 1;
           throw err;
         });

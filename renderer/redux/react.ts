@@ -1,5 +1,5 @@
-import { Action } from './actions'
+import { Action } from './actions';
 
 export interface DispatchProps {
-    dispatch(action: Action<any>): void;
+  dispatch(action: Action<any>): void;
 }
