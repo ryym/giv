@@ -1,0 +1,56 @@
+{
+    "defaultSeverity": "error",
+
+    "extends": [
+      "tslint:recommended",
+      "tslint-eslint-rules"
+    ],
+
+    "rules": {
+      "ban-types": [true, ["Object"]],
+      "interface-over-type-literal": false,
+      "interface-name": false,
+      "linebreak-style": [true, "LF"],
+      "member-access": [true, "no-public"],
+      "member-ordering": false,
+      "no-empty": false,
+      "no-namespace": [true, "allow-declarations"],
+      "object-literal-sort-keys": false,
+      "one-line": false,
+      "ordered-imports": false,
+      "quotemark": [
+        true,
+        "single",
+        "jsx-double",
+        "avoid-escape"
+      ],
+      "whitespace": [
+        true,
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator",
+        "check-type",
+        "check-preblock"
+      ],
+
+      "array-bracket-spacing": [true, "never"],
+      "block-spacing": [true, "always"],
+      "brace-style": [true, "stroustrup", {
+        "allowSingleLine": false
+      }],
+      "no-multi-spaces": true,
+      "object-curly-spacing": [true, "always"],
+      "space-in-parens": [true, "never"],
+      "ter-arrow-spacing": [true, {
+        "before": true,
+        "after": true
+      }],
+      "ter-indent": [true, 2],
+      "ter-max-len": [true, {
+        "code": 100,
+        "ignoreUrls": true,
+        "ignoreRegExpLiterals": true
+      }]
+    }
+}

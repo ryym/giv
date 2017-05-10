@@ -9,8 +9,9 @@
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development yarn clean-dist && node scripts/watch.js",
-    "lint": "run-s lint:js lint:css:fix lint:css",
+    "lint": "run-s lint:js lint:ts lint:css:fix lint:css",
     "lint:js": "eslint --fix .",
+    "lint:ts": "tslint --fix -t stylish 'renderer/**/*.ts'",
     "lint:css": "stylelint 'renderer/**/*css'",
     "lint:css:fix": "stylefmt -r 'renderer/**/*css'",
     "clean-dist": "rm -rf dist",
@@ -55,6 +56,8 @@
     "stylefmt": "^5.3.0",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
+    "tslint": "^5.2.0",
+    "tslint-eslint-rules": "^4.0.0",
     "typescript": "^2.3.2",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
