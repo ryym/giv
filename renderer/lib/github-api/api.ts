@@ -43,7 +43,11 @@ export default class GitHubAPIBase implements GitHubAPI {
     return this._request<T>(this._fetch, rawPath, options);
   }
 
-  async _request<T>(fetch: Fetch, rawPath: string, options: FetchOptions = {}): Promise<APIResponse<T>> {
+  private async _request<T>(
+      fetch: Fetch,
+      rawPath: string,
+      options: FetchOptions = {},
+  ): Promise<APIResponse<T>> {
     const url = this.normalizeURL(rawPath);
     if (url == null) {
       throw new Error(`Invalid path: ${rawPath}`);

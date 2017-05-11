@@ -35,15 +35,15 @@ export const composeReducer = <S>(
   type ByType = { [type: string]: Handler<S, any> };
 
   const handlerByType: ByType = handlers.reduce((hbt: ByType, handler) => {
-      hbt[handler.type] = handler.handle;
-      return hbt;
-    }, {});
+    hbt[handler.type] = handler.handle;
+    return hbt;
+  }, {});
 
   return function reduce(state: S = initialState, action: Action<any>): S {
-      const handler = handlerByType[action.type];
-      if (handler != null) {
-          return handler(state, action.payload, action);
-        }
-      return state;
-    };
+    const handler = handlerByType[action.type];
+    if (handler != null) {
+      return handler(state, action.payload, action);
+    }
+    return state;
+  };
 };

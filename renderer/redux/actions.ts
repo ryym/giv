@@ -30,12 +30,12 @@ export function createAction<P, A>(
 
 export function createAction(type: any, makePayload: any = () => {}): any {
   const actionCreator = (arg: any) => ({
-      type,
-      payload: makePayload(arg),
-    });
+    type,
+    payload: makePayload(arg),
+  });
 
-    // TypeScripe doesn't recognize `actionCreator.type = type`.
-    // We must use `Object.assign` instead.
+  // TypeScripe doesn't recognize `actionCreator.type = type`.
+  // We must use `Object.assign` instead.
   return Object.assign(actionCreator, { type });
 }
 

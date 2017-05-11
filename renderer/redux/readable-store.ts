@@ -20,7 +20,7 @@ import { Action } from './actions';
  * an enhanced store couldn't be statically typed.
  */
 class ReadableStore<S, R> {
-  private readonly store:  Store<S>;
+  private readonly store: Store<S>;
   private readonly createReader: (state: S) => R;
   private _shouldUpdateReader: boolean;
   private _activated: boolean;

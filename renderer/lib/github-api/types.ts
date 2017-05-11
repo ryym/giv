@@ -2,7 +2,7 @@ export type FetchOptions = {
   headers?: {},
 };
 
-export type APIResponse<J extends Object> = {
+export type APIResponse<J> = {
   response?: Response,
   json?: J,
   err?: Error,
