@@ -44,7 +44,7 @@ export interface NormalizedNotifs {
       [id: string]: Notification,
     },
     repository: {
-      [full_name: string]: Repository,
+      [fullName: string]: Repository,
     },
     user: {
       [login: string]: User,

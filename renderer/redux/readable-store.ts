@@ -22,15 +22,15 @@ import { Action } from './actions';
 class ReadableStore<S, R> {
   private readonly store: Store<S>;
   private readonly createReader: (state: S) => R;
-  private _shouldUpdateReader: boolean;
-  private _activated: boolean;
-  private _reader: R;
+  private shouldUpdateReader: boolean;
+  private activated: boolean;
+  private reader: R;
 
   constructor(store: Store<S>, createReader: (state: S) => R) {
     this.store = store;
     this.createReader = createReader;
-    this._shouldUpdateReader = true;
-    this._activated = false;
+    this.shouldUpdateReader = true;
+    this.activated = false;
     bindMethodContext(this);
   }
 
@@ -51,17 +51,17 @@ class ReadableStore<S, R> {
   }
 
   getReader(): R {
-    if (this._shouldUpdateReader) {
-      this._reader = this.createReader(this.store.getState());
-      this._shouldUpdateReader = false;
+    if (this.shouldUpdateReader) {
+      this.reader = this.createReader(this.store.getState());
+      this.shouldUpdateReader = false;
     }
-    return this._reader;
+    return this.reader;
   }
 
   activate(): ReadableStore<S, R> {
-    if (! this._activated) {
+    if (! this.activated) {
       this.subscribe(() => {
-        this._shouldUpdateReader = true;
+        this.shouldUpdateReader = true;
       });
     }
     return this;

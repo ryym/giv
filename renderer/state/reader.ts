@@ -10,18 +10,18 @@ export default function createStateReader(state: State) {
 
 export class StateReader {
   private readonly state: State;
-  private _cache: { [key: string]: any };
+  private cache: { [key: string]: any };
 
   constructor(state: State) {
     this.state = state;
-    this._cache = {};
+    this.cache = {};
   }
 
   private getOrMake<R>(key: string, create: (state: State) => R) {
-    if (! this._cache[key]) {
-      this._cache[key] = create(this.state);
+    if (! this.cache[key]) {
+      this.cache[key] = create(this.state);
     }
-    return this._cache[key] as R;
+    return this.cache[key] as R;
   }
 
   get userConfig(): UserConfigReader {

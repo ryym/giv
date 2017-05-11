@@ -17,33 +17,33 @@ export type ClientOptions = {
 const MAX_CONCURRENT_REQUESTS_COUNT = 5;
 
 export default class GitHubAPIBase implements GitHubAPI {
-  private readonly _token: string;
-  private readonly _apiRoot: string;
-  private readonly _fetch: Fetch;
-  private readonly _fetchGently: Fetch;
+  private readonly token: string;
+  private readonly apiRoot: string;
+  private readonly fetch: Fetch;
+  private readonly fetchGently: Fetch;
 
   constructor(accessToken: string, {
     apiRoot,
     fetch = window.fetch,
     withLimit = runWithLimit,
   }: ClientOptions) {
-    this._token = accessToken;
-    this._apiRoot = apiRoot;
-    this._fetch = fetch;
+    this.token = accessToken;
+    this.apiRoot = apiRoot;
+    this.fetch = fetch;
 
     const limit = withLimit(MAX_CONCURRENT_REQUESTS_COUNT);
-    this._fetchGently = (url, options) => limit(() => fetch(url, options));
+    this.fetchGently = (url, options) => limit(() => fetch(url, options));
   }
 
   async request<T>(rawPath: string, options?: FetchOptions): Promise<APIResponse<T>> {
-    return this._request<T>(this._fetchGently, rawPath, options);
+    return this.doRequest<T>(this.fetchGently, rawPath, options);
   }
 
   async requestSoon<T>(rawPath: string, options?: FetchOptions): Promise<APIResponse<T>> {
-    return this._request<T>(this._fetch, rawPath, options);
+    return this.doRequest<T>(this.fetch, rawPath, options);
   }
 
-  private async _request<T>(
+  private async doRequest<T>(
       fetch: Fetch,
       rawPath: string,
       options: FetchOptions = {},
@@ -54,10 +54,10 @@ export default class GitHubAPIBase implements GitHubAPI {
     }
 
     options.headers = Object.assign({}, options.headers, {
-      Authorization: `token ${this._token}`,
+      Authorization: `token ${this.token}`,
     });
     try {
-      const response = await this._fetchGently(url, options);
+      const response = await this.fetchGently(url, options);
       const json = (await response.json()) as T;
       return { response, json };
     }
@@ -68,9 +68,9 @@ export default class GitHubAPIBase implements GitHubAPI {
 
   normalizeURL(path: string): string | null {
     if (! path.startsWith('http')) {
-      return `${this._apiRoot}/${path}`;
+      return `${this.apiRoot}/${path}`;
     }
-    if (path.indexOf(this._apiRoot) >= 0) {
+    if (path.indexOf(this.apiRoot) >= 0) {
       return path;
     }
     return null;
