@@ -5,8 +5,8 @@ import {
 } from '../../actions';
 
 export type NotificationsState = {
-  unread: {
-    ids: string[],
+  readonly unread: {
+    readonly ids: string[],
   },
 };
 

@@ -3,9 +3,9 @@ export type FetchOptions = {
 };
 
 export type APIResponse<J> = {
-  response?: Response,
-  json?: J,
-  err?: Error,
+  readonly response?: Response,
+  readonly json?: J,
+  readonly err?: Error,
 };
 
 export interface GitHubAPI {

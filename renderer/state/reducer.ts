@@ -5,10 +5,10 @@ import updatePagination, { PaginationState } from './pagination/reducer';
 import updateUIState, { UIState } from './ui/reducer';
 
 export type State = {
-  userConfig: UserConfigState,
-  entities: EntitiesState,
-  pagination: PaginationState,
-  ui: UIState,
+  readonly userConfig: UserConfigState,
+  readonly entities: EntitiesState,
+  readonly pagination: PaginationState,
+  readonly ui: UIState,
 };
 
 export default function createStateReducer(): Reducer<State> {

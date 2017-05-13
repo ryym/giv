@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { updateNotifications, NotificationsState } from './notifications';
 
 export type UIState = {
-  notifications: NotificationsState,
+  readonly notifications: NotificationsState,
 };
 
 export default combineReducers<UIState>({

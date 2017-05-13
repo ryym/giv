@@ -1,54 +1,54 @@
 export type UserConfig = {
-  accessToken: string,
+  readonly accessToken: string,
 };
 
 interface BaseNotification {
-  id: string;
-  updated_at: string;
-  subject: {
-    title: string,
-    url: string,
-    type: 'Issue' | 'PullRequest',
+  readonly id: string;
+  readonly updated_at: string;
+  readonly subject: {
+    readonly title: string,
+    readonly url: string,
+    readonly type: 'Issue' | 'PullRequest',
   };
 }
 
 export interface NotificationJSON extends BaseNotification {
-  repository: {};
+  readonly repository: {};
 }
 
 export interface Notification extends BaseNotification {
-  repository: string;
+  readonly repository: string;
 }
 
 export interface User {
-  id: number;
-  login: string;
+  readonly id: number;
+  readonly login: string;
 }
 
 export interface Repository {
-  id: number;
-  full_name: string;
-  owner: User;
+  readonly id: number;
+  readonly full_name: string;
+  readonly owner: User;
 }
 
 export interface Issue {
-  id: number;
-  url: string;
-  state: string;
-  merged: boolean;
+  readonly id: number;
+  readonly url: string;
+  readonly state: string;
+  readonly merged: boolean;
 }
 
 export interface NormalizedNotifs {
-  entities: {
-    notification: {
+  readonly entities: {
+    readonly notification: {
       [id: string]: Notification,
     },
-    repository: {
+    readonly repository: {
       [fullName: string]: Repository,
     },
-    user: {
+    readonly user: {
       [login: string]: User,
     },
   };
-  result: string[];
+  readonly result: string[];
 }

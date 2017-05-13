@@ -7,8 +7,8 @@ import {
 } from '../../actions';
 
 export type NotificationsState = {
-  shownURL: string | undefined,
-  isLoading: boolean,
+  readonly shownURL: string | undefined,
+  readonly isLoading: boolean,
 };
 
 const initialState: NotificationsState = {

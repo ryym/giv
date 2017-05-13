@@ -12,18 +12,18 @@ import {
 import { composeReducer, on } from '../../redux/reducer';
 
 export type EntitiesState = {
-  notifications: {
-    byID: {
+  readonly notifications: {
+    readonly byID: {
       [id: string]: Notification,
     },
   },
-  repositories: {
-    byFullName: {
+  readonly repositories: {
+    readonly byFullName: {
       [fullname: string]: Repository,
     },
   },
-  issues: {
-    byURL: {
+  readonly issues: {
+    readonly byURL: {
       [url: string]: Issue,
     },
   },
