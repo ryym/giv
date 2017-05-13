@@ -1,5 +1,5 @@
 import { combineReducers, Reducer } from 'redux';
-import { updateUserConfig, UserConfigState } from './user-config';
+import { updateUserConfig, UserConfigState } from './user-config/reducer';
 import updateEntities, { EntitiesState } from './entities/reducer';
 import updatePagination, { PaginationState } from './pagination/reducer';
 import updateUIState, { UIState } from './ui/reducer';
