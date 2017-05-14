@@ -27,8 +27,9 @@ export interface User {
 
 export interface Repository {
   readonly id: number;
+  readonly name: string;
   readonly full_name: string;
-  readonly owner: User;
+  readonly owner: string;
 }
 
 export interface Issue {
