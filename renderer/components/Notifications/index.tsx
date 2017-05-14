@@ -8,18 +8,25 @@ import {
   isLoadingNotifs,
   getRepository,
   getIssue,
+  countNotifsPerRepo,
   NotifSelector as NotifSl,
 } from '../../state/selectors';
 import { DispatchProps } from '../../redux/react';
 import Webview from '../shared/Webview';
 import LoadingBars from '../shared/LoadingBars';
 import NotifItem from './NotifItem';
+import RepoGroups from './RepoGroups';
 import {
   Push,
   SelectNotif,
   FetchNotifs,
 } from '../../actions';
-import { Notification, Issue, Repository } from '../../models/types';
+import {
+  Notification,
+  Issue,
+  Repository,
+  NotifCounts,
+} from '../../models/types';
 import './styles.scss';
 
 export type Props = {
@@ -29,6 +36,7 @@ export type Props = {
   getIssue: (url: string) => Issue | null,
   shownURL: string | undefined,
   isLoading: boolean,
+  notifCounts: NotifCounts,
 };
 type AllProps = Props & DispatchProps;
 
@@ -97,7 +105,7 @@ class Notifications extends React.Component<AllProps, ComponentState> {
   }
 
   render() {
-    const { notifs = [], shownURL, isLoading } = this.props;
+    const { notifs = [], shownURL, isLoading, notifCounts } = this.props;
 
     return (
       <div className="c_page-root">
@@ -114,7 +122,7 @@ class Notifications extends React.Component<AllProps, ComponentState> {
         <main className="notifs_main">
           <div className="notifs_side">
             <div className="notifs_repos">
-              { /* TODO: Show repository names with notification count */ }
+              <RepoGroups notifCounts={notifCounts} />
             </div>
             <div className="notifs_notifs" onScroll={this.loadOnScrollEnd}>
               {notifs.map(this.renderNotif)}
@@ -156,5 +164,6 @@ export default connect(
     getIssue: (url: string) => getIssue(state, url),
     shownURL: getShownNotificationURL(state),
     isLoading: isLoadingNotifs(state),
+    notifCounts: countNotifsPerRepo(state),
   }),
 )(Notifications);

@@ -53,3 +53,14 @@ export interface NormalizedNotifs {
   };
   readonly result: string[];
 }
+
+export type NotifCounts = {
+  readonly [owner: string]: {
+    readonly [repoName: string]: number,
+  },
+};
+export type WritableNotifCounts = {
+  [owner: string]: {
+    [repoName: string]: number,
+  },
+};

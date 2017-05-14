@@ -3,6 +3,8 @@ import {
   Notification,
   Repository,
   Issue,
+  NotifCounts,
+  WritableNotifCounts,
 } from '../../models/types';
 
 export const getNotification = (state: State, id: string): Notification | null => {
@@ -14,6 +16,26 @@ export const getRepository = (state: State, fullName: string): Repository | null
 
 export const getIssue = (state: State, url: string): Issue | null => {
   return state.entities.issues.byURL[url];
+};
+
+export const countNotifsPerRepo = (state: State): NotifCounts => {
+  const { notifications: notifs, repositories: repos } = state.entities;
+  return Object.keys(notifs.byID).reduce(
+    (counts: WritableNotifCounts, notifID) => {
+      const notif = notifs.byID[notifID];
+      const repo = repos.byFullName[notif.repository];
+
+      if (!(repo.owner in counts)) {
+        counts[repo.owner] = {};
+      }
+      if (!(repo.name in counts[repo.owner])) {
+        counts[repo.owner][repo.name] = 0;
+      }
+
+      counts[repo.owner][repo.name] += 1;
+      return counts;
+    }, {},
+  );
 };
 
 export const NotifSelector = {
