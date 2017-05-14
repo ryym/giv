@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { connectWithReader } from '../../redux';
+import { connect } from 'react-redux'
+import { State } from '../../state/reducer'
+import { getAccessToken } from '../../state/selectors'
 import { DispatchProps } from '../../redux/react';
 import { UpdateToken } from '../../actions';
 
@@ -29,8 +31,8 @@ const TokenForm = (props: AllProps) => {
   );
 };
 
-export default connectWithReader(
-  ({ userConfig }): Props => ({
-    token: userConfig.accessToken,
+export default connect(
+  (state: State): Props => ({
+    token: getAccessToken(state),
   })
 )(TokenForm);

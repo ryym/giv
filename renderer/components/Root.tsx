@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Router, Route } from 'react-router';
-import { connectWithReader } from '../redux';
+import { connect } from 'react-redux'
+import { State } from '../state/reducer'
+import { getAccessToken } from '../state/selectors'
 import TokenForm from './TokenForm';
 import Notifications from './Notifications';
 import { Push } from '../actions';
@@ -38,9 +40,10 @@ class Root extends React.Component<AllProps, {}> {
   }
 }
 
-export default connectWithReader(
-  ({ userConfig }, { history }: WrapperProps): Props => {
-    const path = userConfig.accessToken ? paths.notifications : paths.tokenRegistration;
+export default connect(
+  (state: State, { history }: WrapperProps): Props => {
+    const token = getAccessToken(state)
+    const path = token ? paths.notifications : paths.tokenRegistration;
     return { history, path };
   }
 )(Root);

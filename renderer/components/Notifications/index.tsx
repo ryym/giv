@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { connectWithReader } from '../../redux';
+import { connect } from 'react-redux'
+import { State } from '../../state/reducer'
+import {
+  getAccessToken,
+  getUnreadNotifs,
+  getShownNotificationURL,
+  isLoadingNotifs,
+  getRepository,
+  getIssue,
+  NotifSelector as NotifSl,
+} from '../../state/selectors'
 import { DispatchProps } from '../../redux/react';
 import Webview from '../shared/Webview';
 import LoadingBars from '../shared/LoadingBars';
@@ -9,7 +19,6 @@ import {
   SelectNotif,
   FetchNotifs,
 } from '../../actions';
-import { NotifReader as NotifR } from '../../state/entities/reader';
 import { Notification, Issue, Repository } from '../../models/types'
 import './styles.scss';
 
@@ -23,12 +32,12 @@ export type Props = {
 }
 type AllProps = Props & DispatchProps
 
-type State = {
+type ComponentState = {
   atScrollEnd: boolean,
   nowViewLoading: boolean
 }
 
-class Notifications extends React.Component<AllProps, State> {
+class Notifications extends React.Component<AllProps, ComponentState> {
   constructor(props: AllProps) {
     super(props);
 
@@ -75,7 +84,7 @@ class Notifications extends React.Component<AllProps, State> {
   renderNotif(notif: Notification) {
     const { props } = this;
     const repo = props.getRepository(notif.repository)!;
-    const issue = props.getIssue(NotifR.getIssueURL(notif))!;
+    const issue = props.getIssue(NotifSl.getIssueURL(notif))!;
     return (
       <NotifItem
         key={notif.id}
@@ -139,13 +148,13 @@ class Notifications extends React.Component<AllProps, State> {
   }
 }
 
-export default connectWithReader(
-  ({ userConfig, pagination, entities, ui }): Props => ({
-    hasAccessToken: Boolean(userConfig.accessToken),
-    notifs: pagination.unreadNotifications,
-    getRepository: entities.getRepository,
-    getIssue: entities.getIssue,
-    shownURL: ui.shownNotificationURL,
-    isLoading: ui.isLoadingNotifs,
+export default connect(
+  (state: State): Props => ({
+    hasAccessToken: Boolean(getAccessToken(state)),
+    notifs: getUnreadNotifs(state),
+    getRepository: (fullName: string) => getRepository(state, fullName),
+    getIssue: (url: string) => getIssue(state, url),
+    shownURL: getShownNotificationURL(state),
+    isLoading: isLoadingNotifs(state),
   })
 )(Notifications);
