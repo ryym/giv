@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Root from './components/Root';
 import history from './history';
 import configureStore from './store';
+import { isConfigLoaded, getAccessToken } from './state/selectors'
 import { LoadUserConfig, Push } from './actions';
 import * as paths from './const/paths';
 
@@ -23,13 +24,12 @@ const store = configureStore();
 store.dispatch(LoadUserConfig());
 
 const unsubscribe = store.subscribe(() => {
-  const { userConfig } = store.getReader();
-
-  if (!userConfig.isLoaded) {
-    return;
+  const state = store.getState()
+  if (!isConfigLoaded(state)) {
+      return
   }
 
-  if (!userConfig.accessToken && history.location.pathname !== paths.tokenRegistration) {
+  if (!getAccessToken(state) && history.location.pathname !== paths.tokenRegistration) {
     store.dispatch(Push(paths.tokenRegistration));
   }
 

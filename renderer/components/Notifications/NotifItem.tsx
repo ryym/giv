@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Octicon from '../shared/Octicon';
-import { NotifReader as NotifR } from '../../state/entities/reader';
+import { NotifSelector as NotifSl } from '../../state/selectors';
 import { Notification, Issue, Repository } from '../../models/types'
 
 export type Props = {
@@ -39,7 +39,7 @@ const getIconDataFor = (issue: Issue, isPR: boolean): [string, string] => {
 };
 
 export default function NotifItem({ notif, repo, issue, onClick }: Props) {
-  const [iconName, iconStateClass] = getIconDataFor(issue, NotifR.isPR(notif));
+  const [iconName, iconStateClass] = getIconDataFor(issue, NotifSl.isPR(notif));
   return (
     <div className="notifs_notif-wrapper">
       <a className="notifs_notif" onClick={() => onClick(notif)}>
