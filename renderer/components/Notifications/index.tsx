@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { connect } from 'react-redux'
-import { State } from '../../state/reducer'
+import { connect } from 'react-redux';
+import { State } from '../../state/reducer';
 import {
   getAccessToken,
   getUnreadNotifs,
@@ -9,7 +9,7 @@ import {
   getRepository,
   getIssue,
   NotifSelector as NotifSl,
-} from '../../state/selectors'
+} from '../../state/selectors';
 import { DispatchProps } from '../../redux/react';
 import Webview from '../shared/Webview';
 import LoadingBars from '../shared/LoadingBars';
@@ -19,7 +19,7 @@ import {
   SelectNotif,
   FetchNotifs,
 } from '../../actions';
-import { Notification, Issue, Repository } from '../../models/types'
+import { Notification, Issue, Repository } from '../../models/types';
 import './styles.scss';
 
 export type Props = {
@@ -29,13 +29,13 @@ export type Props = {
   getIssue: (url: string) => Issue | null,
   shownURL: string | undefined,
   isLoading: boolean,
-}
-type AllProps = Props & DispatchProps
+};
+type AllProps = Props & DispatchProps;
 
 type ComponentState = {
   atScrollEnd: boolean,
-  nowViewLoading: boolean
-}
+  nowViewLoading: boolean,
+};
 
 class Notifications extends React.Component<AllProps, ComponentState> {
   constructor(props: AllProps) {
@@ -156,5 +156,5 @@ export default connect(
     getIssue: (url: string) => getIssue(state, url),
     shownURL: getShownNotificationURL(state),
     isLoading: isLoadingNotifs(state),
-  })
+  }),
 )(Notifications);

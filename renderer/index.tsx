@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Root from './components/Root';
 import history from './history';
 import configureStore from './store';
-import { isConfigLoaded, getAccessToken } from './state/selectors'
+import { isConfigLoaded, getAccessToken } from './state/selectors';
 import { LoadUserConfig, Push } from './actions';
 import * as paths from './const/paths';
 
@@ -15,7 +15,7 @@ const renderView = () => {
     <Provider store={store}>
       <Root history={history} />
     </Provider>,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
 };
 
@@ -24,9 +24,9 @@ const store = configureStore();
 store.dispatch(LoadUserConfig());
 
 const unsubscribe = store.subscribe(() => {
-  const state = store.getState()
+  const state = store.getState();
   if (!isConfigLoaded(state)) {
-      return
+    return;
   }
 
   if (!getAccessToken(state) && history.location.pathname !== paths.tokenRegistration) {

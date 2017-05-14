@@ -1,24 +1,24 @@
 import * as React from 'react';
 import { Router, Route } from 'react-router';
-import { connect } from 'react-redux'
-import { State } from '../state/reducer'
-import { getAccessToken } from '../state/selectors'
+import { connect } from 'react-redux';
+import { State } from '../state/reducer';
+import { getAccessToken } from '../state/selectors';
 import TokenForm from './TokenForm';
 import Notifications from './Notifications';
 import { Push } from '../actions';
 import * as paths from '../const/paths';
-import { History } from 'history'
-import { DispatchProps } from '../redux/react'
+import { History } from 'history';
+import { DispatchProps } from '../redux/react';
 
 export type Props = {
   path?: string,
   history: History,
-}
-type AllProps = DispatchProps & Props
+};
+type AllProps = DispatchProps & Props;
 
 type WrapperProps = {
   history: History,
-}
+};
 
 class Root extends React.Component<AllProps, {}> {
   componentWillReceiveProps({ path, dispatch }: AllProps) {
@@ -42,8 +42,8 @@ class Root extends React.Component<AllProps, {}> {
 
 export default connect(
   (state: State, { history }: WrapperProps): Props => {
-    const token = getAccessToken(state)
+    const token = getAccessToken(state);
     const path = token ? paths.notifications : paths.tokenRegistration;
     return { history, path };
-  }
+  },
 )(Root);

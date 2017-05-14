@@ -2,16 +2,16 @@ import * as React from 'react';
 
 export type Props = JSX.WebViewAttributes & {
   on: {
-    [eventName: string]: (event: Event) => void
-  }
-}
+    [eventName: string]: (event: Event) => void,
+  },
+};
 
 export default class Webview extends React.Component<Props, {}> {
-  private webview: Electron.WebViewElement
+  private webview: Electron.WebViewElement;
 
   componentDidMount() {
     const { on: handlers = {} } = this.props;
-    Object.keys(handlers).forEach(eventName => {
+    Object.keys(handlers).forEach((eventName) => {
       this.webview.addEventListener(eventName, handlers[eventName]);
     });
   }
@@ -19,7 +19,7 @@ export default class Webview extends React.Component<Props, {}> {
   render() {
     const { on, ...props } = this.props;
     return (
-      <webview {...props} ref={el => (this.webview = el)} />
+      <webview {...props} ref={(el) => (this.webview = el)} />
     );
   }
 }

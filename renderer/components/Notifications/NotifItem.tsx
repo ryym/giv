@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Octicon from '../shared/Octicon';
 import { NotifSelector as NotifSl } from '../../state/selectors';
-import { Notification, Issue, Repository } from '../../models/types'
+import { Notification, Issue, Repository } from '../../models/types';
 
 export type Props = {
   notif: Notification,
   repo: Repository,
   issue: Issue,
-  onClick: (notif: Notification) => void
-}
+  onClick: (notif: Notification) => void,
+};
 
 /* eslint-disable camelcase */
 const iconMap: { [iconType: string]: [string, string] } = {
