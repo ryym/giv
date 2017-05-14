@@ -19,7 +19,6 @@ import {
   SelectNotif,
   FetchNotifs,
 } from '../../actions';
-// import { NotifReader as NotifR } from '../../state/entities/reader';
 import { Notification, Issue, Repository } from '../../models/types'
 import './styles.scss';
 
