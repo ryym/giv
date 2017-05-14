@@ -11,7 +11,7 @@
     "start": "NODE_ENV=development yarn clean-dist && node scripts/watch.js",
     "lint": "run-s lint:js lint:ts lint:css:fix lint:css",
     "lint:js": "eslint --fix .",
-    "lint:ts": "tslint --fix -t stylish 'renderer/**/*.ts'",
+    "lint:ts": "tslint --fix -t stylish 'renderer/**/*.ts?(x)'",
     "lint:css": "stylelint 'renderer/**/*css'",
     "lint:css:fix": "stylefmt -r 'renderer/**/*css'",
     "clean-dist": "rm -rf dist",
