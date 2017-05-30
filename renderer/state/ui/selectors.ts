@@ -1,4 +1,5 @@
 import { State } from '../reducer';
+import { NotifFilter } from '../../models/notif-filter';
 
 export const isLoadingNotifs = (state: State): boolean => {
   return state.ui.notifications.isLoading;

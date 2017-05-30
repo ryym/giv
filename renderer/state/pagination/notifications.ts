@@ -2,33 +2,45 @@ import { composeReducer, on, Handler } from '../../redux/reducer';
 import {
   FetchNotifsSuccess,
   FetchNotifsSuccessParam,
+  FilterNotifs,
 } from '../../actions';
+import { NotifFilter } from '../../models/notif-filter';
 
 export type NotificationsState = {
   readonly unread: {
     readonly ids: string[],
   },
+  readonly filter: NotifFilter,
 };
 
 const initialState: NotificationsState = {
   unread: {
     ids: [],
   },
+  filter: {},
 };
 
 export const updateNotifications = composeReducer(initialState, [
   on(FetchNotifsSuccess, handleFetchNotifsSuccess),
+  on(FilterNotifs, handleFilterNotifs),
 ]);
 
 function handleFetchNotifsSuccess(
   notifs: NotificationsState,
   { result: ids }: FetchNotifsSuccessParam,
 ): NotificationsState {
-  return {
+  return Object.assign({}, notifs, {
     unread: {
       ids: concatUniq(notifs.unread.ids, ids),
     },
-  };
+  });
+}
+
+function handleFilterNotifs(
+  notifs: NotificationsState,
+  filter: NotifFilter,
+): NotificationsState {
+  return Object.assign({}, notifs, { filter });
 }
 
 const concatUniq = (ids1: string[], ids2: string[]): string[] => {

@@ -1,6 +1,7 @@
 import { push as pushHistory } from 'react-router-redux';
 import { createAction as action, Action } from './redux/actions';
 import { UserConfig, NormalizedNotifs, Notification, Issue } from './models/types';
+import { NotifFilter } from './models/notif-filter';
 
 // react-router-redux
 export const Push = pushHistory;
@@ -47,4 +48,9 @@ export type FetchIssueSuccessParam = { issue: Issue };
 export const FetchIssueSuccess = action(
     'FETCH_ISSUE_SUCCESS',
     (issue: Issue) => ({ issue }),
+);
+
+export const FilterNotifs = action(
+  'FILTER_NOTIFS',
+  (filters: NotifFilter) => filters,
 );

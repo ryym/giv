@@ -2,26 +2,37 @@ import * as React from 'react';
 import { NotifCounts as NotifCountMap } from '../../../models/types';
 import './styles.scss';
 
-const renderRepos = ({ owner, repos }: NotifCount) => {
-  return (
-    <li key={owner} className="notif-counts-group">
-      <div className="notif-counts-group-name">{owner}</div>
-      {repos.map(({ name, count }) => (
-        <div key={name} className="notif-counts-item">
-          <div className="notif-counts-item-count">{count}</div>
-          <span className="notif-counts-item-name">{name}</span>
-        </div>
-      ))}
-    </li>
-  );
-};
-
 type NotifCount = {
   owner: string,
   repos: Array<{
     name: string,
     count: number,
   }>,
+};
+
+type OnRepoClick = (owner: string, name: string) => void;
+
+type Props = {
+  notifCounts: NotifCountMap,
+  onRepoClick: OnRepoClick,
+};
+
+const renderRepos = ({ owner, repos }: NotifCount, onRepoClick: OnRepoClick) => {
+  return (
+    <li key={owner} className="notif-counts-group">
+      <div className="notif-counts-group-name">{owner}</div>
+      {repos.map(({ name, count }) => (
+        <a
+          key={name}
+          className="notif-counts-item"
+          onClick={() => onRepoClick(owner, name)}
+        >
+          <div className="notif-counts-item-count">{count}</div>
+          <span className="notif-counts-item-name">{name}</span>
+        </a>
+      ))}
+    </li>
+  );
 };
 
 const makeCountArray = (nc: NotifCountMap): NotifCount[] => {
@@ -33,15 +44,11 @@ const makeCountArray = (nc: NotifCountMap): NotifCount[] => {
   }).sort();
 };
 
-type Props = {
-  notifCounts: NotifCountMap,
-};
-
-export default function RepoGroups({ notifCounts }: Props) {
+export default function RepoGroups({ notifCounts, onRepoClick }: Props) {
   const counts = makeCountArray(notifCounts);
   return (
     <ul className="noitf-counts">
-      {counts.map(renderRepos)}
+      {counts.map((nc) => renderRepos(nc, onRepoClick))}
     </ul>
   );
 }

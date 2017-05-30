@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { State } from '../../state/reducer';
 import {
   getAccessToken,
-  getUnreadNotifs,
+  getFilteredNotifs,
   getShownNotificationURL,
   isLoadingNotifs,
   getRepository,
@@ -20,6 +20,7 @@ import {
   Push,
   SelectNotif,
   FetchNotifs,
+  FilterNotifs,
 } from '../../actions';
 import {
   Notification,
@@ -55,6 +56,7 @@ class Notifications extends React.Component<AllProps, ComponentState> {
     };
 
     this.showNotification = this.showNotification.bind(this);
+    this.changeNotifFilter = this.changeNotifFilter.bind(this);
     this.loadOnScrollEnd = this.loadOnScrollEnd.bind(this);
     this.renderNotif = this.renderNotif.bind(this);
   }
@@ -68,6 +70,11 @@ class Notifications extends React.Component<AllProps, ComponentState> {
 
   showNotification(notif: Notification) {
     this.props.dispatch(SelectNotif(notif));
+  }
+
+  changeNotifFilter(owner: string, repo: string) {
+    const fullName = `${owner}/${repo}`;
+    this.props.dispatch(FilterNotifs({ fullName }));
   }
 
   loadOnScrollEnd(event: React.UIEvent<Element>) {
@@ -122,7 +129,10 @@ class Notifications extends React.Component<AllProps, ComponentState> {
         <main className="notifs_main">
           <div className="notifs_side">
             <div className="notifs_repos">
-              <RepoGroups notifCounts={notifCounts} />
+              <RepoGroups
+                notifCounts={notifCounts}
+                onRepoClick={this.changeNotifFilter}
+              />
             </div>
             <div className="notifs_notifs" onScroll={this.loadOnScrollEnd}>
               {notifs.map(this.renderNotif)}
@@ -159,7 +169,7 @@ class Notifications extends React.Component<AllProps, ComponentState> {
 export default connect(
   (state: State): Props => ({
     hasAccessToken: Boolean(getAccessToken(state)),
-    notifs: getUnreadNotifs(state),
+    notifs: getFilteredNotifs(state),
     getRepository: (fullName: string) => getRepository(state, fullName),
     getIssue: (url: string) => getIssue(state, url),
     shownURL: getShownNotificationURL(state),

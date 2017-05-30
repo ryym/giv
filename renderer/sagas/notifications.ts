@@ -50,7 +50,7 @@ function* fetchUnreadNotifications(api: GitHubClient, action?: Action<FetchNotif
     const normalizedNotifs: NormalizedNotifs = yield call(normalizeNotifications, notifs);
     yield put(FetchNotifsSuccess(normalizedNotifs));
 
-    yield spawn(fetchIssues, api, notifs);
+    // yield spawn(fetchIssues, api, notifs);
   }
 }
 
