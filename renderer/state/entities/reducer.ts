@@ -11,22 +11,28 @@ import {
 } from '../../models/types';
 import { composeReducer, on } from '../../redux/reducer';
 
+type NotifEntities = {
+  readonly byID: {
+    [id: string]: Notification,
+  },
+};
+
+type RepoEntities = {
+  readonly byFullName: {
+    [fullname: string]: Repository,
+  },
+};
+
+type IssueEntities = {
+  readonly byURL: {
+    [url: string]: Issue,
+  },
+};
+
 export type EntitiesState = {
-  readonly notifications: {
-    readonly byID: {
-      [id: string]: Notification,
-    },
-  },
-  readonly repositories: {
-    readonly byFullName: {
-      [fullname: string]: Repository,
-    },
-  },
-  readonly issues: {
-    readonly byURL: {
-      [url: string]: Issue,
-    },
-  },
+  readonly notifications: NotifEntities,
+  readonly repositories: RepoEntities,
+  readonly issues: IssueEntities,
 };
 
 const initialState: EntitiesState = {
@@ -63,8 +69,12 @@ function handleFetchNotifsSuccess(
   { entities: newEntities }: FetchNotifsSuccessParam,
 ): EntitiesState {
   return replaceState(entities, [
-    ['notifications', () => ({ byID: newEntities.notification })],
-    ['repositories', () => ({ byFullName: newEntities.repository })],
+    ['notifications', ({ byID }: NotifEntities) => ({
+      byID: Object.assign({}, byID, newEntities.notification),
+    })],
+    ['repositories', ({ byFullName }: RepoEntities) => ({
+      byFullName: Object.assign({}, byFullName, newEntities.repository),
+    })],
   ]);
 }
 
