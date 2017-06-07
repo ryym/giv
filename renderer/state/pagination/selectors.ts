@@ -15,3 +15,7 @@ export const getFilteredNotifs = (state: State): Notification[] => {
   }
   return unreadNotifs;
 };
+
+export const getSelectedRepo = (state: State): string => {
+  return state.pagination.notifications.filter.fullName || ""
+};

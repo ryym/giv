@@ -40,7 +40,8 @@ function handleFilterNotifs(
   notifs: NotificationsState,
   filter: NotifFilter,
 ): NotificationsState {
-  return Object.assign({}, notifs, { filter });
+  const nextFilter = notifs.filter.fullName === filter.fullName ? {} : filter
+  return Object.assign({}, notifs, { filter: nextFilter });
 }
 
 const concatUniq = (ids1: string[], ids2: string[]): string[] => {

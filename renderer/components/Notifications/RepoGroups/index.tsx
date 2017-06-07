@@ -15,16 +15,17 @@ type OnRepoClick = (owner: string, name: string) => void;
 type Props = {
   notifCounts: NotifCountMap,
   onRepoClick: OnRepoClick,
+  selectedRepo: string,
 };
 
-const renderRepos = ({ owner, repos }: NotifCount, onRepoClick: OnRepoClick) => {
+const renderRepos = ({ owner, repos }: NotifCount, { onRepoClick, selectedRepo }: Props) => {
   return (
     <li key={owner} className="notif-counts-group">
       <div className="notif-counts-group-name">{owner}</div>
       {repos.map(({ name, count }) => (
         <a
           key={name}
-          className="notif-counts-item"
+          className={`notif-counts-item ${selectedRepo === `${owner}/${name}` ? "is-selected" : ""}`}
           onClick={() => onRepoClick(owner, name)}
         >
           <div className="notif-counts-item-count">{count}</div>
@@ -44,11 +45,12 @@ const makeCountArray = (nc: NotifCountMap): NotifCount[] => {
   }).sort();
 };
 
-export default function RepoGroups({ notifCounts, onRepoClick }: Props) {
+export default function RepoGroups(props: Props) {
+  const { notifCounts } = props
   const counts = makeCountArray(notifCounts);
   return (
     <ul className="noitf-counts">
-      {counts.map((nc) => renderRepos(nc, onRepoClick))}
+      {counts.map((nc) => renderRepos(nc, props))}
     </ul>
   );
 }

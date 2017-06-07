@@ -4,6 +4,7 @@ import { State } from '../../state/reducer';
 import {
   getAccessToken,
   getFilteredNotifs,
+  getSelectedRepo,
   getShownNotificationURL,
   isLoadingNotifs,
   getRepository,
@@ -38,6 +39,7 @@ export type Props = {
   shownURL: string | undefined,
   isLoading: boolean,
   notifCounts: NotifCounts,
+  selectedRepo: string,
 };
 type AllProps = Props & DispatchProps;
 
@@ -112,7 +114,7 @@ class Notifications extends React.Component<AllProps, ComponentState> {
   }
 
   render() {
-    const { notifs = [], shownURL, isLoading, notifCounts } = this.props;
+    const { notifs = [], shownURL, isLoading, notifCounts, selectedRepo } = this.props;
 
     return (
       <div className="c_page-root">
@@ -132,6 +134,7 @@ class Notifications extends React.Component<AllProps, ComponentState> {
               <RepoGroups
                 notifCounts={notifCounts}
                 onRepoClick={this.changeNotifFilter}
+                selectedRepo={selectedRepo}
               />
             </div>
             <div className="notifs_notifs" onScroll={this.loadOnScrollEnd}>
@@ -175,5 +178,6 @@ export default connect(
     shownURL: getShownNotificationURL(state),
     isLoading: isLoadingNotifs(state),
     notifCounts: countNotifsPerRepo(state),
+    selectedRepo: getSelectedRepo(state),
   }),
 )(Notifications);
