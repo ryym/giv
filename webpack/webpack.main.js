@@ -36,10 +36,6 @@ module.exports = {
         to: conf.distPath,
       },
       {
-        from: path.join(conf.rootPath, 'yarn.lock'),
-        to: conf.distPath,
-      },
-      {
         from: path.join(conf.rootPath, 'index.html'),
         to: conf.distPath,
       },

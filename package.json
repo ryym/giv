@@ -8,7 +8,7 @@
   "author": "ryym <ryym.64@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development yarn clean-dist && node scripts/watch.js",
+    "start": "NODE_ENV=development npm run clean-dist && node scripts/watch.js",
     "lint": "run-s lint:js lint:ts lint:css:fix lint:css",
     "lint:js": "eslint --fix .",
     "lint:ts": "tslint --fix -t stylish 'renderer/**/*.ts?(x)'",
@@ -16,14 +16,14 @@
     "lint:css:fix": "stylefmt -r 'renderer/**/*css'",
     "clean-dist": "rm -rf dist",
     "release": "NODE_ENV=production run-s build install-dist-deps package",
-    "install-dist-deps": "cd dist && yarn install --prod && cd ../",
-    "build": "yarn clean-dist && run-p build:main build:rend",
+    "install-dist-deps": "cd dist && npm install --save-prod && cd ../",
+    "build": "npm clean-dist && run-p build:main build:rend",
     "build:main": "webpack --config webpack/webpack.main.js",
     "build:rend": "webpack --config webpack/webpack.renderer.js",
     "package": "electron-packager --overwrite dist"
   },
   "devDependencies": {
-    "@types/electron": "^1.4.37",
+    "@types/electron": "^1.6.10",
     "@types/react": "^15.0.23",
     "@types/react-dom": "^15.5.0",
     "@types/react-redux": "^4.4.40",
