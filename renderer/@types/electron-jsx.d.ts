@@ -17,7 +17,7 @@ declare namespace JSX {
     }
 
     // https://github.com/Microsoft/TypeScript/blob/975bc765c0e/tests/lib/react.d.ts
-    type WebViewProps = WebViewAttributes & React.HTMLProps<Electron.WebViewElement>;
+    type WebViewProps = WebViewAttributes & React.HTMLProps<Electron.WebviewTag>;
 
     // Without this declaration, we can't use the webview tag in JSX.
     // https://www.typescriptlang.org/docs/handbook/jsx.html

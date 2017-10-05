@@ -7,12 +7,14 @@ export type Props = JSX.WebViewAttributes & {
 };
 
 export default class Webview extends React.Component<Props, {}> {
-  private webview: Electron.WebViewElement;
+  private webview: Electron.WebviewTag | null;
 
   componentDidMount() {
+    const webview = this.webview as Electron.WebviewTag;
     const { on: handlers = {} } = this.props;
     Object.keys(handlers).forEach((eventName) => {
-      this.webview.addEventListener(eventName, handlers[eventName]);
+      // XXX: eventName should be union type.
+      webview.addEventListener(eventName as any, handlers[eventName]);
     });
   }
 
