@@ -19,13 +19,14 @@ type Props = {
 };
 
 const renderRepos = ({ owner, repos }: NotifCount, { onRepoClick, selectedRepo }: Props) => {
+  const isSelected = selectedRepo === `${owner}/${name}`;
   return (
     <li key={owner} className="notif-counts-group">
       <div className="notif-counts-group-name">{owner}</div>
       {repos.map(({ name, count }) => (
         <a
           key={name}
-          className={`notif-counts-item ${selectedRepo === `${owner}/${name}` ? "is-selected" : ""}`}
+          className={`notif-counts-item ${isSelected ? 'is-selected' : ''}`}
           onClick={() => onRepoClick(owner, name)}
         >
           <div className="notif-counts-item-count">{count}</div>
@@ -46,7 +47,7 @@ const makeCountArray = (nc: NotifCountMap): NotifCount[] => {
 };
 
 export default function RepoGroups(props: Props) {
-  const { notifCounts } = props
+  const { notifCounts } = props;
   const counts = makeCountArray(notifCounts);
   return (
     <ul className="noitf-counts">

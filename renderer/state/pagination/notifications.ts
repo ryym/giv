@@ -40,7 +40,7 @@ function handleFilterNotifs(
   notifs: NotificationsState,
   filter: NotifFilter,
 ): NotificationsState {
-  const nextFilter = notifs.filter.fullName === filter.fullName ? {} : filter
+  const nextFilter = notifs.filter.fullName === filter.fullName ? {} : filter;
   return Object.assign({}, notifs, { filter: nextFilter });
 }
 
