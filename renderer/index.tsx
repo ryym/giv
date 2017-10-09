@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Root from './components/Root';
 import history from './history';
-import configureStore from './store';
+import configureStore from './old-store';
 import { isConfigLoaded, getAccessToken } from './state/selectors';
 import { LoadUserConfig, Push } from './actions';
 import * as paths from './const/paths';
