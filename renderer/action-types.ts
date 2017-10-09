@@ -6,7 +6,7 @@ import {
 export type Action
   = { type: 'UPDATE_TOKEN', accessToken: string }
   | { type: 'LOAD_USER_CONFIG' }
-  | { type: 'LOAD_USER_CONFIG_OK', config: UserConfig  }
+  | { type: 'LOAD_USER_CONFIG_OK', config: UserConfig }
   | { type: 'FETCH_UNREAD_NOTIFS', oldestDate?: string }
   | { type: 'FETCH_UNREAD_NOTIFS_START' }
   | { type: 'FETCH_UNREAD_NOTIFS_OK', data: NormalizedNotifs }

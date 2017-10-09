@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { State } from '../../state/reducer';
+import State from '../../store/state';
 import {
   getAccessToken,
   getFilteredNotifs,
@@ -11,24 +11,17 @@ import {
   getIssue,
   countNotifsPerRepo,
   NotifSelector as NotifSl,
-} from '../../state/selectors';
-import { DispatchProps } from '../../redux/react';
+} from '../../store/selectors';
+import { Notification, Issue, Repository, NotifCounts } from '../../models/types';
+import { Dispatch } from '../../store/types';
+import { push } from '../../store/router/actions';
+import { selectNotif, filterNotifs, fetchUnreadNotifs } from '../../store/notifications/actions';
+
 import Webview from '../shared/Webview';
 import LoadingBars from '../shared/LoadingBars';
 import NotifItem from './NotifItem';
 import RepoGroups from './RepoGroups';
-import {
-  Push,
-  SelectNotif,
-  FetchNotifs,
-  FilterNotifs,
-} from '../../actions';
-import {
-  Notification,
-  Issue,
-  Repository,
-  NotifCounts,
-} from '../../models/types';
+
 import './styles.scss';
 
 export type Props = {
@@ -41,7 +34,7 @@ export type Props = {
   notifCounts: NotifCounts,
   selectedRepo: string,
 };
-type AllProps = Props & DispatchProps;
+type AllProps = Props & { dispatch: Dispatch };
 
 type ComponentState = {
   atScrollEnd: boolean,
@@ -63,20 +56,22 @@ class Notifications extends React.Component<AllProps, ComponentState> {
     this.renderNotif = this.renderNotif.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { hasAccessToken, dispatch } = this.props;
-    if (!hasAccessToken) {
-      dispatch(Push('/access-token'));
+    if (hasAccessToken) {
+      dispatch(fetchUnreadNotifs());
+    } else {
+      dispatch(push('/access-token'));
     }
   }
 
   showNotification(notif: Notification) {
-    this.props.dispatch(SelectNotif(notif));
+    this.props.dispatch(selectNotif(notif));
   }
 
   changeNotifFilter(owner: string, repo: string) {
     const fullName = `${owner}/${repo}`;
-    this.props.dispatch(FilterNotifs({ fullName }));
+    this.props.dispatch(filterNotifs({ fullName }));
   }
 
   loadOnScrollEnd(event: React.UIEvent<Element>) {
@@ -90,7 +85,7 @@ class Notifications extends React.Component<AllProps, ComponentState> {
     if (nowAtScrollEnd && !atScrollEnd) {
       const { notifs, dispatch } = this.props;
       const oldestNotif = notifs[notifs.length - 1];
-      dispatch(FetchNotifs(oldestNotif.updated_at));
+      dispatch(fetchUnreadNotifs(oldestNotif.updated_at));
       this.setState({ atScrollEnd: true });
     }
     else if (atScrollEnd) {
@@ -170,14 +165,16 @@ class Notifications extends React.Component<AllProps, ComponentState> {
 }
 
 export default connect(
-  (state: State): Props => ({
-    hasAccessToken: Boolean(getAccessToken(state)),
-    notifs: getFilteredNotifs(state),
-    getRepository: (fullName: string) => getRepository(state, fullName),
-    getIssue: (url: string) => getIssue(state, url),
-    shownURL: getShownNotificationURL(state),
-    isLoading: isLoadingNotifs(state),
-    notifCounts: countNotifsPerRepo(state),
-    selectedRepo: getSelectedRepo(state),
-  }),
+  (state: State) => {
+    return {
+      hasAccessToken: Boolean(getAccessToken(state)),
+      notifs: getFilteredNotifs(state),
+      getRepository: (fullName: string) => getRepository(state, fullName),
+      getIssue: (url: string) => getIssue(state, url),
+      shownURL: getShownNotificationURL(state),
+      isLoading: isLoadingNotifs(state),
+      notifCounts: countNotifsPerRepo(state),
+      selectedRepo: getSelectedRepo(state),
+    };
+  },
 )(Notifications);

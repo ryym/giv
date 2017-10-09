@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Octicon from '../shared/Octicon';
-import { NotifSelector as NotifSl } from '../../state/selectors';
+import { NotifSelector as NotifSl } from '../../store/selectors';
 import { Notification, Issue, Repository } from '../../models/types';
 
 export type Props = {
