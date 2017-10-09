@@ -64,3 +64,7 @@ export type WritableNotifCounts = {
     [repoName: string]: number,
   },
 };
+
+export interface NotifFilter {
+  fullName?: string;
+}

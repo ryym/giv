@@ -1,7 +1,6 @@
 import { push as pushHistory } from 'react-router-redux';
 import { createAction as action, Action } from './redux/actions';
-import { UserConfig, NormalizedNotifs, Notification, Issue } from './models/types';
-import { NotifFilter } from './models/notif-filter';
+import { UserConfig, NormalizedNotifs, Notification, Issue, NotifFilter } from './models/types';
 
 // react-router-redux
 export const Push = pushHistory;

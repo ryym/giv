@@ -4,7 +4,7 @@ import {
   FetchNotifsSuccessParam,
   FilterNotifs,
 } from '../../actions';
-import { NotifFilter } from '../../models/notif-filter';
+import { NotifFilter } from '../../models/types';
 
 export type NotificationsState = {
   readonly unread: {
