@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { Router, Route } from 'react-router';
 import { connect } from 'react-redux';
-import { State } from '../state/reducer';
-import { getAccessToken } from '../state/selectors';
+import State from '../store/state';
+import { getAccessToken } from '../store/selectors';
 import TokenForm from './TokenForm';
 import Notifications from './Notifications';
-import { Push } from '../actions';
 import * as paths from '../const/paths';
 import { History } from 'history';
-import { DispatchProps } from '../redux/react';
+import { Dispatch } from '../store/types';
+import { push } from '../store/router/actions';
 
 export type Props = {
   path?: string,
   history: History,
 };
-type AllProps = DispatchProps & Props;
+type AllProps = { dispatch: Dispatch } & Props;
 
 type WrapperProps = {
   history: History,
@@ -23,7 +23,7 @@ type WrapperProps = {
 class Root extends React.Component<AllProps, {}> {
   componentWillReceiveProps({ path, dispatch }: AllProps) {
     if (path && this.props.path !== path) {
-      dispatch(Push(path));
+      dispatch(push(path));
     }
   }
 

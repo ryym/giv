@@ -1,10 +1,7 @@
-import { State } from '../reducer';
+import State from '../state';
 import {
-  Notification,
-  Repository,
-  Issue,
-  NotifCounts,
-  WritableNotifCounts,
+  Notification, Repository, Issue,
+  NotifCounts, WritableNotifCounts,
 } from '../../models/types';
 
 export const getNotification = (state: State, id: string): Notification | null => {

@@ -1,4 +1,4 @@
-import { State } from '../reducer';
+import State from '../state';
 
 export const isConfigLoaded = (state: State): boolean => {
   return state.userConfig != null;
