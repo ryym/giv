@@ -1,15 +1,10 @@
 import React from 'react';
-import { Router, Route, RouteParam } from 'react-router';
+import { Route, RouteParam } from 'react-router';
 import { ConnectedRouter } from 'react-router-redux';
-import { connect } from 'react-redux';
-import State from '../store/state';
-import { getAccessToken } from '../store/selectors';
 import AuthGuard from './AuthGuard';
 import LoginPage from './pages/LoginPage';
 import NotifsPage from './pages/NotifsPage';
 import { History } from 'history';
-import { Dispatch } from '../store/types';
-import { push } from '../store/router/actions';
 
 export type Props = {
   history: History,

@@ -1,4 +1,4 @@
-import { Middleware, MiddlewareAPI, Action } from 'redux';
+import { Middleware, MiddlewareAPI } from 'redux';
 
 export default function thunkMiddleware<C = void>(context: C): Middleware {
   return <S>({ dispatch, getState }: MiddlewareAPI<S>) => (next) => (action) => {

@@ -16,7 +16,6 @@ import {
   getRepository,
   getIssue,
   countNotifsPerRepo,
-  NotifSelector as NotifSl,
 } from '../../../store/selectors';
 
 export type Props = {
