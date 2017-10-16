@@ -23,6 +23,7 @@
     "package": "electron-packager --overwrite dist"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.3",
     "@types/react": "^15.0.23",
     "@types/react-dom": "^15.5.0",
     "@types/react-redux": "^4.4.40",
@@ -34,6 +35,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-react": "^6.23.0",
+    "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.27.3",
