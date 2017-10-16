@@ -3,7 +3,7 @@ import { Notifications } from '../state';
 import { Notification, NotifFilter } from '../../models/types';
 
 const initialState: Notifications = {
-  isLoading: false,
+  isLoading: true,
   shownURL: undefined,
   filter: {},
   unreadIDs: [],
