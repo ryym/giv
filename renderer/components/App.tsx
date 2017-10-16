@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import State from '../store/state';
 import { getAccessToken } from '../store/selectors';
 import AuthGuard from './AuthGuard';
-import TokenForm from './TokenForm';
+import LoginPage from './pages/LoginPage';
 import NotifsPage from './pages/NotifsPage';
 import { History } from 'history';
 import { Dispatch } from '../store/types';
@@ -37,7 +37,7 @@ function MainRoutes() {
 function LoginRoutes({ match }: RouteParam) {
   return (
     <AuthGuard fallbackPath="/">
-      <Route exact path={match.url} component={TokenForm} />
+      <Route exact path={match.url} component={LoginPage} />
     </AuthGuard>
   );
 }

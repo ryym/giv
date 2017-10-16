@@ -1,16 +1,16 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import State from '../../store/state';
-import { getAccessToken } from '../../store/selectors';
-import { Dispatch } from '../../store/types';
-import { updateToken } from '../../store/user-config/actions';
+import State from '../../../store/state';
+import { getAccessToken } from '../../../store/selectors';
+import { Dispatch } from '../../../store/types';
+import { updateToken } from '../../../store/user-config/actions';
 
 export interface Props {
   token: string;
 }
 type AllProps = Props & { dispatch: Dispatch };
 
-const TokenForm = (props: AllProps) => {
+const LoginPage = (props: AllProps) => {
   const { token: currentToken, dispatch } = props;
   let token = currentToken;
   const handleSubmit = (event: React.FormEvent<any>) => {
@@ -35,4 +35,4 @@ export default connect(
   (state: State): Props => ({
     token: getAccessToken(state),
   }),
-)(TokenForm);
+)(LoginPage);
