@@ -1,9 +1,11 @@
+import { RouterState } from 'react-router-redux';
 import { Notification, Issue, Repository, NotifFilter } from '../models/types';
 
 export default interface State {
   readonly userConfig: UserConfig | null;
   readonly entities: Entities;
   readonly notifications: Notifications;
+  readonly router: RouterState;
 }
 
 export interface UserConfig {
