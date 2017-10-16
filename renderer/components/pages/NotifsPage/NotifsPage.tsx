@@ -5,13 +5,10 @@ import Webview from '../../widgets/Webview';
 import WebviewControll from '../../widgets/WebviewControll';
 import { Notification, Issue, Repository, NotifCounts } from '../../../models/types';
 import { Dispatch } from '../../../store/types';
-import { push } from '../../../store/router/actions';
 import { selectNotif, filterNotifs, fetchUnreadNotifs } from '../../../store/notifications/actions';
-import * as paths from '../../../const/paths';
 import { connect } from 'react-redux';
 import State from '../../../store/state';
 import {
-  getAccessToken,
   getFilteredNotifs,
   getSelectedRepo,
   getShownNotificationURL,
@@ -23,7 +20,6 @@ import {
 } from '../../../store/selectors';
 
 export type Props = {
-  hasAccessToken: boolean,
   notifs: Notification[],
   getRepository: (fullName: string) => Repository | null,
   getIssue: (url: string) => Issue | null,
@@ -36,12 +32,9 @@ type AllProps = Props & { dispatch: Dispatch };
 
 export class NotifsPage extends React.PureComponent<AllProps> {
   componentWillMount() {
-    const { hasAccessToken, dispatch } = this.props;
-    if (hasAccessToken) {
+    const { notifs, dispatch } = this.props;
+    if (notifs.length === 0) {
       dispatch(fetchUnreadNotifs());
-    }
-    else {
-      dispatch(push(paths.tokenRegistration));
     }
   }
 
@@ -55,10 +48,6 @@ export class NotifsPage extends React.PureComponent<AllProps> {
   }
 
   render() {
-    if (!this.props.hasAccessToken) {
-      return null;
-    }
-
     const { props } = this;
     const webviewConnector = WebviewControll.createConnector();
     return (
@@ -96,7 +85,6 @@ export class NotifsPage extends React.PureComponent<AllProps> {
 export default connect(
   (state: State) => {
     return {
-      hasAccessToken: Boolean(getAccessToken(state)),
       notifs: getFilteredNotifs(state),
       getRepository: (fullName: string) => getRepository(state, fullName),
       getIssue: (url: string) => getIssue(state, url),
