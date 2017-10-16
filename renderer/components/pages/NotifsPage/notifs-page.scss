@@ -1,0 +1,62 @@
+.p-notifs_root {
+  display: flex;
+}
+
+.p-notifs_header {
+  height: var(--pad6);
+  display: flex;
+  align-items: center;
+
+  &.for-stream {
+    background-color: var(--cl-base-dark);
+  }
+
+  &.for-webview {
+    background-color: var(--cl-base);
+  }
+}
+
+.p-notifs_streams {
+  display: flex;
+  height: calc(100% - var(--pad6));
+}
+
+.p-notifs_webview-container {
+  flex: 1;
+
+  .webview-controll {
+    padding: var(--pad);
+    margin-left: var(--pad2);
+    height: 100%;
+  }
+
+  .webview-controll_btn {
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--cl-black);
+    cursor: pointer;
+    display: inline-block;
+    margin-right: var(--pad);
+    padding: 0 var(--pad);
+    line-height: var(--pad4);
+
+    &:not(.is-disabled):hover {
+      color: var(--cl-blue-light);
+    }
+
+    &.is-disabled {
+      color: var(--cl-gray);
+      cursor: default;
+    }
+  }
+}
+
+.p-notifs_webview {
+  height: calc(100% - var(--pad6));
+
+  > webview {
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+}

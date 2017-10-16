@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import Root from './components/Root';
+// import Root from './components/Root';
+import App from './components/App';
 import { History } from 'history';
 import createHashHistory from 'history/createHashHistory';
 import configureStore from './store';
@@ -18,7 +19,7 @@ const store = configureStore({ history });
 const renderView = () => {
   render(
     <Provider store={store as any}>
-      <Root history={history} />
+      <App history={history} />
     </Provider>,
     document.getElementById('root'),
   );

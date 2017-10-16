@@ -4,7 +4,7 @@ import octicons, { SVGOptions } from 'octicons';
 export type Props = {
   icon: string,
   options?: SVGOptions,
-  className: string,
+  className?: string,
 };
 
 export default function Octicon({ icon, options = {}, ...props }: Props) {

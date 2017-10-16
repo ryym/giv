@@ -1,16 +1,20 @@
-import * as React from 'react';
+import React from 'react';
+import { WebviewConnector } from './WebviewControll';
 
 export type Props = JSX.WebViewAttributes & {
-  on: {
+  connector: WebviewConnector,
+  on?: {
     [eventName: string]: (event: Event) => void,
   },
 };
 
-export default class Webview extends React.Component<Props, {}> {
-  private webview: Electron.WebviewTag | null;
+export default class Webview extends React.Component<Props> {
+  private webview: Electron.WebviewTag | null = null;
 
   componentDidMount() {
-    const webview = this.webview as Electron.WebviewTag;
+    const webview = this.webview!;
+    this.props.connector.connect(webview);
+
     const { on: handlers = {} } = this.props;
     Object.keys(handlers).forEach((eventName) => {
       // XXX: eventName should be union type.
@@ -19,7 +23,7 @@ export default class Webview extends React.Component<Props, {}> {
   }
 
   render() {
-    const { on, ...props } = this.props;
+    const { on, connector, ...props } = this.props;
     return (
       <webview {...props} ref={(el) => (this.webview = el)} />
     );

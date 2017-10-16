@@ -1,7 +1,28 @@
 /* Common styles */
 
+:root {
+  --pad: 6px;
+  --pad2: 12px;
+  --pad4: 24px;
+  --pad6: 36px;
+  --pad8: 48px;
+
+  /* Colors */
+  --cl-base: #f6f8fa;
+  --cl-base-dark: #5c6975;
+  --cl-white: #fff;
+  --cl-gray: #eaeaea;
+  --cl-gray-dark: #888;
+  --cl-black: rgb(10, 10, 10);
+  --cl-blue-light: rgb(46, 171, 245);
+}
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
 }
 
 html,
@@ -13,7 +34,7 @@ body {
 body {
   font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
   font-size: 13px;
-  color: #555;
+  color: var(--cl-black);
 }
 
 ul {
