@@ -5,17 +5,17 @@ import ThunkContext from './thunk-context';
 
 export type AnyAction = { type: string };
 
-export type ReduxDispatch<S, A extends AnyAction> = <_A extends A>(action: _A) => _A;
+export type ReduxDispatch<A extends AnyAction> = <_A extends A>(action: _A) => _A;
 
-export type Dispatch = ReduxDispatch<State, Action> & (<R>(thunk: Thunk<R>) => R);
+export type Dispatch = ReduxDispatch<Action> & (<R>(thunk: Thunk<R>) => R);
 
-export interface ReduxStore<S, A extends AnyAction> {
+export interface ReduxStore<S, D> {
   getState(): S;
-  dispatch: Dispatch;
+  dispatch: D;
   subscribe(listener: () => void): Unsubscribe;
 }
 
-export type Store = ReduxStore<State, Action>;
+export type Store = ReduxStore<State, Dispatch>;
 
 export type Thunk<R = void> = (
   dispatch: Dispatch,

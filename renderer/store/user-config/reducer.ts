@@ -1,4 +1,3 @@
-import { UserConfig } from '../../models/types';
 import { UserConfig as UserConfigState } from '../state';
 import { Action } from '../../action-types';
 
