@@ -6,6 +6,9 @@ import { API_ROOT } from '../../const/config';
 export type GitHubClient = {
   notifications: GitHubNotifications,
   issues: GitHubIssues,
+
+  // XXX: tmp
+  api: GitHubAPI,
 };
 
 export default function createGitHubClient(accessToken: string): GitHubClient {
@@ -15,5 +18,7 @@ export default function createGitHubClient(accessToken: string): GitHubClient {
   return {
     notifications: new GitHubNotifications(api),
     issues: new GitHubIssues(api),
+
+    api,
   };
 }

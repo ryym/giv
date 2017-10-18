@@ -29,7 +29,7 @@ export default class GitHubAPIBase implements GitHubAPI {
   }: ClientOptions) {
     this.token = accessToken;
     this.apiRoot = apiRoot;
-    this.fetch = fetch;
+    this.fetch = fetch.bind(window);
 
     const limit = withLimit(MAX_CONCURRENT_REQUESTS_COUNT);
     this.fetchGently = (url, options) => limit(() => fetch(url, options));
@@ -58,6 +58,31 @@ export default class GitHubAPIBase implements GitHubAPI {
     });
     try {
       const response = await this.fetchGently(url, options);
+      const json = (await response.json()) as T;
+      return { response, json };
+    }
+    catch (err) {
+      return { err };
+    }
+  }
+
+  // 一応これで GrahQL API は使える。
+  // けどペイロードの組み立てが面倒
+  async graphql<T>(
+    payload: string,
+    options: FetchOptions = {},
+  ): Promise<APIResponse<T>> {
+    options.method = 'POST'
+    options.headers = Object.assign({}, options.headers, {
+      Authorization: `bearer ${this.token}`
+    })
+    options.body = `{"query": ${JSON.stringify(payload)}}` // XXX
+    console.log(options.body)
+
+    const url = `https://api.github.com/graphql`
+
+    try {
+      const response = await this.fetch(url, options);
       const json = (await response.json()) as T;
       return { response, json };
     }
