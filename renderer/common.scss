@@ -48,3 +48,12 @@ ul {
 .c_page-root {
   height: 100%;
 }
+
+::-webkit-scrollbar {
+  width: var(--pad);
+  background: #fdfdfd;
+}
+::-webkit-scrollbar-thumb {
+    background: #cccccd;
+    border-radius: 1ex;
+}
