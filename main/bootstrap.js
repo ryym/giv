@@ -32,11 +32,13 @@ module.exports = function bootstrap(options) {
       height: 1000,
     });
 
-    window.loadURL(`file://${__dirname}/index.html`);
+    window.webContents.session.clearCache(() => {
+      window.loadURL(`file://${__dirname}/index.html`);
 
-    if (process.env.NODE_ENV === 'development') {
-      window.webContents.openDevTools();
-    }
+      if (process.env.NODE_ENV === 'development') {
+        window.webContents.openDevTools();
+      }
+    });
   });
 
   handleUserConfigRequests(ipcMain, options.initConfig);
