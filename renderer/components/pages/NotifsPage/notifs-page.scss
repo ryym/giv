@@ -8,11 +8,13 @@
   align-items: center;
 
   &.for-stream {
-    background-color: var(--cl-base-dark);
+    background-color: var(--cl-base-d);
   }
 
   &.for-webview {
     background-color: var(--cl-base);
+    box-shadow: 0px 4px 5px -3px #96939b;
+    position: relative;
   }
 }
 
@@ -41,11 +43,11 @@
     line-height: var(--pad4);
 
     &:not(.is-disabled):hover {
-      color: var(--cl-blue-light);
+      color: var(--cl-accent);
     }
 
     &.is-disabled {
-      color: var(--cl-gray);
+      color: var(--cl-gray-d);
       cursor: default;
     }
   }

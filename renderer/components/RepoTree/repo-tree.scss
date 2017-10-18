@@ -1,6 +1,6 @@
 .repo-tree {
   width: 130px;
-  margin: var(--pad);
+  padding: 0 2px;
   max-height: 100%;
   overflow-y: scroll;
 }
@@ -11,10 +11,10 @@
 
 .repo-tree_org-name {
   font-size: 1.4rem;
-  background-color: #f6f8fa;
+  background-color: var(--cl-base);
   padding: var(--pad);
   color: #333;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .repo-tree_repo {
@@ -27,8 +27,8 @@
 
   &:hover,
   &.is-selected {
-    color: var(--cl-blue-light);
-    border-bottom: 1px solid var(--cl-gray);
+    color: var(--cl-accent);
+    border-bottom: 1px solid var(--cl-base);
   }
 }
 

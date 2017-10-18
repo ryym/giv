@@ -2,6 +2,8 @@
   width: 260px;
   max-height: 100%;
   overflow-y: scroll;
+  border-left: 1px solid var(--cl-gray);
+  border-right: 1px solid var(--cl-gray);
 }
 
 .notif-list_loading {
@@ -20,12 +22,14 @@
 .notif-list_item {
   display: block;
   padding: var(--pad2);
-  border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+  border-bottom: 1px solid var(--cl-gray);
   position: relative;
   cursor: pointer;
+  transition: box-shadow 0.1s;
 
   &:hover {
-    box-shadow: 0 0 8px #ccc;
+    box-shadow: 0 0 8px var(--cl-gray-dd);
+
   }
 }
 
@@ -45,7 +49,7 @@
   position: absolute;
   top: 4px;
   left: var(--pad);
-  color: #eee;
+  color: #edf2f4;
   border-radius: 11px;
   width: 22px;
   height: 22px;
@@ -55,13 +59,13 @@
   transition: 0.2s;
 
   .notif-list_item:not(.is-read):hover & {
-    color: var(--cl-blue-light);
+    color: var(--cl-accent);
     opacity: 0.9;
   }
 
   .notif-list_item:not(.is-read) &:hover {
-    background-color: var(--cl-blue-light);
-    color: #fff;
+    background-color: var(--cl-accent);
+    color: var(--cl-white);
   }
 }
 
@@ -81,13 +85,13 @@
 }
 
 .notif-list_item.is-read {
-  background-color: var(--cl-gray);
+  background-color: #ececec;
 
   & .notif-list_item-title {
-    font-weight: var(--cl-gray-dark);
+    font-weight: normal;
   }
 
   & .notif-list_item-check {
-    color: #888;
+    color: var(--cl-gray-dd);
   }
 }
