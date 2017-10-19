@@ -95,3 +95,17 @@
     color: var(--cl-gray-dd);
   }
 }
+
+.notif-list_load-more {
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  height: var(--pad6);
+  line-height: var(--pad6);
+  color: var(--cl-accent);
+
+  &:hover {
+    color: var(--cl-white);
+    background-color: var(--cl-accent);
+  }
+}

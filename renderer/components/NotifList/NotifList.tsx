@@ -9,11 +9,12 @@ export type Props = {
   getRepository: (fullName: string) => Repository | null,
   getIssue: (url: string) => Issue | null,
   onNotifClick: (notif: Notification) => void,
+  onLoadMoreClick: (event: any) => void,
   isLoading: boolean,
 };
 
 export default function NotifList({
-  notifs, getRepository, getIssue, onNotifClick, isLoading,
+  notifs, getRepository, getIssue, onNotifClick, onLoadMoreClick, isLoading,
 }: Props) {
   return (
     <div className="notif-list">
@@ -32,6 +33,13 @@ export default function NotifList({
           );
         })
       }
+      {!isLoading && (
+        <a
+          role="button"
+          onClick={onLoadMoreClick}
+          className="notif-list_load-more"
+        >Load more</a>
+      )}
       {isLoading && (
         <div className="notif-list_loading">
           <LoadingBars />

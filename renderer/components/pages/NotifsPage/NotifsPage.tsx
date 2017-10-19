@@ -5,7 +5,10 @@ import Webview from '../../widgets/Webview';
 import WebviewControll from '../../widgets/WebviewControll';
 import { Notification, Issue, Repository, NotifCounts } from '../../../models/types';
 import { Dispatch } from '../../../store/types';
-import { selectNotif, filterNotifs, fetchUnreadNotifs } from '../../../store/notifications/actions';
+import {
+  selectNotif, filterNotifs,
+  fetchUnreadNotifs, FetchUnreadNotifsPayload,
+} from '../../../store/notifications/actions';
 import { connect } from 'react-redux';
 import State from '../../../store/state';
 import {
@@ -46,6 +49,18 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     this.props.dispatch(filterNotifs({ fullName }));
   }
 
+  loadNotifsMore = () => {
+    const { notifs, selectedRepo, dispatch } = this.props;
+
+    const payload: FetchUnreadNotifsPayload = { repoFullName: selectedRepo };
+    if (notifs.length > 0) {
+      const oldestNotif = notifs[notifs.length - 1];
+      payload.oldestUpdatedAt = oldestNotif.updated_at;
+    }
+
+    dispatch(fetchUnreadNotifs(payload));
+  }
+
   render() {
     const { props } = this;
     const webviewConnector = WebviewControll.createConnector();
@@ -64,6 +79,7 @@ export class NotifsPage extends React.PureComponent<AllProps> {
               getRepository={props.getRepository}
               getIssue={props.getIssue}
               onNotifClick={this.showNotification}
+              onLoadMoreClick={this.loadNotifsMore}
               isLoading={props.isLoading}
             />
           </div>
