@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from 'classnames';
 import WebviewConnector from './webview-connector';
+import ControllButton from './ControllButton';
 
 type Props = {
   connector: WebviewConnector,
@@ -46,39 +47,27 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
     const { webview, nowLoading } = this.state;
     return (
       <div className="webview-controll">
-        <a
-          role="button"
-          onClick={() => webview && webview.goBack()}
-          className={classes({
-            'webview-controll_btn': true,
-            'is-disabled': !webview || !webview.canGoBack(),
-          })}
+        <ControllButton
+          action={() => webview && webview.goBack()}
+          enabled={webview && webview.canGoBack()}
         >
           ◀
-        </a>
-        <a
-          role="button"
-          onClick={() => webview && webview.goForward()}
-          className={classes({
-            'webview-controll_btn': true,
-            'is-disabled': !webview || !webview.canGoForward(),
-          })}
-          >
+        </ControllButton>
+        <ControllButton
+          action={() => webview && webview.goForward()}
+          enabled={webview && webview.canGoForward()}
+        >
           ▶
-        </a>
-        <a
-          role="button"
-          onClick={() => webview && webview.reload()}
-          className={classes({
-            'webview-controll_btn': true,
-            'is-disabled': !webview && !nowLoading,
-          })}
-          >
+        </ControllButton>
+        <ControllButton
+          action={() => webview && !nowLoading && webview.reload()}
+          enabled={webview || nowLoading}
+        >
           <i className={classes(
             ['fa', 'fa-refresh', 'fa-lg'],
             { 'fa-spin': nowLoading },
           )}></i>
-        </a>
+        </ControllButton>
       </div>
     );
   }
