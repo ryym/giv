@@ -50,6 +50,10 @@
       color: var(--cl-gray-d);
       cursor: default;
     }
+
+    .fa-spin {
+      animation-duration: 1s;
+    }
   }
 }
 

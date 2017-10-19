@@ -8,6 +8,7 @@ type Props = {
 
 type State = {
   webview: Electron.WebviewTag | null,
+  nowLoading: boolean,
 };
 
 export default class WebviewControll extends React.PureComponent<Props, State> {
@@ -17,53 +18,66 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { webview: null };
+    this.state = { webview: null, nowLoading: false };
     props.connector.onConnect(this.connectToWebview);
   }
 
   connectToWebview = (webview: Electron.WebviewTag) => {
-    webview.addEventListener('did-finish-load', () => {
-      this.forceUpdate();
-    });
-
-    webview.addEventListener('did-navigate-in-page', (event: any) => {
-      if (webview.src !== event.url) {
-        this.forceUpdate();
-      }
-    });
-
-    webview.addEventListener('dom-ready', () => {
+    const setWebview = () => {
       this.setState({ webview });
+      webview.removeEventListener('dom-ready', setWebview);
+    };
+    webview.addEventListener('dom-ready', setWebview);
+
+    webview.addEventListener('did-start-loading', () => {
+      this.setState({ nowLoading: true });
     });
+
+    const stopLoading = () => {
+      if (this.state.nowLoading) {
+        this.setState({ nowLoading: false });
+      }
+    };
+    webview.addEventListener('did-navigate-in-page', stopLoading);
+    webview.addEventListener('dom-ready', stopLoading);
   }
 
   render() {
-    const { webview } = this.state;
-    if (webview == null) {
-      return null;
-    }
-
+    const { webview, nowLoading } = this.state;
     return (
       <div className="webview-controll">
         <a
           role="button"
-          onClick={() => webview.goBack()}
+          onClick={() => webview && webview.goBack()}
           className={classes({
             'webview-controll_btn': true,
-            'is-disabled': !webview.canGoBack(),
+            'is-disabled': !webview || !webview.canGoBack(),
           })}
         >
           ◀
         </a>
         <a
           role="button"
-          onClick={() => webview.goForward()}
+          onClick={() => webview && webview.goForward()}
           className={classes({
             'webview-controll_btn': true,
-            'is-disabled': !webview.canGoForward(),
+            'is-disabled': !webview || !webview.canGoForward(),
           })}
           >
           ▶
+        </a>
+        <a
+          role="button"
+          onClick={() => webview && webview.reload()}
+          className={classes({
+            'webview-controll_btn': true,
+            'is-disabled': !webview && !nowLoading,
+          })}
+          >
+          <i className={classes(
+            ['fa', 'fa-refresh', 'fa-lg'],
+            { 'fa-spin': nowLoading },
+          )}></i>
         </a>
       </div>
     );
