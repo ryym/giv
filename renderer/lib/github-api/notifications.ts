@@ -16,4 +16,14 @@ export default class GitHubNotifications {
     const { json, err } = await this.api.requestSoon<NotificationJSON[]>(`notifications${query}`);
     return [json, err];
   }
+
+  async listUnreadInRepo(
+    repoFullName: string, oldestDate?: string,
+  ): Promise<Failable<NotificationJSON[]>> {
+    const query = oldestDate ? `?before=${oldestDate}` : '';
+    const { json, err } = await this.api.requestSoon<NotificationJSON[]>(
+      `repos/${repoFullName}/notifications${query}`,
+    );
+    return [json, err];
+  }
 }
