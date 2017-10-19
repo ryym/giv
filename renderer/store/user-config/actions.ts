@@ -1,6 +1,8 @@
 import { sendNewToken, fetchUserConfig } from '../../lib/ipc';
 import { AsyncThunk } from '../types';
 
+// TODO: What happen if a user registers a wrong access token?
+
 export function updateToken(accessToken: string): AsyncThunk {
   return async (dispatch, _, { initGitHubAPI }) => {
     sendNewToken(accessToken);

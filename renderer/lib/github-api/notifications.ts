@@ -11,7 +11,6 @@ export default class GitHubNotifications {
     bindMethodContext(this);
   }
 
-  // TODO: pagination
   async listUnread(oldestDate?: string): Promise<Failable<NotificationJSON[]>> {
     const query = oldestDate ? `?before=${oldestDate}` : '';
     const { json, err } = await this.api.requestSoon<NotificationJSON[]>(`notifications${query}`);

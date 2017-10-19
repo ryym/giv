@@ -8,6 +8,8 @@ export type GitHubClient = {
   issues: GitHubIssues,
 };
 
+// TODO: 401 also returns JSON. We need to handle this properly.
+
 export default function createGitHubClient(accessToken: string): GitHubClient {
   const api = new GitHubAPI(accessToken, {
     apiRoot: API_ROOT,
