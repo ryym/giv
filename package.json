@@ -16,7 +16,7 @@
     "clean-dist": "rm -rf dist",
     "release": "NODE_ENV=production run-s build install-dist-deps package",
     "install-dist-deps": "cd dist && npm install --save-prod && cd ../",
-    "build": "npm clean-dist && run-p build:main build:rend",
+    "build": "npm run clean-dist && run-p build:main build:rend",
     "build:main": "webpack --config webpack/webpack.main.js",
     "build:rend": "webpack --config webpack/webpack.renderer.js",
     "package": "electron-packager --overwrite dist"
