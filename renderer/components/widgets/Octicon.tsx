@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import octicons, { SVGOptions } from 'octicons';
 
 export type Props = {

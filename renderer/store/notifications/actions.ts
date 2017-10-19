@@ -15,6 +15,8 @@ export type FetchUnreadNotifsPayload = {
   repoFullName?: string,
   oldestUpdatedAt?: string,
 };
+
+// TODO: Fetch each issue/PR status (open, closed, merged).
 export function fetchUnreadNotifs({
   repoFullName, oldestUpdatedAt,
 }: FetchUnreadNotifsPayload = {}): AsyncThunk {

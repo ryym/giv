@@ -16,6 +16,12 @@
   --cl-gray: #dcdcdd;
   --cl-gray-d: #bfbfbf;
   --cl-gray-dd: #888;
+
+  /* GitHub icon colors */
+  --cl-gh-open: #28a745;
+  --cl-gh-closed: #cb2431;
+  --cl-gh-merged: #6f42c1;
+  --cl-gh-unknown: #666;
 }
 
 * {
@@ -54,7 +60,8 @@ ul {
   width: var(--pad);
   background: #fdfdfd;
 }
+
 ::-webkit-scrollbar-thumb {
-    background: #cccccd;
-    border-radius: 1ex;
+  background: #cccccd;
+  border-radius: 1ex;
 }

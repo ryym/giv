@@ -37,10 +37,25 @@
 }
 
 .notif-list_item-kind {
-  fill: green; // XXX
   position: absolute;
   top: var(--pad);
   left: var(--pad6);
+
+  &.is-open {
+    fill: var(--cl-gh-open);
+  }
+
+  &.is-closed {
+    fill: var(--cl-gh-closed);
+  }
+
+  &.is-merged {
+    fill: var(--cl-gh-merged);
+  }
+
+  &.is-unknown {
+    fill: var(--cl-gh-unknown);
+  }
 }
 
 .notif-list_item-check {

@@ -10,22 +10,31 @@ export type Props = {
   repoName: string,
   issue: Issue,
   onClick: (notif: Notification) => void,
+  onCheckClick: (notif: Notification) => void,
 };
 
 export default function NotifItem({
-  notif, repoName, issue, onClick,
+  notif, repoName, issue, onClick, onCheckClick,
 }: Props) {
   const [iconName, iconStateClass] = decideIcon(issue, NotifSl.isPR(notif));
+
+  const handleClick = () => onClick(notif);
+
+  const handleCheckClick = (event: React.SyntheticEvent<any>) => {
+    event.stopPropagation();
+    onCheckClick(notif);
+  };
+
   return (
     <a
       className={classes({ 'notif-list_item': true, 'is-read': !notif.unread })}
-      onClick={() => onClick(notif)}
+      onClick={handleClick}
     >
-      <div className="notif-list_item-check">
+      <div className="notif-list_item-check" onClick={handleCheckClick}>
         <i className="fa fa-check"></i>
       </div>
-      <div className="notif-list_item-kind">
-        <Octicon icon={iconName} className={iconStateClass} />
+      <div className={`notif-list_item-kind ${iconStateClass}`}>
+        <Octicon icon={iconName} />
       </div>
       <div className="notif-list_item-time">
         {notif.updated_at}
