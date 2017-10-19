@@ -6,7 +6,7 @@ const initialState: Notifications = {
   isLoading: true,
   shownURL: undefined,
   filter: {},
-  unreadIDs: [],
+  ids: [],
 };
 
 export default (notifs: Notifications = initialState, action: Action) => {
@@ -21,7 +21,7 @@ export default (notifs: Notifications = initialState, action: Action) => {
     return {
       ...notifs,
       isLoading: false,
-      unreadIDs: concatUniq(notifs.unreadIDs, action.data.result),
+      ids: concatUniq(notifs.ids, action.data.result),
     };
 
   case 'SELECT_NOTIF':

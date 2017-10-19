@@ -5,6 +5,7 @@ export type UserConfig = {
 interface BaseNotification {
   readonly id: string;
   readonly updated_at: string;
+  readonly unread: boolean;
   readonly subject: {
     readonly title: string,
     readonly url: string,

@@ -10,16 +10,15 @@ export type Props = {
   repoName: string,
   issue: Issue,
   onClick: (notif: Notification) => void,
-  read?: boolean,
 };
 
 export default function NotifItem({
-  notif, repoName, issue, onClick, read = false,
+  notif, repoName, issue, onClick,
 }: Props) {
   const [iconName, iconStateClass] = decideIcon(issue, NotifSl.isPR(notif));
   return (
     <a
-      className={classes({ 'notif-list_item': true, 'is-read': read })}
+      className={classes({ 'notif-list_item': true, 'is-read': !notif.unread })}
       onClick={() => onClick(notif)}
     >
       <div className="notif-list_item-check">

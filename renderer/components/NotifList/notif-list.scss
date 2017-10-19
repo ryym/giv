@@ -25,11 +25,10 @@
   border-bottom: 1px solid var(--cl-gray);
   position: relative;
   cursor: pointer;
-  transition: box-shadow 0.1s;
+  transition: box-shadow 0.1s, background-color 0.2s;
 
   &:hover {
     box-shadow: 0 0 8px var(--cl-gray-dd);
-
   }
 }
 
@@ -93,6 +92,22 @@
 
   & .notif-list_item-check {
     color: var(--cl-gray-dd);
+
+    > i {
+      animation: 0.2s ease-out notif-list_item-check_read;
+    }
+  }
+}
+
+@keyframes notif-list_item-check_read {
+  0% {
+    color: var(--cl-accent);
+    transform: scale(2);
+  }
+
+  85% {
+    color: var(--cl-gray-d);
+    transform: scale(0.9);
   }
 }
 

@@ -19,6 +19,17 @@ const notifsReducer = (notifs: NotifEntities = initialNotifs, action: Action) =>
       },
     };
 
+  case 'SELECT_NOTIF': {
+    const { notif } = action;
+    return {
+      ...notifs,
+      byID: {
+        ...notifs.byID,
+        [notif.id]: { ...notif, unread: false },
+      },
+    };
+  }
+
   default:
     return notifs;
   }

@@ -11,8 +11,8 @@ export const getShownNotificationURL = (state: State): string | undefined => {
 };
 
 export const getUnreadNotifs = (state: State): Notification[] => {
-  const unreadIDs = state.notifications.unreadIDs;
-  return unreadIDs.map((id) => getNotification(state, id)!);
+  const ids = state.notifications.ids;
+  return ids.map((id) => getNotification(state, id)!);
 };
 
 export const getFilteredNotifs = (state: State): Notification[] => {

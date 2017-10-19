@@ -40,5 +40,5 @@ export interface Notifications {
   readonly isLoading: boolean;
   readonly shownURL: string | undefined;
   readonly filter: NotifFilter;
-  readonly unreadIDs: string[];
+  readonly ids: string[];
 }
