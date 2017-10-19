@@ -11,11 +11,22 @@ export const filterNotifs = (filter: NotifFilter): Action => ({
   type: 'FILTER_NOTIFS', filter,
 });
 
-export function fetchUnreadNotifs(oldestUpdatedAt?: string): AsyncThunk {
-  return async (dispatch, getState, { github }) => {
-    dispatch({ type: 'FETCH_UNREAD_NOTIFS_START' });
+export type FetchUnreadNotifsPayload = {
+  repoFullName?: string,
+  oldestUpdatedAt?: string,
+};
+export function fetchUnreadNotifs({
+  repoFullName, oldestUpdatedAt,
+}: FetchUnreadNotifsPayload = {}): AsyncThunk {
+  return async (dispatch, getState, { github: { notifications: notifsAPI } }) => {
+    dispatch({
+      type: 'FETCH_UNREAD_NOTIFS_START',
+      ...(repoFullName ? { repoFullName } : {}),
+    });
 
-    const [notifs, _] = await github.notifications.listUnread(oldestUpdatedAt);
+    const [notifs, _] = repoFullName
+      ? await notifsAPI.listUnreadInRepo(repoFullName, oldestUpdatedAt)
+      : await notifsAPI.listUnread(oldestUpdatedAt);
 
     if (notifs != null) {
       const normalizedNotifs = normalizeNotifications(notifs);
