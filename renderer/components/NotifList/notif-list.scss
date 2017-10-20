@@ -109,15 +109,15 @@
     color: var(--cl-gray-dd);
 
     > i {
-      animation: 0.2s ease-out notif-list_item-check_read;
+      animation: 0.3s ease-out notif-list_item-check_read;
     }
   }
 }
 
 @keyframes notif-list_item-check_read {
-  0% {
+  20% {
     color: var(--cl-accent);
-    transform: scale(2);
+    transform: scale(2.2);
   }
 
   85% {
