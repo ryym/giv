@@ -21,10 +21,10 @@ const renderView = () => {
 };
 
 store.dispatch(loadUserConfig()).then(() => {
-  if (document.readyState === 'pending') {
-    document.addEventListener('DOMContentLoaded', renderView);
+  if (document.readyState === 'complete') {
+    renderView();
   }
   else {
-    renderView();
+    document.addEventListener('DOMContentLoaded', renderView);
   }
 });
