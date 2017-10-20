@@ -21,10 +21,10 @@ export default function App({ history }: Props) {
   );
 }
 
-function MainRoutes() {
+function MainRoutes({ match }: RouteParam) {
   return (
     <AuthGuard requireToken fallbackPath="/login">
-      <Route exact path="/" component={NotifsPage} />
+      <Route exact path={match.url} component={NotifsPage} />
     </AuthGuard>
   );
 }
