@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import State from '../store/state';
+import Errors from '../lib/errors';
 
 type CompState = {
   err: Error | null,
@@ -45,6 +46,10 @@ export default connect(
     ...state.appError,
     onError: (err: Error) => {
       alert(err.message || 'Unexpected error occurred');
+      if (err instanceof Errors) {
+        // tslint:disable-next-line:no-console
+        console.error('CAUSE: ', err.cause);
+      }
     },
   }),
 )(AppErrorBoundary);
