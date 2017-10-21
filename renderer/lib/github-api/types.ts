@@ -1,4 +1,5 @@
 export type FetchOptions = {
+  method?: string,
   headers?: {},
 };
 

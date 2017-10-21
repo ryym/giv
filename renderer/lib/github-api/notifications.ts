@@ -36,4 +36,17 @@ export default class GitHubNotifications {
       throw new Errors(err, 'Failed to fetch notifications in repo');
     }
   }
+
+  async markAsRead(threadID: string): Promise<boolean> {
+    try {
+      const res = await this.api.requestSoon(
+        `notifications/threads/${threadID}`,
+        { method: 'POST' },
+      );
+      return res.ok;
+    }
+    catch (err) {
+      throw new Errors(err, `Failed to mark a thread ${threadID} as read`);
+    }
+  }
 }
