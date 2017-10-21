@@ -40,14 +40,3 @@ export function fetchUnreadNotifs({
     // TODO: Handle failures such as 404.
   };
 }
-
-// function fetchIssues(notifs) {
-//   return async ({ dispatch }, { github }) => {
-//     for (const notif of notifs) {
-//       const [issue, _] = await github.issues.getIssue(notif.subject.url);
-//       if (issue != null) {
-//         dispatch({ type: 'FETCH_ISSUE_OK', issue })
-//       }
-//     }
-//   }
-// }
