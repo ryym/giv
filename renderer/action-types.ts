@@ -13,6 +13,7 @@ export type Action
   | { type: 'SELECT_NOTIF', notif: Notification }
   | { type: 'FETCH_ISSUE_OK', issue: Issue }
   | { type: 'FILTER_NOTIFS', filter: NotifFilter }
+  | { type: 'CATCH_ERROR', err: Error }
 
   // react-router-redux
   | { type: '@@router/CALL_HISTORY_METHOD' };
