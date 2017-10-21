@@ -26,7 +26,7 @@ export function fetchUnreadNotifs({
       ...(repoFullName ? { repoFullName } : {}),
     });
 
-    const [notifs, _] = repoFullName
+    const notifs = repoFullName
       ? await notifsAPI.listUnreadInRepo(repoFullName, oldestUpdatedAt)
       : await notifsAPI.listUnread(oldestUpdatedAt);
 
@@ -37,6 +37,7 @@ export function fetchUnreadNotifs({
         data: normalizedNotifs,
       });
     }
+    // TODO: Handle failures such as 404.
   };
 }
 

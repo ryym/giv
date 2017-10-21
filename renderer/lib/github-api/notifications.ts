@@ -1,7 +1,7 @@
 import bindMethodContext from '../utils/bind-method-context';
 import { GitHubAPI } from './types';
 import { NotificationJSON } from '../../models/types';
-import { Failable } from '../../models/result';
+import Errors from '../errors';
 
 export default class GitHubNotifications {
   private readonly api: GitHubAPI;
@@ -11,19 +11,29 @@ export default class GitHubNotifications {
     bindMethodContext(this);
   }
 
-  async listUnread(oldestDate?: string): Promise<Failable<NotificationJSON[]>> {
-    const query = oldestDate ? `?before=${oldestDate}` : '';
-    const { json, err } = await this.api.requestSoon<NotificationJSON[]>(`notifications${query}`);
-    return [json, err];
+  async listUnread(oldestDate?: string): Promise<NotificationJSON[] | null> {
+    try {
+      const query = oldestDate ? `?before=${oldestDate}` : '';
+      const res = await this.api.requestSoon(`notifications${query}`);
+      return res.ok ? (await res.json()) as NotificationJSON[] : null;
+    }
+    catch (err) {
+      throw new Errors(err, 'Failed to fetch notifications');
+    }
   }
 
   async listUnreadInRepo(
     repoFullName: string, oldestDate?: string,
-  ): Promise<Failable<NotificationJSON[]>> {
-    const query = oldestDate ? `?before=${oldestDate}` : '';
-    const { json, err } = await this.api.requestSoon<NotificationJSON[]>(
-      `repos/${repoFullName}/notifications${query}`,
-    );
-    return [json, err];
+  ): Promise<NotificationJSON[] | null> {
+    try {
+      const query = oldestDate ? `?before=${oldestDate}` : '';
+      const res = await this.api.requestSoon(
+        `repos/${repoFullName}/notifications${query}`,
+      );
+      return res.ok ? (await res.json()) as NotificationJSON[] : null;
+    }
+    catch (err) {
+      throw new Errors(err, 'Failed to fetch notifications in repo');
+    }
   }
 }

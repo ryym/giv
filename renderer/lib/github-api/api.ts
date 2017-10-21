@@ -1,5 +1,5 @@
 import runWithLimit from '../async/run-with-limit';
-import { GitHubAPI, APIResponse, FetchOptions } from './types';
+import { GitHubAPI, FetchOptions } from './types';
 
 type Fetch = typeof window.fetch;
 
@@ -35,19 +35,19 @@ export default class GitHubAPIBase implements GitHubAPI {
     this.fetchGently = (url, options) => limit(() => fetch(url, options));
   }
 
-  async request<T>(rawPath: string, options?: FetchOptions): Promise<APIResponse<T>> {
-    return this.doRequest<T>(this.fetchGently, rawPath, options);
+  async request(rawPath: string, options?: FetchOptions): Promise<Response> {
+    return this.doRequest(this.fetchGently, rawPath, options);
   }
 
-  async requestSoon<T>(rawPath: string, options?: FetchOptions): Promise<APIResponse<T>> {
-    return this.doRequest<T>(this.fetch, rawPath, options);
+  async requestSoon(rawPath: string, options?: FetchOptions): Promise<Response> {
+    return this.doRequest(this.fetch, rawPath, options);
   }
 
-  private async doRequest<T>(
+  private async doRequest(
       fetch: Fetch,
       rawPath: string,
       options: FetchOptions = {},
-  ): Promise<APIResponse<T>> {
+  ): Promise<Response> {
     const url = this.normalizeURL(rawPath);
     if (url == null) {
       throw new Error(`Invalid path: ${rawPath}`);
@@ -56,14 +56,7 @@ export default class GitHubAPIBase implements GitHubAPI {
     options.headers = Object.assign({}, options.headers, {
       Authorization: `token ${this.token}`,
     });
-    try {
-      const response = await this.fetchGently(url, options);
-      const json = (await response.json()) as T;
-      return { response, json };
-    }
-    catch (err) {
-      return { err };
-    }
+    return this.fetchGently(url, options);
   }
 
   normalizeURL(path: string): string | null {
