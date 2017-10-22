@@ -17,6 +17,13 @@ export default (notifs: Notifications = initialState, action: Action) => {
       isLoading: true,
     };
 
+  case 'POLL_NOTIFS_OK':
+    return {
+      ...notifs,
+      isLoading: action.isFirst ? false : notifs.isLoading,
+      ids: concatUniq(action.data.result, notifs.ids),
+    };
+
   case 'FETCH_UNREAD_NOTIFS_OK':
     return {
       ...notifs,
