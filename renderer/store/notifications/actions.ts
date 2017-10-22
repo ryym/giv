@@ -11,6 +11,30 @@ export const filterNotifs = (filter: NotifFilter): Action => ({
   type: 'FILTER_NOTIFS', filter,
 });
 
+export function pollNotifications(): AsyncThunk {
+  return async (dispatch, getState, { github }) => {
+    dispatch({ type: 'POLL_NOTIFS_START' });
+
+    const poll = async (interval: number, lastModified?: string) => {
+      const [updated, maybeRes] = await github.notifications.poll(lastModified);
+      if (updated) {
+        const res = maybeRes!;
+        dispatch({
+          type: 'POLL_NOTIFS_OK',
+          isFirst: !lastModified,
+          data: normalizeNotifications(res.notifs),
+        });
+        lastModified = res.lastModified;
+        interval = res.interval * 1000;
+      }
+      setTimeout(() => poll(interval, lastModified), interval);
+    };
+
+    poll(0);
+    return;
+  };
+}
+
 export type FetchUnreadNotifsPayload = {
   repoFullName?: string,
   oldestUpdatedAt?: string,
@@ -38,5 +62,16 @@ export function fetchUnreadNotifs({
       });
     }
     // TODO: Handle failures such as 404.
+  };
+}
+
+export function markAsRead(notif: Notification): AsyncThunk {
+  return async (dispatch, getState, { github }) => {
+    dispatch({ type: 'MARK_NOTIF_AS_READ_START', notif });
+    const marked = await github.notifications.markAsRead(notif.id);
+    if (marked) {
+      dispatch({ type: 'MARK_NOTIF_AS_READ_OK', notif });
+    }
+    // TODO: Handle failure case.
   };
 }

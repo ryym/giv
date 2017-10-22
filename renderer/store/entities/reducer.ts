@@ -10,6 +10,7 @@ import { Action } from '../../action-types';
 const initialNotifs = { byID: {} };
 const notifsReducer = (notifs: NotifEntities = initialNotifs, action: Action) => {
   switch (action.type) {
+  case 'POLL_NOTIFS_OK':
   case 'FETCH_UNREAD_NOTIFS_OK':
     return {
       ...notifs,
@@ -19,7 +20,8 @@ const notifsReducer = (notifs: NotifEntities = initialNotifs, action: Action) =>
       },
     };
 
-  case 'SELECT_NOTIF': {
+  case 'SELECT_NOTIF':
+  case 'MARK_NOTIF_AS_READ_START': {
     const { notif } = action;
     return {
       ...notifs,
@@ -47,6 +49,7 @@ const issuesReducer = (issues: IssueEntities = initialIssues, action: Action) =>
 const initialRepos = { byFullName: {} };
 const reposReducer = (repos: RepoEntities = initialRepos, action: Action) => {
   switch (action.type) {
+  case 'POLL_NOTIFS_OK':
   case 'FETCH_UNREAD_NOTIFS_OK':
     return {
       ...repos,

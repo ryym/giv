@@ -9,12 +9,14 @@ export type Props = {
   getRepository: (fullName: string) => Repository | null,
   getIssue: (url: string) => Issue | null,
   onNotifClick: (notif: Notification) => void,
+  onCheckClick: (notif: Notification) => void,
   onLoadMoreClick: (event: any) => void,
   isLoading: boolean,
 };
 
 export default function NotifList({
-  notifs, getRepository, getIssue, onNotifClick, onLoadMoreClick, isLoading,
+  notifs, getRepository, getIssue, isLoading,
+  onNotifClick, onLoadMoreClick, onCheckClick,
 }: Props) {
   return (
     <div className="notif-list">
@@ -29,6 +31,7 @@ export default function NotifList({
               repoName={repo.full_name}
               issue={issue}
               onClick={onNotifClick}
+              onCheckClick={onCheckClick}
             />
           );
         })

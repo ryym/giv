@@ -7,7 +7,9 @@ import { Notification, Issue, Repository, NotifCounts } from '../../../models/ty
 import { Dispatch } from '../../../store/types';
 import {
   selectNotif, filterNotifs,
+  pollNotifications,
   fetchUnreadNotifs, FetchUnreadNotifsPayload,
+  markAsRead,
 } from '../../../store/notifications/actions';
 import { connect } from 'react-redux';
 import State from '../../../store/state';
@@ -36,7 +38,7 @@ export class NotifsPage extends React.PureComponent<AllProps> {
   componentWillMount() {
     const { notifs, dispatch } = this.props;
     if (notifs.length === 0) {
-      dispatch(fetchUnreadNotifs());
+      dispatch(pollNotifications());
     }
   }
 
@@ -61,6 +63,10 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     dispatch(fetchUnreadNotifs(payload));
   }
 
+  markAsRead = (notif: Notification) => {
+    this.props.dispatch(markAsRead(notif));
+  }
+
   render() {
     const { props } = this;
     const webviewConnector = WebviewControll.createConnector();
@@ -79,6 +85,7 @@ export class NotifsPage extends React.PureComponent<AllProps> {
               getRepository={props.getRepository}
               getIssue={props.getIssue}
               onNotifClick={this.showNotification}
+              onCheckClick={this.markAsRead}
               onLoadMoreClick={this.loadNotifsMore}
               isLoading={props.isLoading}
             />
