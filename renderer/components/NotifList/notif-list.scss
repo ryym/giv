@@ -26,10 +26,38 @@
   position: relative;
   cursor: pointer;
   transition: box-shadow 0.1s, background-color 0.2s;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-100px);
+  animation:
+    notif-list_item-insert 0.4s ease forwards,
+    notif-list_item-new 1.4s ease-out;
 
   &:hover {
     box-shadow: 0 0 8px var(--cl-gray-dd);
     z-index: 10;
+  }
+}
+
+@keyframes notif-list_item-insert {
+  99% {
+    max-height: 120px;
+  }
+
+  100% {
+    max-height: 180px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes notif-list_item-new {
+  0% {
+    background-color: rgba(247, 253, 0, 0.1);
+  }
+
+  100% {
+    background-color: transparent;
   }
 }
 
