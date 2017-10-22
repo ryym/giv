@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, session } from 'electron';
 import loadUserConfig from './storage/user-config';
 import * as ipc from '../shared/ipc-messages';
 
@@ -25,20 +25,24 @@ async function handleUserConfigRequests(ipcMain, shouldInit) {
 
 module.exports = function bootstrap(options) {
   app.on('ready', () => {
+    // Disable cache to fetch latest data correctly from GitHub.
+    const noCacheSession = session.fromPartition('', { cache: false });
+
     const window = new BrowserWindow({
       x: 0,
       y: 0,
       width: 600,
       height: 1000,
+      webPreferences: {
+        session: noCacheSession,
+      },
     });
 
-    window.webContents.session.clearCache(() => {
-      window.loadURL(`file://${__dirname}/index.html`);
+    window.loadURL(`file://${__dirname}/index.html`);
 
-      if (process.env.NODE_ENV === 'development') {
-        window.webContents.openDevTools();
-      }
-    });
+    if (process.env.NODE_ENV === 'development') {
+      window.webContents.openDevTools();
+    }
   });
 
   handleUserConfigRequests(ipcMain, options.initConfig);
