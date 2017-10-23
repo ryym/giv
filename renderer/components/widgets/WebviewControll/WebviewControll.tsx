@@ -10,6 +10,7 @@ type Props = {
 type State = {
   webview: Electron.WebviewTag | null,
   nowLoading: boolean,
+  url: string | null,
 };
 
 export default class WebviewControll extends React.PureComponent<Props, State> {
@@ -19,7 +20,7 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { webview: null, nowLoading: false };
+    this.state = { webview: null, nowLoading: false, url: null };
     props.connector.onConnect(this.connectToWebview);
   }
 
@@ -39,6 +40,13 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
         this.setState({ nowLoading: false });
       }
     };
+
+    webview.addEventListener('load-commit', (event: any) => {
+      if (event.isMainFrame) {
+        this.setState({ url: event.url });
+      }
+    });
+
     webview.addEventListener('did-navigate-in-page', stopLoading);
     webview.addEventListener('dom-ready', stopLoading);
   }
@@ -68,7 +76,20 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
             { 'fa-spin': nowLoading },
           )}></i>
         </ControllButton>
+        {this.renderURLBar()}
       </div>
+    );
+  }
+
+  renderURLBar() {
+    const { url } = this.state;
+    return (
+      <input
+        type="text"
+        readOnly
+        value={url || ''}
+        className="webview-controll_url"
+      />
     );
   }
 }
