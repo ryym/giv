@@ -1,4 +1,4 @@
-import { Issue } from '../../models/types';
+import { Issue } from '../../lib/models';
 
 export type IconState = 'is-unknown' | 'is-open' | 'is-closed' | 'is-merged';
 

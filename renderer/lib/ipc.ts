@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 import * as ipc from '../../shared/ipc-messages';
-import { UserConfig } from '../models/types';
+import { UserConfig } from '../lib/models';
 
 export const sendNewToken = (token: string) => {
   ipcRenderer.send(ipc.UPDATE_TOKEN, token);

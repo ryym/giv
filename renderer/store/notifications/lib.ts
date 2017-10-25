@@ -1,4 +1,4 @@
-import { Notification } from '../../models/types';
+import { Notification } from '../../lib/models';
 
 export const extractIssueURL = (notif: Notification): string => {
   // TODO: Do not parse URL by hand!

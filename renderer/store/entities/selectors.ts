@@ -2,7 +2,7 @@ import State from '../state';
 import {
   Notification, Repository, Issue,
   NotifCounts, WritableNotifCounts,
-} from '../../models/types';
+} from '../../lib/models';
 
 export const getNotification = (state: State, id: string): Notification | null => {
   return state.entities.notifications.byID[id];

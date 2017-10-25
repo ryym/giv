@@ -1,5 +1,5 @@
 import { normalize, schema } from 'normalizr';
-import { NotificationJSON, NormalizedNotifs } from '../../models/types';
+import { NotificationJSON, NormalizedNotifs } from '../../lib/models';
 
 const { Entity } = schema;
 

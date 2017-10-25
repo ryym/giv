@@ -1,6 +1,6 @@
 import bindMethodContext from '../utils/bind-method-context';
 import { GitHubAPI } from './types';
-import { Issue } from '../../models/types';
+import { Issue } from '../../lib/models';
 
 export default class GitHubIssues {
   private readonly api: GitHubAPI;

@@ -1,6 +1,6 @@
 import { Action } from '../../action-types';
 import { AsyncThunk } from '../types';
-import { Notification, NotifFilter } from '../../models/types';
+import { Notification, NotifFilter } from '../../lib/models';
 import normalizeNotifications from '../../lib/normalizers/notifications';
 import { openExternal } from '../../lib/ipc';
 import { extractIssueURL } from './lib';

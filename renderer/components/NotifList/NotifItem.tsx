@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from 'classnames';
 import { NotifSelector as NotifSl } from '../../store/selectors';
-import { Notification, Issue } from '../../models/types';
+import { Notification, Issue } from '../../lib/models';
 import Octicon from '../widgets/Octicon';
 import decideIcon from './issue-icon-decider';
 

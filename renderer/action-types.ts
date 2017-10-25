@@ -1,7 +1,7 @@
 import {
   UserConfig, Issue, NotifFilter,
   NormalizedNotifs, Notification,
-} from './models/types';
+} from './lib/models';
 
 export type Action
   = { type: 'UPDATE_TOKEN', accessToken: string }

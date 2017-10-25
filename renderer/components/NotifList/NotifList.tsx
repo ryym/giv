@@ -1,7 +1,7 @@
 import React from 'react';
 import LoadingBars from '../widgets/LoadingBars';
 import NotifItem from './NotifItem';
-import { Notification, Issue, Repository } from '../../models/types';
+import { Notification, Issue, Repository } from '../../lib/models';
 import { NotifSelector as NotifSl } from '../../store/selectors';
 
 export type Props = {

@@ -1,6 +1,6 @@
 import { Action } from '../../action-types';
 import { Notifications } from '../state';
-import { Notification, NotifFilter } from '../../models/types';
+import { Notification, NotifFilter } from '../../lib/models';
 import { extractIssueURL } from './lib';
 
 const initialState: Notifications = {

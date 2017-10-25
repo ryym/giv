@@ -1,6 +1,6 @@
 import State from '../state';
 import { getNotification } from '../entities/selectors';
-import { Notification } from '../../models/types';
+import { Notification } from '../../lib/models';
 
 export const isLoadingNotifs = (state: State): boolean => {
   return state.notifications.isLoading;

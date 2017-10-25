@@ -3,7 +3,7 @@ import NotifList from '../../NotifList';
 import RepoTree from '../../RepoTree';
 import Webview from '../../widgets/Webview';
 import WebviewControll from '../../widgets/WebviewControll';
-import { Notification, Issue, Repository, NotifCounts } from '../../../models/types';
+import { Notification, Issue, Repository, NotifCounts } from '../../../lib/models';
 import { Dispatch } from '../../../store/types';
 import {
   selectNotif, openNotifExternal,

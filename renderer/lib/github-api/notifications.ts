@@ -1,6 +1,6 @@
 import bindMethodContext from '../utils/bind-method-context';
 import { GitHubAPI } from './types';
-import { NotificationJSON } from '../../models/types';
+import { NotificationJSON } from '../../lib/models';
 import Errors from '../errors';
 
 export default class GitHubNotifications {

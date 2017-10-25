@@ -1,6 +1,6 @@
 import React from 'react';
 import Repo from './Repo';
-import { NotifCounts } from '../../models/types';
+import { NotifCounts } from '../../lib/models';
 
 export type NotifCount = {
   owner: string,
