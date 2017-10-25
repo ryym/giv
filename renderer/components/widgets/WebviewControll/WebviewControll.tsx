@@ -18,6 +18,8 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
     return new WebviewConnector();
   }
 
+  private urlBar: HTMLInputElement | null;
+
   constructor(props: Props) {
     super(props);
     this.state = { webview: null, nowLoading: false, url: null };
@@ -49,6 +51,10 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
 
     webview.addEventListener('did-navigate-in-page', stopLoading);
     webview.addEventListener('dom-ready', stopLoading);
+  }
+
+  selectWholeURL = () => {
+    this.urlBar!.select();
   }
 
   render() {
@@ -89,6 +95,8 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
         readOnly
         value={url || ''}
         className="webview-controll_url"
+        ref={(urlBar: HTMLInputElement) => this.urlBar = urlBar}
+        onClick={this.selectWholeURL}
       />
     );
   }
