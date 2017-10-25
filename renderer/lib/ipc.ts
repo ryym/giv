@@ -15,3 +15,7 @@ export const fetchUserConfig = (): Promise<UserConfig> => new Promise((resolve) 
   );
   ipcRenderer.send(ipc.LOAD_USER_CONFIG);
 });
+
+export const openExternal = (url: string) => {
+  ipcRenderer.send(ipc.OPEN_URL_EXTERNAL, url);
+};

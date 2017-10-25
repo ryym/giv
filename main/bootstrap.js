@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, session } from 'electron';
+import { app, BrowserWindow, ipcMain, session, shell } from 'electron';
 import loadUserConfig from './storage/user-config';
 import * as ipc from '../shared/ipc-messages';
 
@@ -20,6 +20,12 @@ async function handleUserConfigRequests(ipcMain, shouldInit) {
   ipcMain.on(ipc.LOAD_USER_CONFIG, async (event) => {
     const json = await config.toJSON();
     event.sender.send(ipc.LOAD_USER_CONFIG_SUCCESS, json);
+  });
+}
+
+function handleKeyboardShortcuts(ipcMain) {
+  ipcMain.on(ipc.OPEN_URL_EXTERNAL, (event, url) => {
+    shell.openExternal(url);
   });
 }
 
@@ -46,4 +52,5 @@ module.exports = function bootstrap(options) {
   });
 
   handleUserConfigRequests(ipcMain, options.initConfig);
+  handleKeyboardShortcuts(ipcMain);
 };
