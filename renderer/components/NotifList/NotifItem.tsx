@@ -9,7 +9,7 @@ export type Props = {
   notif: Notification,
   repoName: string,
   issue: Issue,
-  onClick: (notif: Notification) => void,
+  onClick: (notif: Notification, event: React.MouseEvent<any>) => void,
   onCheckClick: (notif: Notification) => void,
 };
 
@@ -18,7 +18,7 @@ export default function NotifItem({
 }: Props) {
   const [iconName, iconStateClass] = decideIcon(issue, NotifSl.isPR(notif));
 
-  const handleClick = () => onClick(notif);
+  const handleClick = (event: React.MouseEvent<any>) => onClick(notif, event);
 
   const handleCheckClick = (event: React.SyntheticEvent<any>) => {
     event.stopPropagation();

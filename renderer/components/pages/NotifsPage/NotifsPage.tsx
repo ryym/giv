@@ -6,9 +6,11 @@ import WebviewControll from '../../widgets/WebviewControll';
 import { Notification, Issue, Repository, NotifCounts } from '../../../models/types';
 import { Dispatch } from '../../../store/types';
 import {
-  selectNotif, filterNotifs,
+  selectNotif, openNotifExternal,
+  filterNotifs,
   pollNotifications,
-  fetchUnreadNotifs, FetchUnreadNotifsPayload,
+  fetchUnreadNotifs,
+  FetchUnreadNotifsPayload,
   markAsRead,
 } from '../../../store/notifications/actions';
 import { connect } from 'react-redux';
@@ -42,8 +44,13 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     }
   }
 
-  showNotification = (notif: Notification) => {
-    this.props.dispatch(selectNotif(notif));
+  showNotification = (notif: Notification, event: React.MouseEvent<any>) => {
+    if (event.metaKey || event.ctrlKey) {
+      this.props.dispatch(openNotifExternal(notif));
+    }
+    else {
+      this.props.dispatch(selectNotif(notif));
+    }
   }
 
   changeNotifFilter = (owner: string, repo: string) => {

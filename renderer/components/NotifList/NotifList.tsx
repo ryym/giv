@@ -8,7 +8,7 @@ export type Props = {
   notifs: Notification[],
   getRepository: (fullName: string) => Repository | null,
   getIssue: (url: string) => Issue | null,
-  onNotifClick: (notif: Notification) => void,
+  onNotifClick: (notif: Notification, event: React.MouseEvent<any>) => void,
   onCheckClick: (notif: Notification) => void,
   onLoadMoreClick: (event: any) => void,
   isLoading: boolean,

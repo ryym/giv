@@ -2,10 +2,23 @@ import { Action } from '../../action-types';
 import { AsyncThunk } from '../types';
 import { Notification, NotifFilter } from '../../models/types';
 import normalizeNotifications from '../../lib/normalizers/notifications';
+import { openExternal } from '../../lib/ipc';
+import { extractIssueURL } from './lib';
 
 export const selectNotif = (notif: Notification): Action => ({
   type: 'SELECT_NOTIF', notif,
 });
+
+export const openNotifExternal = (notif: Notification): AsyncThunk => {
+  return async (dispatch) => {
+    openExternal(extractIssueURL(notif));
+    dispatch({
+      type: 'SELECT_NOTIF',
+      notif,
+      openExternal: true,
+    });
+  };
+};
 
 export const filterNotifs = (filter: NotifFilter): Action => ({
   type: 'FILTER_NOTIFS', filter,

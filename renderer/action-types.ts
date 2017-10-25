@@ -10,7 +10,7 @@ export type Action
   | { type: 'FETCH_UNREAD_NOTIFS', oldestDate?: string }
   | { type: 'FETCH_UNREAD_NOTIFS_START', repoFullName?: string }
   | { type: 'FETCH_UNREAD_NOTIFS_OK', data: NormalizedNotifs }
-  | { type: 'SELECT_NOTIF', notif: Notification }
+  | { type: 'SELECT_NOTIF', notif: Notification, openExternal?: boolean }
   | { type: 'FETCH_ISSUE_OK', issue: Issue }
   | { type: 'FILTER_NOTIFS', filter: NotifFilter }
   | { type: 'CATCH_ERROR', err: Error }
