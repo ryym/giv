@@ -1,8 +1,7 @@
 import React from 'react';
 import NotifList from '../../NotifList';
 import RepoTree from '../../RepoTree';
-import Webview from '../../widgets/Webview';
-import WebviewControll from '../../widgets/WebviewControll';
+import Browser from '../../Browser';
 import { Notification, Issue, Repository, NotifCounts } from '../../../lib/models';
 import { Dispatch } from '../../../store/types';
 import {
@@ -76,7 +75,6 @@ export class NotifsPage extends React.PureComponent<AllProps> {
 
   render() {
     const { props } = this;
-    const webviewConnector = WebviewControll.createConnector();
     return (
       <div className="c_page-root p-notifs_root">
         <section className="p-notifs_streams-container">
@@ -99,12 +97,7 @@ export class NotifsPage extends React.PureComponent<AllProps> {
           </div>
         </section>
         <section className="p-notifs_webview-container">
-          <header className="p-notifs_header for-webview">
-            <WebviewControll connector={webviewConnector} />
-          </header>
-          <div className="p-notifs_webview">
-            <Webview connector={webviewConnector} src={props.shownURL} />
-          </div>
+          <Browser url={props.shownURL} />
         </section>
       </div>
     );

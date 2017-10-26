@@ -1,0 +1,68 @@
+.browser_header {
+  height: var(--pad6);
+  display: flex;
+  align-items: center;
+  background-color: var(--cl-base);
+  box-shadow: 0 4px 5px -3px #96939b;
+  position: relative;
+}
+
+.browser_container {
+  height: 100%;
+
+  .webview-controll {
+    padding: var(--pad);
+    margin-left: var(--pad2);
+    height: 100%;
+    width: 100%;
+    min-width: 600px;
+  }
+
+  .webview-controll_btn {
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--cl-black);
+    cursor: pointer;
+    display: inline-block;
+    margin-right: var(--pad);
+    padding: 0 var(--pad);
+    line-height: var(--pad4);
+
+    &:not(.is-disabled):hover {
+      color: var(--cl-accent);
+    }
+
+    &.is-disabled {
+      color: var(--cl-gray-d);
+      cursor: default;
+    }
+
+    .fa-spin {
+      animation-duration: 1s;
+    }
+  }
+
+  .webview-controll_url {
+    background-color: inherit;
+    border: 0;
+    border-bottom: 1px solid var(--cl-base-d);
+    display: inline-block;
+    font-size: 1.4rem;
+    margin: 0;
+    margin-left: var(--pad4);
+    min-width: 60%;
+    padding: 2px;
+    padding-left: var(--pad);
+    opacity: 0.8;
+  }
+}
+
+.browser_webview {
+  height: calc(100% - var(--pad6));
+
+  > webview {
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+}
