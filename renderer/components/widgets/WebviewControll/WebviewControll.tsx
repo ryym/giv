@@ -60,7 +60,7 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
   render() {
     const { webview, nowLoading } = this.state;
     return (
-      <div className="webview-controll">
+      <div className="w_webview-controll">
         <ControllButton
           action={() => webview && webview.goBack()}
           enabled={webview && webview.canGoBack()}
@@ -94,7 +94,7 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
         type="text"
         readOnly
         value={url || ''}
-        className="webview-controll_url"
+        className="w_webview-controll_url"
         ref={(urlBar: HTMLInputElement) => this.urlBar = urlBar}
         onClick={this.selectWholeURL}
       />

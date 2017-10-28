@@ -10,7 +10,7 @@
 .browser_container {
   height: 100%;
 
-  .webview-controll {
+  .w_webview-controll {
     padding: var(--pad);
     margin-left: var(--pad2);
     height: 100%;
@@ -18,7 +18,7 @@
     min-width: 600px;
   }
 
-  .webview-controll_btn {
+  .w_webview-controll_btn {
     text-decoration: none;
     font-size: 1.4rem;
     color: var(--cl-black);
@@ -42,7 +42,7 @@
     }
   }
 
-  .webview-controll_url {
+  .w_webview-controll_url {
     background-color: inherit;
     border: 0;
     border-bottom: 1px solid var(--cl-base-d);

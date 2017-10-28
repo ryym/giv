@@ -12,7 +12,7 @@ export default function ControllButton({ children, action, enabled }: Props) {
     <a
       role="button"
       onClick={action}
-      className={classes({ 'webview-controll_btn': true, 'is-disabled': !enabled })}
+      className={classes({ 'w_webview-controll_btn': true, 'is-disabled': !enabled })}
     >
       {children}
     </a>
