@@ -1,7 +1,7 @@
 import React from 'react';
 import NotifList from '../../NotifList';
 import RepoTree from '../../RepoTree';
-import Browser from '../../Browser';
+import Browser from '../../widgets/Browser';
 import { Notification, Issue, Repository, NotifCounts } from '../../../lib/models';
 import { Dispatch } from '../../../store/types';
 import {

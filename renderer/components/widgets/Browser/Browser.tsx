@@ -1,7 +1,7 @@
 import React from 'react';
-import Webview from '../widgets/Webview';
-import WebviewControll from '../widgets/WebviewControll';
-import WebviewConnector from '../widgets/WebviewControll/webview-connector';
+import Webview from '../Webview';
+import WebviewControll from '../WebviewControll';
+import WebviewConnector from '../WebviewControll/webview-connector';
 
 export type Props = {
   url?: string,
@@ -17,11 +17,11 @@ export default class Browser extends React.Component<Props> {
 
   render() {
     return (
-      <div className="browser_container">
-        <header className="browser_header">
+      <div className="w_browser_container">
+        <header className="w_browser_header">
           <WebviewControll connector={this.connector} />
         </header>
-        <div className="browser_webview">
+        <div className="w_browser_webview">
           <Webview connector={this.connector} src={this.props.url} />
         </div>
       </div>

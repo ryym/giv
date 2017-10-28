@@ -1,4 +1,4 @@
-.browser_header {
+.w_browser_header {
   height: var(--pad6);
   display: flex;
   align-items: center;
@@ -7,7 +7,7 @@
   position: relative;
 }
 
-.browser_container {
+.w_browser_container {
   height: 100%;
 
   .w_webview-controll {
@@ -57,7 +57,7 @@
   }
 }
 
-.browser_webview {
+.w_browser_webview {
   height: calc(100% - var(--pad6));
 
   > webview {
