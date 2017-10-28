@@ -1,10 +1,10 @@
-.loading {
+.loading-bars {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
 
   div {
-    animation: loading-bar 1.2s infinite;
+    animation: loading-bars_bar 1.2s infinite;
     background-color: #ccc;
     border-radius: 2px;
     opacity: 0.8;
@@ -33,7 +33,7 @@
   }
 }
 
-@keyframes loading-bar {
+@keyframes loading-bars_bar {
   30% {
     transform: scaleY(2);
     border-radius: 0;
