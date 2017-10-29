@@ -3,6 +3,21 @@ import { GitHubAPI } from './types';
 import { NotificationJSON } from '../../lib/models';
 import Errors from '../errors';
 
+const paramsToQuery = (params: { [key: string]: any }) => {
+  const query = Object.keys(params).reduce((q, k) => {
+    const v = params[k];
+    return v != null ? `${q}&${k}=${v}` : `${q}&${k}`;
+  }, '');
+  return query.length > 0 ? `?${query}` : query;
+};
+
+export type ListUnreadParams = {
+  all?: boolean,
+  participating?: boolean,
+  since?: string,
+  before?: string,
+};
+
 export default class GitHubNotifications {
   private readonly api: GitHubAPI;
 
@@ -30,9 +45,9 @@ export default class GitHubNotifications {
     }
   }
 
-  async listUnread(oldestDate?: string): Promise<NotificationJSON[] | null> {
+  async listUnread(params: ListUnreadParams = {}): Promise<NotificationJSON[] | null> {
     try {
-      const query = oldestDate ? `?before=${oldestDate}` : '';
+      const query = paramsToQuery(params);
       const res = await this.api.requestSoon(`notifications${query}`);
       return res.ok ? (await res.json()) as NotificationJSON[] : null;
     }

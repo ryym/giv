@@ -64,7 +64,7 @@ export function fetchUnreadNotifs({
 
     const notifs = repoFullName
       ? await notifsAPI.listUnreadInRepo(repoFullName, oldestUpdatedAt)
-      : await notifsAPI.listUnread(oldestUpdatedAt);
+      : await notifsAPI.listUnread({ before: oldestUpdatedAt });
 
     if (notifs != null) {
       const normalizedNotifs = normalizeNotifications(notifs);
