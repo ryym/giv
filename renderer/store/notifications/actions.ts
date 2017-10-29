@@ -29,9 +29,8 @@ export function pollNotifications(): AsyncThunk {
     dispatch({ type: 'POLL_NOTIFS_START' });
 
     const poll = async (interval: number, lastModified?: string) => {
-      const [updated, maybeRes] = await github.notifications.poll(lastModified);
-      if (updated) {
-        const res = maybeRes!;
+      const res = await github.notifications.poll(lastModified);
+      if (res !== null) {
         dispatch({
           type: 'POLL_NOTIFS_OK',
           isFirst: !lastModified,

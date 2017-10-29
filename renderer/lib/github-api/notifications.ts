@@ -11,19 +11,19 @@ export default class GitHubNotifications {
     bindMethodContext(this);
   }
 
-  async poll(lastModified?: string): Promise<[boolean, {
+  async poll(lastModified?: string): Promise<{
     lastModified: string, interval: number, notifs: NotificationJSON[],
-  } | null]> {
+  } | null> {
     try {
       const headers = lastModified ? { 'If-Modified-Since': lastModified } : {};
       const res = await this.api.requestSoon('notifications', { headers });
       if (!res.ok) {
-        return [false, null];
+        return null;
       }
       const modified = res.headers.get('Last-Modified')!;
       const interval = Number(res.headers.get('X-Poll-Interval'));
       const notifs = (await res.json()) as NotificationJSON[];
-      return [true, { lastModified: modified, interval, notifs }];
+      return { lastModified: modified, interval, notifs };
     }
     catch (err) {
       throw new Errors(err, `Failed to poll notifications (lastModified: ${lastModified})`);
