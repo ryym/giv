@@ -18,6 +18,39 @@
   }
 }
 
+/* TODO: Share same CSS with webview-controll buttons */
+.p-notifs_header-actions {
+  color: var(--cl-base);
+  margin-left: 130px;
+}
+
+.p-notifs_header-action {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: var(--pad);
+  padding: 0 var(--pad);
+  line-height: var(--pad4);
+
+  &:not(.is-disabled):hover {
+    color: var(--cl-accent);
+  }
+
+  &.is-disabled {
+    color: var(--cl-gray-d);
+    cursor: default;
+  }
+
+  .fa-spin {
+    animation-duration: 1s;
+  }
+}
+
 .p-notifs_streams {
   display: flex;
   height: calc(100% - var(--pad6));

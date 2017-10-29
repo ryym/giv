@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from 'classnames';
 import NotifList from '../../NotifList';
 import RepoTree from '../../RepoTree';
 import Browser from '../../widgets/Browser';
@@ -11,6 +12,7 @@ import {
   fetchUnreadNotifs,
   FetchUnreadNotifsPayload,
   markAsRead,
+  refreshNotifs,
 } from '../../../store/notifications/actions';
 import { connect } from 'react-redux';
 import State from '../../../store/state';
@@ -73,12 +75,31 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     this.props.dispatch(markAsRead(notif));
   }
 
+  refreshNotifs = () => {
+    if (!this.props.isLoading) {
+      this.props.dispatch(refreshNotifs());
+    }
+  }
+
   render() {
     const { props } = this;
     return (
       <div className="c_page-root p-notifs_root">
         <section className="p-notifs_streams-container">
-          <header className="p-notifs_header for-stream" />
+          <header className="p-notifs_header for-stream">
+          <div className="p-notifs_header-actions">
+            <button
+              className="p-notifs_header-action"
+              onClick={this.refreshNotifs}
+              disabled={props.isLoading}
+            >
+              <i className={classes(
+                ['fa', 'fa-refresh', 'fa-lg'],
+                { 'fa-spin': props.isLoading },
+              )}></i>
+            </button>
+          </div>
+          </header>
           <div className="p-notifs_streams">
             <RepoTree
               notifCounts={props.notifCounts}

@@ -28,6 +28,7 @@
     padding: 0 var(--pad);
     line-height: var(--pad4);
 
+    /* TODO: Use [disabled] attribute. */
     &:not(.is-disabled):hover {
       color: var(--cl-accent);
     }
