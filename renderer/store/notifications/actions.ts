@@ -4,6 +4,7 @@ import { Notification, NotifFilter } from '../../lib/models';
 import normalizeNotifications from '../../lib/normalizers/notifications';
 import { openExternal } from '../../lib/ipc';
 import { extractIssueURL } from './lib';
+import { getNotification } from '../selectors';
 
 export const selectNotif = (notif: Notification): Action => ({
   type: 'SELECT_NOTIF', notif,
@@ -85,5 +86,33 @@ export function markAsRead(notif: Notification): AsyncThunk {
       dispatch({ type: 'MARK_NOTIF_AS_READ_OK', notif });
     }
     // TODO: Handle failure case.
+  };
+}
+
+// - Fetch latest notifications
+// - Remove read notifications
+export function refreshNotifs(): AsyncThunk {
+  return async (dispatch, getState, { github }) => {
+    dispatch({ type: 'REFRESH_NOTIFS_START' });
+
+    let state = getState();
+    const newest = getNotification(state, state.notifications.ids[0]);
+    const notifs = await github.notifications.listUnread({
+      since: newest ? newest.updated_at : undefined,
+    });
+
+    if (notifs == null) {
+      // TODO: Handle failures such as 404.
+      return;
+    }
+
+    state = getState();
+    const unreadIDs = state.notifications.ids.filter((id) => {
+      const notif = getNotification(state, id);
+      return notif && notif.unread;
+    });
+
+    const data = normalizeNotifications(notifs);
+    dispatch({ type: 'REFRESH_NOTIFS_OK', data, unreadIDs });
   };
 }

@@ -13,6 +13,7 @@ const initialState: Notifications = {
 export default (notifs: Notifications = initialState, action: Action) => {
   switch (action.type) {
   case 'FETCH_UNREAD_NOTIFS_START':
+  case 'REFRESH_NOTIFS_START':
     return {
       ...notifs,
       isLoading: true,
@@ -30,6 +31,13 @@ export default (notifs: Notifications = initialState, action: Action) => {
       ...notifs,
       isLoading: false,
       ids: concatUniq(notifs.ids, action.data.result),
+    };
+
+  case 'REFRESH_NOTIFS_OK':
+    return {
+      ...notifs,
+      isLoading: false,
+      ids: action.data.result.concat(action.unreadIDs),
     };
 
   case 'SELECT_NOTIF':

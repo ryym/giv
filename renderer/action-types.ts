@@ -18,6 +18,8 @@ export type Action
   | { type: 'MARK_NOTIF_AS_READ_OK', notif: Notification }
   | { type: 'POLL_NOTIFS_START' }
   | { type: 'POLL_NOTIFS_OK', data: NormalizedNotifs, isFirst: boolean }
+  | { type: 'REFRESH_NOTIFS_START' }
+  | { type: 'REFRESH_NOTIFS_OK', data: NormalizedNotifs, unreadIDs: string[] }
 
   // react-router-redux
   | { type: '@@router/CALL_HISTORY_METHOD' };

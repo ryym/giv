@@ -12,6 +12,7 @@ const notifsReducer = (notifs: NotifEntities = initialNotifs, action: Action) =>
   switch (action.type) {
   case 'POLL_NOTIFS_OK':
   case 'FETCH_UNREAD_NOTIFS_OK':
+  case 'REFRESH_NOTIFS_OK': // Should remove read notifications?
     return {
       ...notifs,
       byID: {
@@ -51,6 +52,7 @@ const reposReducer = (repos: RepoEntities = initialRepos, action: Action) => {
   switch (action.type) {
   case 'POLL_NOTIFS_OK':
   case 'FETCH_UNREAD_NOTIFS_OK':
+  case 'REFRESH_NOTIFS_OK':
     return {
       ...repos,
       byFullName: {
