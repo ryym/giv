@@ -87,18 +87,18 @@ export class NotifsPage extends React.PureComponent<AllProps> {
       <div className="c_page-root p-notifs_root">
         <section className="p-notifs_streams-container">
           <header className="p-notifs_header for-stream">
-          <div className="p-notifs_header-actions">
-            <button
-              className="p-notifs_header-action"
-              onClick={this.refreshNotifs}
-              disabled={props.isLoading}
-            >
-              <i className={classes(
-                ['fa', 'fa-refresh', 'fa-lg'],
-                { 'fa-spin': props.isLoading },
-              )}></i>
-            </button>
-          </div>
+            <div className="p-notifs_header-actions">
+              <button
+                className="p-notifs_header-action"
+                onClick={this.refreshNotifs}
+                disabled={props.isLoading}
+              >
+                <i className={classes(
+                  ['fa', 'fa-refresh', 'fa-lg'],
+                  { 'fa-spin': props.isLoading },
+                )}></i>
+              </button>
+            </div>
           </header>
           <div className="p-notifs_streams">
             <RepoTree
