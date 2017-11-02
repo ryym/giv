@@ -1,8 +1,8 @@
 import bindMethodContext from '../utils/bind-method-context';
-import { GitHubAPI } from './types';
+import { GitHubAPI, PageLinks } from './types';
 import { NotificationJSON } from '../../lib/models';
 import Errors from '../errors';
-import { paramsToQuery } from './lib';
+import { paramsToQuery, extractLinks, extractPage } from './lib';
 
 export type ListUnreadParams = {
   all?: boolean,
@@ -10,6 +10,8 @@ export type ListUnreadParams = {
   since?: string,
   before?: string,
 };
+
+export const NOTIFS_PER_PAGE = 50;
 
 export default class GitHubNotifications {
   private readonly api: GitHubAPI;
@@ -20,7 +22,10 @@ export default class GitHubNotifications {
   }
 
   async poll(lastModified?: string): Promise<{
-    lastModified: string, interval: number, notifs: NotificationJSON[],
+    lastModified: string,
+    interval: number,
+    notifs: NotificationJSON[],
+    links: PageLinks | null,
   } | null> {
     try {
       const headers = lastModified ? { 'If-Modified-Since': lastModified } : {};
@@ -30,8 +35,12 @@ export default class GitHubNotifications {
       }
       const modified = res.headers.get('Last-Modified')!;
       const interval = Number(res.headers.get('X-Poll-Interval'));
+
+      const link = res.headers.get('Link');
+      const links = link ? extractLinks(link) : null;
+
       const notifs = (await res.json()) as NotificationJSON[];
-      return { lastModified: modified, interval, notifs };
+      return { lastModified: modified, interval, notifs, links };
     }
     catch (err) {
       throw new Errors(err, `Failed to poll notifications (lastModified: ${lastModified})`);
@@ -75,5 +84,26 @@ export default class GitHubNotifications {
     catch (err) {
       throw new Errors(err, `Failed to mark a thread ${threadID} as read`);
     }
+  }
+
+  async countAllUnread(lastPageURL: string, perPage = NOTIFS_PER_PAGE): Promise<number | null> {
+    const lastPage = extractPage(lastPageURL);
+    if (lastPage == null) {
+      return null;
+    }
+
+    let res: Response;
+    try {
+      res = await this.api.requestSoon(lastPageURL);
+    }
+    catch (err) {
+      return null;
+    }
+
+    if (!res.ok) {
+      return null;
+    }
+    const lastNotifs = await res.json() as NotificationJSON[];
+    return perPage * (lastPage - 1) + lastNotifs.length;
   }
 }
