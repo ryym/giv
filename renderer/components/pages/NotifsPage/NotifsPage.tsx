@@ -3,6 +3,7 @@ import classes from 'classnames';
 import NotifList from '../../NotifList';
 import RepoTree from '../../RepoTree';
 import Browser from '../../widgets/Browser';
+import NotifsHeader from './NotifsHeader';
 import { Notification, Issue, Repository, NotifCounts } from '../../../lib/models';
 import { Dispatch } from '../../../store/types';
 import {
@@ -82,35 +83,17 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     }
   }
 
-  renderNotifCount = () => {
-    const { notifs, allUnreadCount: all } = this.props;
-    return all ? `${notifs.length} / ${all}` : '-';
-  }
-
   render() {
     const { props } = this;
     return (
       <div className="c_page-root p-notifs_root">
         <section className="p-notifs_streams-container">
-          <header className="p-notifs_header for-stream">
-            <div className="p-notifs_header-items">
-              <div className="p-notifs_header-item for-counts">
-                {this.renderNotifCount()}
-              </div>
-              <div className="p-notifs_header-item">
-                <button
-                  className="p-notifs_header-action"
-                  onClick={this.refreshNotifs}
-                  disabled={props.isLoading}
-                >
-                  <i className={classes(
-                    ['fa', 'fa-refresh', 'fa-lg'],
-                    { 'fa-spin': props.isLoading },
-                  )}></i>
-                </button>
-              </div>
-            </div>
-          </header>
+          <NotifsHeader
+            shownCount={props.notifs.length}
+            allCount={props.allUnreadCount}
+            isLoading={props.isLoading}
+            onRefresh={this.refreshNotifs}
+          />
           <div className="p-notifs_streams">
             <RepoTree
               notifCounts={props.notifCounts}
