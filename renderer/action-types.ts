@@ -20,6 +20,7 @@ export type Action
   | { type: 'POLL_NOTIFS_OK', data: NormalizedNotifs, isFirst: boolean }
   | { type: 'REFRESH_NOTIFS_START' }
   | { type: 'REFRESH_NOTIFS_OK', data: NormalizedNotifs, unreadIDs: string[] }
+  | { type: 'COUNT_ALL_UNREAD_NOTIFS_OK', count: number }
 
   // react-router-redux
   | { type: '@@router/CALL_HISTORY_METHOD' };

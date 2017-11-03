@@ -34,6 +34,7 @@ export type Props = {
   isLoading: boolean,
   notifCounts: NotifCounts,
   selectedRepo: string,
+  allUnreadCount: number | undefined,
 };
 type AllProps = Props & { dispatch: Dispatch };
 
@@ -81,23 +82,33 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     }
   }
 
+  renderNotifCount = () => {
+    const { notifs, allUnreadCount: all } = this.props;
+    return all ? `${notifs.length} / ${all}` : '-';
+  }
+
   render() {
     const { props } = this;
     return (
       <div className="c_page-root p-notifs_root">
         <section className="p-notifs_streams-container">
           <header className="p-notifs_header for-stream">
-            <div className="p-notifs_header-actions">
-              <button
-                className="p-notifs_header-action"
-                onClick={this.refreshNotifs}
-                disabled={props.isLoading}
-              >
-                <i className={classes(
-                  ['fa', 'fa-refresh', 'fa-lg'],
-                  { 'fa-spin': props.isLoading },
-                )}></i>
-              </button>
+            <div className="p-notifs_header-items">
+              <div className="p-notifs_header-item for-counts">
+                {this.renderNotifCount()}
+              </div>
+              <div className="p-notifs_header-item">
+                <button
+                  className="p-notifs_header-action"
+                  onClick={this.refreshNotifs}
+                  disabled={props.isLoading}
+                >
+                  <i className={classes(
+                    ['fa', 'fa-refresh', 'fa-lg'],
+                    { 'fa-spin': props.isLoading },
+                  )}></i>
+                </button>
+              </div>
             </div>
           </header>
           <div className="p-notifs_streams">
@@ -135,6 +146,7 @@ export default connect(
       isLoading: isLoadingNotifs(state),
       notifCounts: countNotifsPerRepo(state),
       selectedRepo: getSelectedRepo(state),
+      allUnreadCount: state.notifications.allUnreadCount,
     };
   },
 )(NotifsPage);

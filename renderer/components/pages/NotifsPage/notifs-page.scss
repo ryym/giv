@@ -9,6 +9,7 @@
 
   &.for-stream {
     background-color: var(--cl-base-d);
+    color: var(--cl-base);
   }
 
   &.for-webview {
@@ -19,9 +20,20 @@
 }
 
 /* TODO: Share same CSS with webview-controll buttons */
-.p-notifs_header-actions {
-  color: var(--cl-base);
-  margin-left: 130px;
+.p-notifs_header-items {
+  margin-left: 60px;
+}
+
+.p-notifs_header-item {
+  display: inline-block;
+  margin-right: var(--pad);
+  padding: 0 var(--pad);
+  line-height: var(--pad4);
+
+  &.for-counts {
+    width: 70px;
+    text-align: center;
+  }
 }
 
 .p-notifs_header-action {
@@ -33,9 +45,7 @@
   font-size: 1.4rem;
   cursor: pointer;
   display: inline-block;
-  margin-right: var(--pad);
-  padding: 0 var(--pad);
-  line-height: var(--pad4);
+  padding: 0;
 
   &:not(.is-disabled):hover {
     color: var(--cl-accent);

@@ -37,14 +37,28 @@ export function pollNotifications(): AsyncThunk {
           isFirst: !lastModified,
           data: normalizeNotifications(res.notifs),
         });
+
+        if (res.links && res.links.last) {
+          countAllUnreadNotifs(res.links.last);
+        }
+
         lastModified = res.lastModified;
         interval = res.interval * 1000;
       }
       setTimeout(() => poll(interval, lastModified), interval);
     };
 
+    const countAllUnreadNotifs = async (lastPageURL: string) => {
+      const count = await github.notifications.countAllUnread(lastPageURL);
+      if (count != null) {
+        dispatch({
+          type: 'COUNT_ALL_UNREAD_NOTIFS_OK',
+          count,
+        });
+      }
+    };
+
     poll(0);
-    return;
   };
 }
 

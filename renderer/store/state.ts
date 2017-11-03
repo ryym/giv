@@ -42,6 +42,7 @@ export interface Notifications {
   readonly shownURL: string | undefined;
   readonly filter: NotifFilter;
   readonly ids: string[];
+  readonly allUnreadCount: number | undefined;
 }
 
 export interface AppError {

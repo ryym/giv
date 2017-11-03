@@ -8,6 +8,7 @@ const initialState: Notifications = {
   shownURL: undefined,
   filter: {},
   ids: [],
+  allUnreadCount: undefined,
 };
 
 export default (notifs: Notifications = initialState, action: Action) => {
@@ -50,6 +51,12 @@ export default (notifs: Notifications = initialState, action: Action) => {
     return {
       ...notifs,
       filter: determineNextFilter(notifs.filter, action.filter),
+    };
+
+  case 'COUNT_ALL_UNREAD_NOTIFS_OK':
+    return {
+      ...notifs,
+      allUnreadCount: action.count,
     };
 
   default:
