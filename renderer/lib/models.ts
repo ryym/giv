@@ -24,6 +24,7 @@ export interface Notification extends BaseNotification {
 export interface User {
   readonly id: number;
   readonly login: string;
+  readonly avatar_url: string;
 }
 
 export interface Repository {
