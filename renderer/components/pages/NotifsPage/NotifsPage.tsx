@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from 'classnames';
 import NotifList from '../../NotifList';
 import RepoTree from '../../RepoTree';
 import Browser from '../../widgets/Browser';
@@ -13,6 +12,7 @@ import {
   fetchUnreadNotifs,
   FetchUnreadNotifsPayload,
   markAsRead,
+  markAllAsRead,
   refreshNotifs,
 } from '../../../store/notifications/actions';
 import { connect } from 'react-redux';
@@ -83,6 +83,12 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     }
   }
 
+  markAllAsRead = () => {
+    if (!this.props.isLoading) {
+      this.props.dispatch(markAllAsRead());
+    }
+  }
+
   render() {
     const { props } = this;
     return (
@@ -93,6 +99,7 @@ export class NotifsPage extends React.PureComponent<AllProps> {
             allCount={props.allUnreadCount}
             isLoading={props.isLoading}
             onRefresh={this.refreshNotifs}
+            onMarkAllAsRead={this.markAllAsRead}
           />
           <div className="p-notifs_streams">
             <RepoTree

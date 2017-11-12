@@ -1,6 +1,7 @@
 export type FetchOptions = {
   method?: string,
   headers?: {},
+  body?: string,
 };
 
 export interface GitHubAPI {

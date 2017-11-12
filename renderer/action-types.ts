@@ -21,6 +21,9 @@ export type Action
   | { type: 'REFRESH_NOTIFS_START' }
   | { type: 'REFRESH_NOTIFS_OK', data: NormalizedNotifs, unreadIDs: string[] }
   | { type: 'COUNT_ALL_UNREAD_NOTIFS_OK', count: number }
+  | { type: 'MARK_ALL_AS_READ' }
+  | { type: 'MARK_ALL_AS_READ_START' }
+  | { type: 'MARK_ALL_AS_READ_OK' }
 
   // react-router-redux
   | { type: '@@router/CALL_HISTORY_METHOD' };

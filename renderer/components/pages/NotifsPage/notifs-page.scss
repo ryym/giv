@@ -21,7 +21,7 @@
 
 /* TODO: Share same CSS with webview-controll buttons */
 .p-notifs_header-items {
-  margin-left: 60px;
+  margin-left: 56px;
 }
 
 .p-notifs_header-item {
@@ -47,11 +47,11 @@
   display: inline-block;
   padding: 0;
 
-  &:not(.is-disabled):hover {
+  &:not([disabled]):hover {
     color: var(--cl-accent);
   }
 
-  &.is-disabled {
+  &[disabled] {
     color: var(--cl-gray-d);
     cursor: default;
   }

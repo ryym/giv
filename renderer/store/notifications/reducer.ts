@@ -1,6 +1,6 @@
 import { Action } from '../../action-types';
 import { Notifications } from '../state';
-import { Notification, NotifFilter } from '../../lib/models';
+import { NotifFilter } from '../../lib/models';
 import { extractIssueURL } from './lib';
 
 const initialState: Notifications = {
@@ -15,6 +15,7 @@ export default (notifs: Notifications = initialState, action: Action) => {
   switch (action.type) {
   case 'FETCH_UNREAD_NOTIFS_START':
   case 'REFRESH_NOTIFS_START':
+  case 'MARK_ALL_AS_READ_START':
     return {
       ...notifs,
       isLoading: true,
@@ -39,6 +40,13 @@ export default (notifs: Notifications = initialState, action: Action) => {
       ...notifs,
       isLoading: false,
       ids: action.data.result.concat(action.unreadIDs),
+    };
+
+  case 'MARK_ALL_AS_READ_OK':
+    return {
+      ...notifs,
+      isLoading: false,
+      ids: [],
     };
 
   case 'SELECT_NOTIF':

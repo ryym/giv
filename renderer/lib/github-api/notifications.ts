@@ -86,6 +86,19 @@ export default class GitHubNotifications {
     }
   }
 
+  async markAllAsRead(lastUpdatedAt: string): Promise<boolean> {
+    try {
+      const res = await this.api.requestSoon(`notifications`, {
+        method: 'PUT',
+        body: JSON.stringify({ last_updated_at: lastUpdatedAt }),
+      });
+      return res.ok;
+    }
+    catch (err) {
+      throw new Errors(err, `Failed to mark all as read (since: ${lastUpdatedAt})`);
+    }
+  }
+
   // You need to this method only when notifications are paginated.
   async countAllUnread(lastPageURL: string, perPage = NOTIFS_PER_PAGE): Promise<number | null> {
     const lastPage = extractPage(lastPageURL);

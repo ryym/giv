@@ -107,6 +107,19 @@ export function markAsRead(notif: Notification): AsyncThunk {
   };
 }
 
+export function markAllAsRead(): AsyncThunk {
+  return async (dispatch, getState, { github }) => {
+    const state = getState();
+    const newest = getNotification(state, state.notifications.ids[0]);
+
+    if (newest != null) {
+      dispatch({ type: 'MARK_ALL_AS_READ_START' });
+      await github.notifications.markAllAsRead(newest.updated_at);
+      dispatch({ type: 'MARK_ALL_AS_READ_OK' });
+    }
+  };
+}
+
 // - Fetch latest notifications
 // - Remove read notifications
 export function refreshNotifs(): AsyncThunk {

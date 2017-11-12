@@ -33,6 +33,12 @@ const notifsReducer = (notifs: NotifEntities = initialNotifs, action: Action) =>
     };
   }
 
+  case 'MARK_ALL_AS_READ_OK':
+    return {
+      ...notifs,
+      byID: {},
+    };
+
   default:
     return notifs;
   }
