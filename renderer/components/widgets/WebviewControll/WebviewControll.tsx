@@ -43,7 +43,7 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
       }
     };
 
-    webview.addEventListener('load-commit', (event: any) => {
+    webview.addEventListener('load-commit', (event: Electron.LoadCommitEvent) => {
       if (event.isMainFrame) {
         this.setState({ url: event.url });
       }

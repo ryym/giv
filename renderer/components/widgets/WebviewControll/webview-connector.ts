@@ -2,16 +2,12 @@ type HandleConnect = (webview: Electron.WebviewTag) => void;
 
 export default class WebviewConnector {
   private webview?: Electron.WebviewTag;
-  private handleConnect?: HandleConnect;
+  private handlers: HandleConnect[] = [];
 
   connect(webview: Electron.WebviewTag) {
-    if (this.handleConnect) {
-      this.handleConnect(webview);
-      this.handleConnect = undefined;
-    }
-    else {
-      this.webview = webview;
-    }
+    this.webview = webview;
+    this.handlers.forEach((handle) => handle(webview));
+    this.handlers = [];
   }
 
   // The given handler will be fired only once.
@@ -20,7 +16,7 @@ export default class WebviewConnector {
       handleConnect(this.webview);
     }
     else {
-      this.handleConnect = handleConnect;
+      this.handlers.push(handleConnect);
     }
   }
 }
