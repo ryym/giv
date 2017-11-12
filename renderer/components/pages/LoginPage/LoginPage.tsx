@@ -26,12 +26,13 @@ const GITHUB_URL = Object.freeze({
 
 export class LoginPage extends React.Component<AllProps, State> {
   state: State = {
-    url: 'https://github.com/login',
+    url: GITHUB_URL.LOGIN,
     step: STEP.LOADING,
     token: '',
   };
 
-  updateStepsByGitHubURL = ({ url }: Electron.LoadCommitEvent) => {
+  updateStepsByGitHubURL = async (event: Event, webview: Electron.WebviewTag) => {
+    const url = webview.getURL();
     switch (this.state.step) {
     case STEP.LOADING:
       if (url === GITHUB_URL.LOGIN) {
@@ -53,20 +54,28 @@ export class LoginPage extends React.Component<AllProps, State> {
       break;
 
     case STEP.GEN_TOKEN:
-      if (url === GITHUB_URL.TOKENS) {
+      if (await this.isTokenGenerated(url, webview)) {
         this.setState({ step: STEP.SAVE_TOKEN });
       }
       break;
-
-      // XXX: GitHub moves to `TOENS` URL even if
-      // the validation is failed...
-      // So this does not work perfectly.
-    case STEP.SAVE_TOKEN:
-      if (url === GITHUB_URL.NEW_TOKEN) {
-        this.setState({ step: STEP.GEN_TOKEN });
-      }
-      break;
     }
+  }
+
+  isTokenGenerated(url: string, webview: Electron.WebviewTag): Promise<boolean> {
+    return new Promise((resolve) => {
+      if (url !== GITHUB_URL.TOKENS) {
+        resolve(false);
+        return;
+      }
+      webview.executeJavaScript(
+        // GitHub, please do not change the class name..!
+        "document.querySelectorAll('.token').length",
+        false,
+        (len: number) => {
+          resolve(len === 1);
+        },
+      );
+    });
   }
 
   saveAccessToken = (token: string) => {
@@ -94,7 +103,7 @@ export class LoginPage extends React.Component<AllProps, State> {
           />
         </section>
         <section className="p-login_webview-container">
-          <Browser url={state.url} onURLChange={this.updateStepsByGitHubURL} />
+          <Browser url={state.url} onFinishLoad={this.updateStepsByGitHubURL} />
         </section>
       </div>
     );

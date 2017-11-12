@@ -5,7 +5,10 @@ import WebviewConnector from '../WebviewControll/webview-connector';
 
 export type Props = {
   url?: string,
-  onURLChange?: (event: Electron.LoadCommitEvent) => void,
+  onFinishLoad?: (
+    event: Event,
+    webview: Electron.WebviewTag,
+  ) => void,
 };
 
 export default class Browser extends React.Component<Props> {
@@ -18,10 +21,10 @@ export default class Browser extends React.Component<Props> {
   }
 
   handleWebviewEvents = (webview: Electron.WebviewTag) => {
-    const { onURLChange } = this.props;
-    webview.addEventListener('load-commit', (event: Electron.LoadCommitEvent) => {
-      if (event.isMainFrame && onURLChange != null) {
-        onURLChange(event);
+    const { onFinishLoad } = this.props;
+    webview.addEventListener('did-finish-load', (event: Event) => {
+      if (onFinishLoad) {
+        onFinishLoad(event, webview);
       }
     });
   }
