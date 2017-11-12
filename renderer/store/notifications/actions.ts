@@ -1,6 +1,6 @@
 import { Action } from '../../action-types';
 import { AsyncThunk } from '../types';
-import { Notification, NotifFilter } from '../../lib/models';
+import { Notification, NotificationJSON, NotifFilter } from '../../lib/models';
 import normalizeNotifications from '../../lib/normalizers/notifications';
 import { openExternal } from '../../lib/ipc';
 import { extractIssueURL } from './lib';
@@ -38,9 +38,8 @@ export function pollNotifications(): AsyncThunk {
           data: normalizeNotifications(res.notifs),
         });
 
-        if (res.links && res.links.last) {
-          countAllUnreadNotifs(res.links.last);
-        }
+        const lastPageURL = res.links ? res.links.last : undefined;
+        countAllUnreadNotifs(lastPageURL, res.notifs);
 
         lastModified = res.lastModified;
         interval = res.interval * 1000;
@@ -48,8 +47,13 @@ export function pollNotifications(): AsyncThunk {
       setTimeout(() => poll(interval, lastModified), interval);
     };
 
-    const countAllUnreadNotifs = async (lastPageURL: string) => {
-      const count = await github.notifications.countAllUnread(lastPageURL);
+    const countAllUnreadNotifs = async (
+      lastPageURL: string | undefined,
+      notifs: NotificationJSON[],
+    ) => {
+      const count = lastPageURL == null
+        ? notifs.length
+        : await github.notifications.countAllUnread(lastPageURL);
       if (count != null) {
         dispatch({
           type: 'COUNT_ALL_UNREAD_NOTIFS_OK',

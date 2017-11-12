@@ -9,7 +9,7 @@ export type Props = {
 };
 
 const renderNotifCount = (shownCount: number, allCount: number | undefined) => {
-  return allCount ? `${shownCount} / ${allCount}` : '-';
+  return allCount != null ? `${shownCount} / ${allCount}` : '-';
 };
 
 export default function NotifsHeader(props: Props) {

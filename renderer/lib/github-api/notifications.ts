@@ -86,6 +86,7 @@ export default class GitHubNotifications {
     }
   }
 
+  // You need to this method only when notifications are paginated.
   async countAllUnread(lastPageURL: string, perPage = NOTIFS_PER_PAGE): Promise<number | null> {
     const lastPage = extractPage(lastPageURL);
     if (lastPage == null) {
