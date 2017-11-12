@@ -1,10 +1,20 @@
 import { sendNewToken, fetchUserConfig } from '../../lib/ipc';
+import createGitHubClient from '../../lib/github-api';
 import { AsyncThunk } from '../types';
 
-// TODO: What happen if a user registers a wrong access token?
+// TODO: Restructure state about user
+// login: { config: UserConfig, user: User } ?
 
 export function updateToken(accessToken: string): AsyncThunk {
   return async (dispatch, _, { initGitHubAPI }) => {
+    const api = createGitHubClient(accessToken);
+    const user = await api.users.getAuthenticatedUser();
+    if (user == null) {
+      throw new Error('The access token is invalid.');
+    }
+
+    // TODO: Show the got data and let a user confirm it.
+
     sendNewToken(accessToken);
     initGitHubAPI(accessToken);
 

@@ -1,0 +1,77 @@
+.login-steps_steps {
+  margin: var(--pad4) 0;
+  padding-left: var(--pad8);
+  list-style-type: none;
+  counter-reset: steps;
+
+  &.is-disabled {
+    color: var(--cl-gray-d);
+  }
+}
+
+.login-steps_step {
+  position: relative;
+  line-height: var(--pad4);
+  margin: var(--pad2) 0;
+  padding-bottom: var(--pad2);
+  border-bottom: 1px solid var(--cl-gray);
+
+  &::before {
+    counter-increment: steps;
+    content: counter(steps) ".";
+  }
+
+  &.is-done {
+    color: var(--cl-gray-d);
+
+    .login-steps_step-icon {
+      color: var(--cl-gray-dd);
+    }
+  }
+
+  &.is-current {
+    .login-steps_step-icon {
+      color: var(--cl-accent);
+    }
+  }
+
+  &.is-notyet {
+    color: var(--cl-gray-d);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.login-steps_step-icon {
+  position: absolute;
+  top: var(--pad);
+  left: calc(-1 * var(--pad6));
+}
+
+// TODO: namespace
+.login-steps_form {
+  margin-top: var(--pad);
+  display: flex;
+  justify-content: space-around;
+}
+
+.login-steps_form_token {
+  width: 80%;
+}
+
+.login-steps_form_submit {
+  color: var(--cl-black);
+  cursor: pointer;
+  padding: 4px var(--pad);
+
+  &[disabled] {
+    cursor: default;
+    color: var(--cl-gray-d);
+  }
+
+  &:not([disabled]):hover {
+    color: var(--cl-accent);
+  }
+}

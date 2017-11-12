@@ -1,0 +1,30 @@
+.p-login_root {
+  display: flex;
+}
+
+.p-login_header {
+  margin: var(--pad2);
+  margin-right: 0;
+  padding-bottom: var(--pad);
+
+  h1,
+  p {
+    margin: var(--pad2) 0;
+  }
+
+  p {
+    font-size: 1.4rem;
+  }
+}
+
+.p-login_instruction {
+  height: 100%;
+  width: 400px;
+  min-width: 300px;
+  padding-right: var(--pad4);
+  border-right: 1px solid var(--cl-gray);
+}
+
+.p-login_webview-container {
+  flex: 1;
+}
