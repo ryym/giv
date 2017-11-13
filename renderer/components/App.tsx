@@ -13,14 +13,14 @@ export type Props = {
 
 export default function App({ history }: Props) {
   return (
-    <ConnectedRouter history={history}>
-      <AppErrorBoundary>
-        <div className="c_route-container">
-            <Route exact path="/" component={MainRoutes} />
-            <Route exact path="/login" component={LoginRoutes} />
-        </div>
-      </AppErrorBoundary>
-    </ConnectedRouter>
+    <AppErrorBoundary>
+      <ConnectedRouter history={history}>
+          <div className="c_route-container">
+              <Route exact path="/" component={MainRoutes} />
+              <Route exact path="/login" component={LoginRoutes} />
+          </div>
+      </ConnectedRouter>
+    </AppErrorBoundary>
   );
 }
 
