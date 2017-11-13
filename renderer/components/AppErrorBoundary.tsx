@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import State from '../store/state';
+import { Dispatch } from '../store/types';
+import { alertError } from '../store/app-error/actions';
 import Errors from '../lib/errors';
 
 type CompState = {
@@ -9,7 +11,7 @@ type CompState = {
 
 export type Props = CompState & {
   children?: any,
-  onError: (err: Error) => void,
+  onError: (err: Error) => Promise<void>,
 };
 
 export class AppErrorBoundary extends React.PureComponent<Props, CompState> {
@@ -42,14 +44,10 @@ export class AppErrorBoundary extends React.PureComponent<Props, CompState> {
 }
 
 export default connect(
-  (state: State): Props => ({
-    ...state.appError,
-    onError: (err: Error) => {
-      alert(err.message || 'Unexpected error occurred');
-      if (err instanceof Errors) {
-        // tslint:disable-next-line:no-console
-        console.error('CAUSE: ', err.cause);
-      }
-    },
+  (state: State) => ({
+    err: state.appError.err,
+  }),
+  (dispatch: Dispatch) => ({
+    onError: (err: Error) => dispatch(alertError(err)),
   }),
 )(AppErrorBoundary);

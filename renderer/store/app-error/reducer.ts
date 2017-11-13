@@ -13,6 +13,12 @@ export default (s = initialState, action: Action): AppError => {
       err: action.err,
     };
 
+  case 'CLEAR_ERROR':
+    return {
+      ...s,
+      err: null,
+    };
+
   default:
     return s;
   }

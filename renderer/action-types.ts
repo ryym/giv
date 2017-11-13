@@ -14,6 +14,7 @@ export type Action
   | { type: 'FETCH_ISSUE_OK', issue: Issue }
   | { type: 'FILTER_NOTIFS', filter: NotifFilter }
   | { type: 'CATCH_ERROR', err: Error }
+  | { type: 'CLEAR_ERROR' }
   | { type: 'MARK_NOTIF_AS_READ_START', notif: Notification }
   | { type: 'MARK_NOTIF_AS_READ_OK', notif: Notification }
   | { type: 'POLL_NOTIFS_START' }
