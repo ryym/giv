@@ -1,0 +1,28 @@
+.w-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border-radius: var(--pad);
+  padding: var(--pad2);
+  transition: 0.6s ease-out;
+  transition-property: opacity, box-shadow, transform;
+  top: -100%;
+
+  opacity: 0;
+  box-shadow: none;
+  transform: translate(-50%, -90%);
+
+  // height: 200px;
+  // width: 200px;
+
+  &.is-visible {
+    opacity: 1;
+    box-shadow: none;
+    box-shadow: 0px 5px 13px 1px var(--cl-gray-dd);
+    transform: translate(-50%, -50%);
+  }
+
+  &.in-frame {
+    top: 50%;
+  }
+}

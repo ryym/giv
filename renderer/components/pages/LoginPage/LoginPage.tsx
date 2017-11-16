@@ -7,6 +7,7 @@ import { Dispatch } from '../../../store/types';
 import { updateToken } from '../../../store/user-config/actions';
 import LoginSteps, { STEP } from '../../LoginSteps';
 import Browser from '../../widgets/Browser';
+import Dialog from '../../widgets/Dialog'
 import './login-page.scss';
 
 type AllProps = { dispatch: Dispatch };
@@ -103,10 +104,27 @@ export class LoginPage extends React.Component<AllProps, State> {
           />
         </section>
         <section className="p-login_webview-container">
-          <Browser url={state.url} onFinishLoad={this.updateStepsByGitHubURL} />
+          <Browser onFinishLoad={this.updateStepsByGitHubURL} />
         </section>
+        <Dialog>
+          {this.renderConfirmation()}
+        </Dialog>
       </div>
     );
+  }
+          // <Browser url={state.url} onFinishLoad={this.updateStepsByGitHubURL} />
+
+  renderConfirmation() {
+    return (
+      <div className="login-confirm-container">
+        <div className="login-confirm-row">
+          <p className="login-confirm-greet">
+          Hello, @ryym :)
+          </p>
+          <img className="login-confirm-avatar" src="https://avatars1.githubusercontent.com/u/12684251?v=4" alt="" />
+        </div>
+      </div>
+    )
   }
 }
 

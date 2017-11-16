@@ -28,3 +28,59 @@
 .p-login_webview-container {
   flex: 1;
 }
+
+
+.login-confirm-container {
+  // width: 280px;
+  margin: 0 var(--pad2);
+}
+
+.login-confirm-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--pad4) 0;
+}
+
+.login-confirm-greet {
+  font-weight: bold;
+  font-size: 2rem;
+  display: inline-block;
+}
+
+.login-confirm-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--pad);
+  margin-left: var(--pad4);
+}
+
+.login-confirm-btn {
+  font-size: 1.6rem;
+  border: 1px solid var(--cl-gray-dd);
+  padding: var(--pad) var(--pad2);
+  background-color: transparent;
+  border-radius: 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:not(:first-child) {
+    margin-left: var(--pad2);
+  }
+
+  &.is-ok {
+    border: 1px solid var(--cl-accent);
+    color: var(--cl-accent);
+
+    &:hover {
+      background-color: var(--cl-accent);
+      color: var(--cl-white);
+    }
+  }
+
+  &.is-cancel:hover {
+    background-color: var(--cl-gray);
+  }
+}
