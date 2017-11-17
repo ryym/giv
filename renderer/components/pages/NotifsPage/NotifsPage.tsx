@@ -3,10 +3,18 @@ import NotifList from '../../NotifList';
 import RepoTree from '../../RepoTree';
 import Browser from '../../widgets/Browser';
 import NotifsHeader from './NotifsHeader';
-import { Notification, Issue, Repository, NotifCounts } from '../../../lib/models';
+import SideMenu from '../../SideMenu';
+import {
+  Notification,
+  Issue,
+  Repository,
+  NotifCounts,
+  LoginUser,
+} from '../../../lib/models';
 import { Dispatch } from '../../../store/types';
 import {
-  selectNotif, openNotifExternal,
+  selectNotif,
+  openNotifExternal,
   filterNotifs,
   pollNotifications,
   fetchUnreadNotifs,
@@ -18,6 +26,7 @@ import {
 import { connect } from 'react-redux';
 import State from '../../../store/state';
 import {
+  getLoginUser,
   getFilteredNotifs,
   getSelectedRepo,
   getShownNotificationURL,
@@ -28,6 +37,7 @@ import {
 } from '../../../store/selectors';
 
 export type Props = {
+  user: LoginUser,
   notifs: Notification[],
   getRepository: (fullName: string) => Repository | null,
   getIssue: (url: string) => Issue | null,
@@ -39,7 +49,15 @@ export type Props = {
 };
 type AllProps = Props & { dispatch: Dispatch };
 
-export class NotifsPage extends React.PureComponent<AllProps> {
+type PageState = {
+  sideMenuOpen: boolean,
+};
+
+export class NotifsPage extends React.PureComponent<AllProps, PageState> {
+  state: PageState = {
+    sideMenuOpen: false,
+  };
+
   componentWillMount() {
     const { notifs, dispatch } = this.props;
     if (notifs.length === 0) {
@@ -89,8 +107,11 @@ export class NotifsPage extends React.PureComponent<AllProps> {
     }
   }
 
+  openSideMenu = () => this.setState({ sideMenuOpen: true });
+  closeSideMenu = () => this.setState({ sideMenuOpen: false });
+
   render() {
-    const { props } = this;
+    const { props, state } = this;
     return (
       <div className="c_page-root p-notifs_root">
         <section className="p-notifs_streams-container">
@@ -98,6 +119,7 @@ export class NotifsPage extends React.PureComponent<AllProps> {
             shownCount={props.notifs.length}
             allCount={props.allUnreadCount}
             isLoading={props.isLoading}
+            onSideMenuOpen={this.openSideMenu}
             onRefresh={this.refreshNotifs}
             onMarkAllAsRead={this.markAllAsRead}
           />
@@ -121,6 +143,11 @@ export class NotifsPage extends React.PureComponent<AllProps> {
         <section className="p-notifs_webview-container">
           <Browser url={props.shownURL} />
         </section>
+        <SideMenu
+          user={props.user}
+          open={state.sideMenuOpen}
+          onCloseClick={this.closeSideMenu}
+        />
       </div>
     );
   }
@@ -137,6 +164,7 @@ export default connect(
       notifCounts: countNotifsPerRepo(state),
       selectedRepo: getSelectedRepo(state),
       allUnreadCount: state.notifications.allUnreadCount,
+      user: getLoginUser(state)!,
     };
   },
 )(NotifsPage);

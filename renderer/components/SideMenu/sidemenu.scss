@@ -1,0 +1,101 @@
+.sidemenu_mask {
+  position: fixed;
+  z-index: 2;
+  background-color: var(--cl-gray);
+  opacity: 0.2;
+  top: -1px;
+
+  .sidemenu_container.is-open & {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.sidemenu {
+  --width: calc(var(--pad) * 40);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--width);
+  background-color: var(--cl-white);
+  box-shadow: 1px 0 8px var(--cl-gray-dd);
+  transition: transform 0.2s;
+  transform: translateX(calc(-1 * var(--width)));
+  z-index: 3;
+
+  .sidemenu_container.is-open & {
+    transform: none;
+  }
+}
+
+.sidemenu_content {
+  margin: var(--pad2);
+}
+
+.sidemenu_user {
+  padding: 0 var(--pad) var(--pad2);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--cl-gray);
+}
+
+.sidemenu_user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+
+.sidemenu_user-names {
+  margin-left: var(--pad2);
+}
+
+.sidemenu_user-login {
+  display: block;
+  color: inherit;
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 1.4;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.sidemenu_user-name {
+  color: var(--cl-gray-d);
+}
+
+.sidemenu_token-change-btn {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+  line-height: 1.5em;
+  padding: var(--pad2);
+
+  &:hover {
+    cursor: pointer;
+    color: var(--cl-accent);
+  }
+}
+
+.sidemenu_close {
+  border: none;
+  background-color: transparent;
+  color: var(--cl-gray);
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  outline: 0;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--cl-black);
+  }
+}
