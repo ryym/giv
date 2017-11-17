@@ -6,9 +6,12 @@ export interface Props {
   user: LoginUser;
   open: boolean;
   onCloseClick: () => void;
+  onUserClick: () => void;
 }
 
-export default function SideMenu({ user, open, onCloseClick }: Props) {
+export default function SideMenu({
+  user, open, onCloseClick, onUserClick,
+}: Props) {
   return (
     <div className={classes('sidemenu_container', {
       'is-open': open,
@@ -21,9 +24,8 @@ export default function SideMenu({ user, open, onCloseClick }: Props) {
         <div className="sidemenu_content">
           <div className="sidemenu_user">
             <img className="sidemenu_user-avatar" src={user.avatar_url} />
-            {/* TODO: Open user's profile page */}
             <div className="sidemenu_user-names">
-              <a className="sidemenu_user-login" role="button">
+              <a className="sidemenu_user-login" role="button" onClick={onUserClick}>
                 @{user.login}
               </a>
               <span className="sidemenu_user-name">{user.name}</span>

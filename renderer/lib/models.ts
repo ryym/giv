@@ -6,6 +6,7 @@ export interface User {
   readonly id: number;
   readonly login: string;
   readonly avatar_url: string;
+  readonly html_url: string;
 }
 
 export interface LoginUser extends User {
