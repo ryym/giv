@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import createHashHistory from 'history/createHashHistory';
 import configureStore from './store';
-import { loadUserConfig } from './store/user-config/actions';
+import { loadUserConfig } from './store/login/actions';
 
 import './common.scss';
 

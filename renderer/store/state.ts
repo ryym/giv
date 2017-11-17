@@ -1,16 +1,20 @@
 import { RouterState } from 'react-router-redux';
-import { Notification, Issue, Repository, NotifFilter } from '../lib/models';
+import {
+  Notification, Issue, Repository, NotifFilter,
+  UserConfig, LoginUser,
+} from '../lib/models';
 
 export default interface State {
-  readonly userConfig: UserConfig | null;
+  readonly login: LoginState | null;
   readonly entities: Entities;
   readonly notifications: Notifications;
   readonly appError: AppError;
   readonly router: RouterState;
 }
 
-export interface UserConfig {
-  readonly accessToken: string;
+export interface LoginState {
+  config: UserConfig;
+  user: LoginUser;
 }
 
 export interface Entities {

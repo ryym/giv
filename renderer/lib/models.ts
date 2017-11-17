@@ -1,6 +1,16 @@
-export type UserConfig = {
-  readonly accessToken: string,
-};
+export interface UserConfig {
+  readonly accessToken: string;
+}
+
+export interface User {
+  readonly id: number;
+  readonly login: string;
+  readonly avatar_url: string;
+}
+
+export interface LoginUser extends User {
+  readonly name: string;
+}
 
 interface BaseNotification {
   readonly id: string;
@@ -19,12 +29,6 @@ export interface NotificationJSON extends BaseNotification {
 
 export interface Notification extends BaseNotification {
   readonly repository: string;
-}
-
-export interface User {
-  readonly id: number;
-  readonly login: string;
-  readonly avatar_url: string;
 }
 
 export interface Repository {

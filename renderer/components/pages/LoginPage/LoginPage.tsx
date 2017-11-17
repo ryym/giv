@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import StoreState from '../../../store/state';
 import { getAccessToken } from '../../../store/selectors';
 import { Dispatch } from '../../../store/types';
-import { updateToken } from '../../../store/user-config/actions';
+import { updateToken } from '../../../store/login/actions';
 import LoginSteps, { STEP } from '../../LoginSteps';
 import Browser from '../../widgets/Browser';
 import './login-page.scss';

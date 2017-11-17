@@ -1,9 +1,10 @@
 import State from '../state';
 
 export const isConfigLoaded = (state: State): boolean => {
-  return state.userConfig != null;
+  return state.login !== null;
 };
 
 export const getAccessToken = (state: State): string => {
-  return state.userConfig ? state.userConfig.accessToken : '';
+  const { login } = state;
+  return login == null ? '' : login.config.accessToken;
 };

@@ -2,9 +2,6 @@ import { sendNewToken, fetchUserConfig } from '../../lib/ipc';
 import createGitHubClient from '../../lib/github-api';
 import { AsyncThunk } from '../types';
 
-// TODO: Restructure state about user
-// login: { config: UserConfig, user: User } ?
-
 export function updateToken(accessToken: string): AsyncThunk {
   return async (dispatch, _, { initGitHubAPI }) => {
     const api = createGitHubClient(accessToken);
@@ -12,8 +9,6 @@ export function updateToken(accessToken: string): AsyncThunk {
     if (user == null) {
       throw new Error('The access token is invalid.');
     }
-
-    // TODO: Show the got data and let a user confirm it.
 
     sendNewToken(accessToken);
     initGitHubAPI(accessToken);
@@ -31,6 +26,8 @@ export function loadUserConfig(): AsyncThunk {
     if (!config.accessToken) {
       return;
     }
+
+    // TODO: fetch user
 
     initGitHubAPI(config.accessToken);
     dispatch({
