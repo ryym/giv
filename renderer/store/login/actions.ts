@@ -1,14 +1,20 @@
 import { sendNewToken, fetchUserConfig } from '../../lib/ipc';
-import createGitHubClient from '../../lib/github-api';
+import createGitHubClient, { GitHubClient } from '../../lib/github-api';
+import { LoginUser } from '../../lib/models';
 import { AsyncThunk } from '../types';
 
+async function assertTokenIsValid(api: GitHubClient, token: string): Promise<LoginUser> {
+  const user = await api.users.getAuthenticatedUser();
+  if (user == null) {
+    throw new Error('The access token is invalid.');
+  }
+  return user;
+}
+
 export function updateToken(accessToken: string): AsyncThunk {
-  return async (dispatch, _, { initGitHubAPI }) => {
+  return async (dispatch, getState, { initGitHubAPI }) => {
     const api = createGitHubClient(accessToken);
-    const user = await api.users.getAuthenticatedUser();
-    if (user == null) {
-      throw new Error('The access token is invalid.');
-    }
+    const user = await assertTokenIsValid(api, accessToken);
 
     sendNewToken(accessToken);
     initGitHubAPI(accessToken);
@@ -16,6 +22,7 @@ export function updateToken(accessToken: string): AsyncThunk {
     dispatch({
       type: 'UPDATE_TOKEN',
       accessToken,
+      user,
     });
   };
 }
@@ -27,12 +34,14 @@ export function loadUserConfig(): AsyncThunk {
       return;
     }
 
-    // TODO: fetch user
+    const api = createGitHubClient(config.accessToken);
+    const user = await assertTokenIsValid(api, config.accessToken);
 
     initGitHubAPI(config.accessToken);
     dispatch({
       type: 'LOAD_USER_CONFIG_OK',
       config,
+      user,
     });
   };
 }

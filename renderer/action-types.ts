@@ -1,12 +1,12 @@
 import {
-  UserConfig, Issue, NotifFilter,
+  UserConfig, LoginUser, Issue, NotifFilter,
   NormalizedNotifs, Notification,
 } from './lib/models';
 
 export type Action
-  = { type: 'UPDATE_TOKEN', accessToken: string }
+  = { type: 'UPDATE_TOKEN', accessToken: string, user: LoginUser }
   | { type: 'LOAD_USER_CONFIG' }
-  | { type: 'LOAD_USER_CONFIG_OK', config: UserConfig }
+  | { type: 'LOAD_USER_CONFIG_OK', config: UserConfig, user: LoginUser }
   | { type: 'FETCH_UNREAD_NOTIFS', oldestDate?: string }
   | { type: 'FETCH_UNREAD_NOTIFS_START', repoFullName?: string }
   | { type: 'FETCH_UNREAD_NOTIFS_OK', data: NormalizedNotifs }

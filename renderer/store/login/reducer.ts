@@ -2,23 +2,23 @@ import { LoginState } from '../state';
 import { Action } from '../../action-types';
 
 export default (login: LoginState | null = null, action: Action) => {
-  if (login === null) {
-    return login;
-  }
   switch (action.type) {
   case 'LOAD_USER_CONFIG_OK':
     return {
-      ...login,
-      config: { ...action.config },
+      user: action.user,
+      config: action.config,
     };
 
   case 'UPDATE_TOKEN':
     return {
-      ...login,
+      user: action.user,
       config: {
-        ...login.config,
+        ...(login ? login.config : {}),
         accessToken: action.accessToken,
       },
     };
+
+  default:
+    return login;
   }
 };
