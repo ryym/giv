@@ -2,6 +2,8 @@ import React from 'react';
 import classes from 'classnames';
 import Icon from '../widgets/Icon';
 
+const notifScopeImage = require('../../images/login-step-notif-scope.png');
+
 export interface Props {
   step: number;
   token: string;
@@ -33,18 +35,22 @@ export default class LoginSteps extends React.PureComponent<Props> {
         'is-disabled': props.step === STEP.LOADING,
       })}>
         {renderStep(STEP.LOGIN, (
-          <p>Login to GitHub.</p>
+          <p>Sign in to GitHub.</p>
         ))}
         {renderStep(STEP.GEN_TOKEN, (
-          <p>
-            Generate an access token for this app.<br />
-            The <strong>notifications</strong> scope is required.
-          </p>
+          <div>
+            <p>
+              Generate an access token for this app.<br />
+              {/*The <strong>notifications</strong> scope is required. */}
+              Make sure to check <strong>notifications</strong> scope like below:
+            </p>
+            <img src={notifScopeImage} alt="" className="login-steps_notif-scope-img" />
+          </div>
         ))}
         {renderStep(STEP.SAVE_TOKEN, (
           <div>
             <p>
-              Save your access token!
+              Paste and save the access token you created!
             </p>
             {this.renderForm()}
           </div>

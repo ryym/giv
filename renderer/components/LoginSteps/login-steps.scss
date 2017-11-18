@@ -5,7 +5,7 @@
   counter-reset: steps;
 
   &.is-disabled {
-    color: var(--cl-gray-d);
+    opacity: 0.4;
   }
 }
 
@@ -22,11 +22,7 @@
   }
 
   &.is-done {
-    color: var(--cl-gray-d);
-
-    .login-steps_step-icon {
-      color: var(--cl-gray-dd);
-    }
+    opacity: 0.4;
   }
 
   &.is-current {
@@ -35,13 +31,17 @@
     }
   }
 
-  &.is-notyet {
-    color: var(--cl-gray-d);
-  }
-
   p {
     margin: 0;
   }
+}
+
+.login-steps_notif-scope-img {
+  border: 1px solid var(--cl-gray);
+  box-shadow: 0 0 2px var(--cl-gray);
+  padding: 2px 4px;
+  margin-top: var(--pad4);
+  width: 100%;
 }
 
 .login-steps_step-icon {
@@ -50,11 +50,9 @@
   left: calc(-1 * var(--pad6));
 }
 
-// TODO: namespace
 .login-steps_form {
   margin-top: var(--pad);
   display: flex;
-  justify-content: space-around;
 }
 
 .login-steps_form_token {
@@ -65,6 +63,7 @@
   color: var(--cl-black);
   cursor: pointer;
   padding: 4px var(--pad);
+  margin-left: var(--pad);
 
   &[disabled] {
     cursor: default;

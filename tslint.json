@@ -7,6 +7,7 @@
     ],
 
     "rules": {
+      "no-var-requires": false,
       "ban-types": [true, ["Object"]],
       "interface-over-type-literal": false,
       "interface-name": false,
