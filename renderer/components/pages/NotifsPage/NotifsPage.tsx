@@ -23,6 +23,7 @@ import {
   markAllAsRead,
   refreshNotifs,
 } from '../../../store/notifications/actions';
+import { logout } from '../../../store/login/actions';
 import { openInExternalBrowser } from '../../../store/ext/actions';
 import { connect } from 'react-redux';
 import State from '../../../store/state';
@@ -116,6 +117,10 @@ export class NotifsPage extends React.PureComponent<AllProps, PageState> {
     dispatch(openInExternalBrowser(user.html_url));
   }
 
+  logout = () => {
+    this.props.dispatch(logout());
+  }
+
   render() {
     const { props, state } = this;
     return (
@@ -154,6 +159,7 @@ export class NotifsPage extends React.PureComponent<AllProps, PageState> {
           open={state.sideMenuOpen}
           onCloseClick={this.closeSideMenu}
           onUserClick={this.openUserPage}
+          onLogout={this.logout}
         />
       </div>
     );

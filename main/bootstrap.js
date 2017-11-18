@@ -6,11 +6,16 @@ import * as ipc from '../shared/ipc-messages';
 // https://electron.atom.io/docs/tutorial/security/
 // http://utf-8.jp/public/2016/0629/electron.pdf
 
-async function handleUserConfigRequests(ipcMain, shouldInit) {
+async function handleUserConfigRequests(ipcMain, { shouldInit, clearSession }) {
   const config = await loadUserConfig();
 
+  const initSettings = () => Promise.all([
+    config.clear(),
+    clearSession(),
+  ]);
+
   if (shouldInit) {
-    await config.clear();
+    await initSettings();
   }
 
   ipcMain.on(ipc.UPDATE_TOKEN, (event, token) => {
@@ -20,6 +25,11 @@ async function handleUserConfigRequests(ipcMain, shouldInit) {
   ipcMain.on(ipc.LOAD_USER_CONFIG, async (event) => {
     const json = await config.toJSON();
     event.sender.send(ipc.LOAD_USER_CONFIG_OK, json);
+  });
+
+  ipcMain.on(ipc.LOG_OUT, async (event) => {
+    await initSettings();
+    event.sender.send(ipc.LOG_OUT_OK);
   });
 }
 
@@ -49,8 +59,19 @@ module.exports = function bootstrap(options) {
     if (process.env.NODE_ENV === 'development') {
       window.webContents.openDevTools();
     }
-  });
 
-  handleUserConfigRequests(ipcMain, options.initConfig);
-  handleKeyboardShortcuts(ipcMain);
+    const clearSession = () => new Promise(resolve => {
+      noCacheSession.clearStorageData({
+        origin: 'https://github.com',
+        storages: ['cookies'],
+      }, resolve);
+    });
+
+    handleUserConfigRequests(ipcMain, {
+      shouldInit: options.initConfig,
+      clearSession,
+    });
+
+    handleKeyboardShortcuts(ipcMain);
+  });
 };

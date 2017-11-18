@@ -1,4 +1,8 @@
-import { sendNewToken, fetchUserConfig } from '../../lib/ipc';
+import {
+  sendNewToken,
+  fetchUserConfig,
+  logout as logoutGitHub,
+} from '../../lib/ipc';
 import createGitHubClient, { GitHubClient } from '../../lib/github-api';
 import { LoginUser } from '../../lib/models';
 import { AsyncThunk } from '../types';
@@ -48,4 +52,11 @@ export function loadUserConfig(): AsyncThunk {
 
 export function saveAccessToken(token: string): AsyncThunk {
   return async () => sendNewToken(token);
+}
+
+export function logout(): AsyncThunk {
+  return async (dispatch, getState, { github }) => {
+    await logoutGitHub();
+    dispatch({ type: 'LOG_OUT' });
+  };
 }

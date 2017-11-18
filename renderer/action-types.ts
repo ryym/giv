@@ -7,6 +7,7 @@ export type Action
   = { type: 'UPDATE_TOKEN', accessToken: string, user: LoginUser }
   | { type: 'LOAD_USER_CONFIG' }
   | { type: 'LOAD_USER_CONFIG_OK', config: UserConfig, user: LoginUser }
+  | { type: 'LOG_OUT' }
   | { type: 'FETCH_UNREAD_NOTIFS', oldestDate?: string }
   | { type: 'FETCH_UNREAD_NOTIFS_START', repoFullName?: string }
   | { type: 'FETCH_UNREAD_NOTIFS_OK', data: NormalizedNotifs }

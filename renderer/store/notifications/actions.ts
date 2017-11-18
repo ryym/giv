@@ -1,6 +1,7 @@
 import { Action } from '../../action-types';
 import { AsyncThunk } from '../types';
 import { Notification, NotificationJSON, NotifFilter } from '../../lib/models';
+import { GitHubClient } from '../../lib/github-api';
 import normalizeNotifications from '../../lib/normalizers/notifications';
 import { openExternal } from '../../lib/ipc';
 import { extractIssueURL } from './lib';
@@ -26,10 +27,19 @@ export const filterNotifs = (filter: NotifFilter): Action => ({
 });
 
 export function pollNotifications(): AsyncThunk {
-  return async (dispatch, getState, { github }) => {
+  return async (dispatch, getState, context) => {
     dispatch({ type: 'POLL_NOTIFS_START' });
 
     const poll = async (interval: number, lastModified?: string) => {
+      if (getState().login == null) {
+        return;
+      }
+
+      // Get the GitHub client from the context each time
+      // to avoid holding an old client after a user change
+      // the access token.
+      const { github } = context;
+
       const res = await github.notifications.poll(lastModified);
       if (res !== null) {
         dispatch({
@@ -39,7 +49,7 @@ export function pollNotifications(): AsyncThunk {
         });
 
         const lastPageURL = res.links ? res.links.last : undefined;
-        countAllUnreadNotifs(lastPageURL, res.notifs);
+        countAllUnreadNotifs(github, lastPageURL, res.notifs);
 
         lastModified = res.lastModified;
         interval = res.interval * 1000;
@@ -48,6 +58,7 @@ export function pollNotifications(): AsyncThunk {
     };
 
     const countAllUnreadNotifs = async (
+      github: GitHubClient,
       lastPageURL: string | undefined,
       notifs: NotificationJSON[],
     ) => {

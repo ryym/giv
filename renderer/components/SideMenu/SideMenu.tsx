@@ -8,10 +8,11 @@ export interface Props {
   open: boolean;
   onCloseClick: () => void;
   onUserClick: () => void;
+  onLogout: () => void;
 }
 
 export default function SideMenu({
-  user, open, onCloseClick, onUserClick,
+  user, open, onCloseClick, onUserClick, onLogout,
 }: Props) {
   return (
     <div className={classes('sidemenu_container', {
@@ -36,10 +37,9 @@ export default function SideMenu({
               <span className="sidemenu_user-name">{user.name}</span>
             </div>
           </div>
-          <div className="sidemenu_token-change">
-            {/* TODO: Open token update dialog */}
-            <a className="sidemenu_token-change-btn">
-              Change access token
+          <div className="sidemenu_logout">
+            <a role="button" className="sidemenu_logout-btn" onClick={onLogout}>
+              Sign out
             </a>
           </div>
         </div>
