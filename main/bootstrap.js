@@ -19,7 +19,7 @@ async function handleUserConfigRequests(ipcMain, shouldInit) {
 
   ipcMain.on(ipc.LOAD_USER_CONFIG, async (event) => {
     const json = await config.toJSON();
-    event.sender.send(ipc.LOAD_USER_CONFIG_SUCCESS, json);
+    event.sender.send(ipc.LOAD_USER_CONFIG_OK, json);
   });
 }
 

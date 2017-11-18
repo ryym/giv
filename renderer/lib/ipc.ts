@@ -8,7 +8,7 @@ export const sendNewToken = (token: string) => {
 
 export const fetchUserConfig = (): Promise<UserConfig> => new Promise((resolve) => {
   ipcRenderer.once(
-    ipc.LOAD_USER_CONFIG_SUCCESS,
+    ipc.LOAD_USER_CONFIG_OK,
     (event: string, config: UserConfig) => {
       resolve(config);
     },
