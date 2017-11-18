@@ -6,6 +6,7 @@ import { getAccessToken } from '../../../store/selectors';
 import { Dispatch } from '../../../store/types';
 import { updateToken } from '../../../store/login/actions';
 import LoginSteps, { STEP } from '../../LoginSteps';
+import LoadingBars from '../../widgets/LoadingBars';
 import Browser from '../../widgets/Browser';
 import './login-page.scss';
 
@@ -95,6 +96,11 @@ export class LoginPage extends React.Component<AllProps, State> {
             <h1>Welcome to Giv</h1>
             <p>To start using Giv, please follow the steps below.</p>
           </header>
+          {state.step === STEP.LOADING && (
+            <div className="p-login_loading-bars">
+              <LoadingBars />
+            </div>
+          )}
           <LoginSteps
             step={state.step}
             token={state.token}

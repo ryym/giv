@@ -23,6 +23,20 @@
   min-width: 300px;
   padding-right: var(--pad4);
   border-right: 1px solid var(--cl-gray);
+  position: relative;
+}
+
+.p-login_loading-bars {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  > .w_loading-bars {
+    margin: 0 auto;
+    height: 25px;
+    width: 90px;
+  }
 }
 
 .p-login_webview-container {
