@@ -17,8 +17,9 @@ export const getIssue = (state: State, url: string): Issue | null => {
 
 export const countNotifsPerRepo = (state: State): NotifCounts => {
   const { notifications: notifs, repositories: repos } = state.entities;
-  return Object.keys(notifs.byID).reduce(
-    (counts: WritableNotifCounts, notifID) => {
+  return Object.keys(notifs.byID)
+    .filter((id) => notifs.byID[id].unread)
+    .reduce((counts: WritableNotifCounts, notifID) => {
       const notif = notifs.byID[notifID];
       const repo = repos.byFullName[notif.repository];
 
@@ -31,8 +32,7 @@ export const countNotifsPerRepo = (state: State): NotifCounts => {
 
       counts[repo.owner][repo.name] += 1;
       return counts;
-    }, {},
-  );
+    }, {});
 };
 
 export const NotifSelector = {

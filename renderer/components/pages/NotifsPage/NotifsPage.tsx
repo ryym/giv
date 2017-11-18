@@ -127,7 +127,7 @@ export class NotifsPage extends React.PureComponent<AllProps, PageState> {
       <div className="c_page-root p-notifs_root">
         <section className="p-notifs_streams-container">
           <NotifsHeader
-            shownCount={props.notifs.length}
+            shownCount={props.notifs.filter((n) => n.unread).length}
             allCount={props.allUnreadCount}
             isLoading={props.isLoading}
             onSideMenuOpen={this.openSideMenu}
