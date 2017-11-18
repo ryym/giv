@@ -9,7 +9,7 @@ export default (login: LoginState | null = null, action: Action) => {
       config: action.config,
     };
 
-  case 'UPDATE_TOKEN':
+  case 'LOG_IN':
     return {
       user: action.user,
       config: {

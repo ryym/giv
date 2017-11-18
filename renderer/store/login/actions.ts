@@ -24,7 +24,7 @@ export function updateToken(accessToken: string): AsyncThunk {
     initGitHubAPI(accessToken);
 
     dispatch({
-      type: 'UPDATE_TOKEN',
+      type: 'LOG_IN',
       accessToken,
       user,
     });
