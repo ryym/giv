@@ -44,6 +44,14 @@ module.exports = {
           ],
         }),
       },
+
+      {
+        test: /\.(png|ico|jpg||gif|svg)$/,
+        include: conf.rendererPath,
+        use: [
+          { loader: 'url-loader' },
+        ],
+      },
     ],
   },
 
