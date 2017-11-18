@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from 'classnames';
+import Icon from '../widgets/Icon';
 import { LoginUser } from '../../lib/models';
 
 export interface Props {
@@ -18,8 +19,12 @@ export default function SideMenu({
     })}>
       <div className="sidemenu_mask" onClick={onCloseClick}></div>
       <div className="sidemenu">
-        <button className="sidemenu_close" onClick={onCloseClick}>
-          <i className="fa fa-times"></i>
+        <button
+          title="Close side menu"
+          className="sidemenu_close"
+          onClick={onCloseClick}
+        >
+          <Icon id="times" />
         </button>
         <div className="sidemenu_content">
           <div className="sidemenu_user">

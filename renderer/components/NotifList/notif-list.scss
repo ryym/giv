@@ -76,7 +76,11 @@
 }
 
 .notif-list_item-check {
+  background-color: transparent;
+  border: 0;
+  display: block;
   cursor: pointer;
+  padding: 0;
   position: absolute;
   top: 4px;
   left: var(--pad);

@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../../widgets/Icon';
 import classes from 'classnames';
 
 export type Props = {
@@ -32,10 +33,11 @@ export default function NotifsHeader(props: Props) {
       <div className="p-notifs_header-items">
         <div className="p-notifs_header-item is-menu">
           <button
+            title="Open side menu"
             className="p-notifs_header-action"
             onClick={props.onSideMenuOpen}
           >
-            <i className="fa fa-bars fa-lg"></i>
+            <Icon id="bars" opts="lg" />
           </button>
         </div>
         <div className="p-notifs_header-item is-counts">
@@ -43,23 +45,25 @@ export default function NotifsHeader(props: Props) {
         </div>
         <div className="p-notifs_header-item">
           <button
+            title="Mark all as read"
             className="p-notifs_header-action"
             onClick={confirmAndMarkAllAsRead}
             disabled={!allCount || props.isLoading}
           >
-            <i className="fa fa-check fa-lg"></i>
+            <Icon id="check" opts="lg" />
           </button>
         </div>
         <div className="p-notifs_header-item">
           <button
+            title="Reload notifications"
             className="p-notifs_header-action"
             onClick={props.onRefresh}
             disabled={props.isLoading}
           >
-            <i className={classes(
-              ['fa', 'fa-refresh', 'fa-lg'],
-              { 'fa-spin': props.isLoading },
-            )}></i>
+            <Icon id="refresh" opts={classes({
+              lg: true,
+              spin: props.isLoading,
+            })} />
           </button>
         </div>
       </div>

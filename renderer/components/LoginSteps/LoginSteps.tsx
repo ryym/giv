@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from 'classnames';
+import Icon from '../widgets/Icon';
 
 export interface Props {
   step: number;
@@ -58,10 +59,10 @@ export default class LoginSteps extends React.PureComponent<Props> {
     return (
       <li className={`login-steps_step is-${stepState}`}>
         {step < current && (
-          <i className="login-steps_step-icon fa fa-check" />
+          <Icon id="check" className="login-steps_step-icon" />
         )}
         {step === current && (
-          <i className="login-steps_step-icon fa fa-arrow-right" />
+          <Icon id="arrow-right" className="login-steps_step-icon" />
         )}
         {content}
       </li>

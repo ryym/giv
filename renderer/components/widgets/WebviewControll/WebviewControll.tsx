@@ -2,6 +2,7 @@ import React from 'react';
 import classes from 'classnames';
 import WebviewConnector from './webview-connector';
 import ControllButton from './ControllButton';
+import Icon from '../Icon';
 
 type Props = {
   connector: WebviewConnector,
@@ -62,25 +63,28 @@ export default class WebviewControll extends React.PureComponent<Props, State> {
     return (
       <div className="w_webview-controll">
         <ControllButton
+          title="Back to previous page"
           action={() => webview && webview.goBack()}
           enabled={webview && webview.canGoBack()}
         >
           ◀
         </ControllButton>
         <ControllButton
+          title="Go to next page"
           action={() => webview && webview.goForward()}
           enabled={webview && webview.canGoForward()}
         >
           ▶
         </ControllButton>
         <ControllButton
+          title="Refresh page"
           action={() => webview && !nowLoading && webview.reload()}
           enabled={webview || nowLoading}
         >
-          <i className={classes(
-            ['fa', 'fa-refresh', 'fa-lg'],
-            { 'fa-spin': nowLoading },
-          )}></i>
+          <Icon id="refresh" opts={classes({
+            lg: true,
+            spin: nowLoading,
+          })} />
         </ControllButton>
         {this.renderURLBar()}
       </div>

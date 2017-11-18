@@ -3,6 +3,7 @@ import classes from 'classnames';
 import { NotifSelector as NotifSl } from '../../store/selectors';
 import { Notification, Issue } from '../../lib/models';
 import Octicon from '../widgets/Octicon';
+import Icon from '../widgets/Icon';
 import decideIcon from './issue-icon-decider';
 
 export type Props = {
@@ -30,9 +31,13 @@ export default function NotifItem({
       className={classes({ 'notif-list_item': true, 'is-read': !notif.unread })}
       onClick={handleClick}
     >
-      <div className="notif-list_item-check" onClick={handleCheckClick}>
-        <i className="fa fa-check"></i>
-      </div>
+      <button
+        title="Mark as read"
+        className="notif-list_item-check"
+        onClick={handleCheckClick}
+      >
+        <Icon id="check" />
+      </button>
       <div className={`notif-list_item-kind ${iconStateClass}`}>
         <Octicon icon={iconName} />
       </div>
