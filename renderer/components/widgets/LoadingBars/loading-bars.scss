@@ -2,33 +2,33 @@
   display: flex;
   align-items: stretch;
   justify-content: space-between;
+}
 
-  div {
-    animation: w_loading-bars_bar 1.2s infinite;
-    background-color: #ccc;
-    border-radius: 2px;
-    opacity: 0.8;
-    flex: 1;
-    margin-right: 8%;
-  }
+.w_loading-bars-bar {
+  animation: w_loading-bars_bar 1.2s infinite;
+  background-color: #ccc;
+  border-radius: 2px;
+  opacity: 0.8;
+  flex: 1;
+  margin-right: 8%;
 
-  div:nth-child(1) {
+  &:nth-child(1) {
     animation-delay: 0.1s;
   }
 
-  div:nth-child(2) {
+  &:nth-child(2) {
     animation-delay: 0.2s;
   }
 
-  div:nth-child(3) {
+  &:nth-child(3) {
     animation-delay: 0.3s;
   }
 
-  div:nth-child(4) {
+  &:nth-child(4) {
     animation-delay: 0.4s;
   }
 
-  div:nth-child(5) {
+  &:nth-child(5) {
     animation-delay: 0.5s;
   }
 }
