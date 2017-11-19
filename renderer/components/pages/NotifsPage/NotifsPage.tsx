@@ -152,7 +152,7 @@ export class NotifsPage extends React.PureComponent<AllProps, PageState> {
           </div>
         </section>
         <section className="p-notifs_webview-container">
-          <Browser url={props.shownURL} />
+          <Browser url={props.shownURL || 'https://github.com'} />
         </section>
         <SideMenu
           user={props.user}
