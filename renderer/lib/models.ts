@@ -20,6 +20,7 @@ interface BaseNotification {
   readonly subject: {
     readonly title: string,
     readonly url: string,
+    readonly latest_comment_url: string | null,
     readonly type: 'Issue' | 'PullRequest',
   };
 }

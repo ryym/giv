@@ -32,6 +32,7 @@ export default function NotifItem({
 
   return (
     <a
+      role="button"
       className={classes({ 'notif-list_item': true, 'is-read': !notif.unread })}
       onClick={handleClick}
     >
