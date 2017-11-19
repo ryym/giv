@@ -30,6 +30,7 @@ export default function NotifList({
               notif={notif}
               repoName={repo.full_name}
               issue={issue}
+              issueNumber={NotifSl.getIssueNumber(notif)}
               onClick={onNotifClick}
               onCheckClick={onCheckClick}
             />

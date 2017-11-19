@@ -38,6 +38,11 @@ export const countNotifsPerRepo = (state: State): NotifCounts => {
 export const NotifSelector = {
   getIssueURL: (notif: Notification) => notif.subject.url,
 
+  getIssueNumber: (notif: Notification) => {
+    const m = notif.subject.url.match(/(?:issues|pulls)\/(\d+)/);
+    return m ? m[1] : '';
+  },
+
   getTitle: (notif: Notification) => notif.subject.title,
 
   isPR: (notif: Notification) => notif.subject.type === 'PullRequest',

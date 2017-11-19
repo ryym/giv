@@ -12,7 +12,7 @@ const iconMap: { [iconType: string]: [string, IconState] } = {
   'pull-merged': ['git-pull-request', 'is-merged'],
 };
 
-export default function getIconDataFor(issue: Issue, isPR: boolean): [string, IconState] {
+export default function getIconDataFor(issue: Issue | null, isPR: boolean): [string, IconState] {
   const type = isPR ? 'pull' : 'issue';
 
   if (issue == null) {

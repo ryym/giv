@@ -9,13 +9,17 @@ import decideIcon from './issue-icon-decider';
 export type Props = {
   notif: Notification,
   repoName: string,
-  issue: Issue,
+
+  // Currently we need to fetch issues indivisually
+  // so issue may be null when it does not fetched yet.
+  issue: Issue | null,
+  issueNumber: string,
   onClick: (notif: Notification, event: React.MouseEvent<any>) => void,
   onCheckClick: (notif: Notification) => void,
 };
 
 export default function NotifItem({
-  notif, repoName, issue, onClick, onCheckClick,
+  notif, repoName, issue, issueNumber, onClick, onCheckClick,
 }: Props) {
   const [iconName, iconStateClass] = decideIcon(issue, NotifSl.isPR(notif));
 
@@ -50,7 +54,7 @@ export default function NotifItem({
         </div>
       </div>
       <div className="notif-list_item-repo">
-        {repoName}
+        {repoName}{issueNumber ? `#${issueNumber}` : ''}
       </div>
     </a>
   );
