@@ -24,3 +24,14 @@ export default function normalizeNotifications(
 ): NormalizedNotifs {
   return normalize(notifications, [notificationSchema]) as NormalizedNotifs;
 }
+
+export function makeEmptyResult(): NormalizedNotifs {
+  return {
+    entities: {
+      notification: {},
+      repository: {},
+      user: {},
+    },
+    result: [],
+  };
+}

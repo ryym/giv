@@ -39,7 +39,7 @@ export default (notifs: Notifications = initialState, action: Action) => {
     return {
       ...notifs,
       isLoading: false,
-      ids: action.data.result.concat(action.unreadIDs),
+      ids: concatUniq(action.data.result, action.unreadIDs),
     };
 
   case 'MARK_ALL_AS_READ_OK':
@@ -49,11 +49,14 @@ export default (notifs: Notifications = initialState, action: Action) => {
       ids: [],
     };
 
-  case 'SELECT_NOTIF':
-    return action.openExternal ? notifs : {
+  case 'SELECT_NOTIF': {
+    const { shownURL, allUnreadCount } = notifs;
+    return {
       ...notifs,
-      shownURL: extractIssueURL(action.notif),
+      shownURL: action.openExternal ? shownURL : extractIssueURL(action.notif),
+      allUnreadCount: allUnreadCount && allUnreadCount - 1,
     };
+  }
 
   case 'FILTER_NOTIFS':
     return {

@@ -2,7 +2,7 @@ import { Action } from '../../action-types';
 import { AsyncThunk } from '../types';
 import { Notification, NotificationJSON, NotifFilter } from '../../lib/models';
 import { GitHubClient } from '../../lib/github-api';
-import normalizeNotifications from '../../lib/normalizers/notifications';
+import normalizeNotifications, { makeEmptyResult } from '../../lib/normalizers/notifications';
 import { openExternal } from '../../lib/ipc';
 import { extractIssueURL } from './lib';
 import { getNotification } from '../selectors';
@@ -131,28 +131,24 @@ export function markAllAsRead(): AsyncThunk {
 
 // - Fetch latest notifications
 // - Remove read notifications
+// - Update all unread count
 export function refreshNotifs(): AsyncThunk {
   return async (dispatch, getState, { github }) => {
     dispatch({ type: 'REFRESH_NOTIFS_START' });
 
-    let state = getState();
-    const newest = getNotification(state, state.notifications.ids[0]);
-    const notifs = await github.notifications.listUnread({
-      since: newest ? newest.updated_at : undefined,
-    });
-
-    if (notifs == null) {
-      // TODO: Handle failures such as 404.
-      return;
-    }
-
-    state = getState();
+    const state = getState();
     const unreadIDs = state.notifications.ids.filter((id) => {
       const notif = getNotification(state, id);
       return notif && notif.unread;
     });
 
-    const data = normalizeNotifications(notifs);
+    const res = await github.notifications.poll();
+    const data = res ? normalizeNotifications(res.notifs) : makeEmptyResult();
     dispatch({ type: 'REFRESH_NOTIFS_OK', data, unreadIDs });
+
+    if (res !== null) {
+      const lastPageURL = res.links ? res.links.last : undefined;
+      dispatch(countAllUnreadNotifs(res.notifs.length, lastPageURL));
+    }
   };
 }
