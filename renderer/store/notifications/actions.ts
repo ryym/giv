@@ -26,6 +26,20 @@ export const filterNotifs = (filter: NotifFilter): Action => ({
   type: 'FILTER_NOTIFS', filter,
 });
 
+export function countAllUnreadNotifs(firstPageCount: number, lastPageURL?: string): AsyncThunk {
+  return async (dispatch, getState, { github }) => {
+    const count = lastPageURL == null
+      ? firstPageCount
+      : await github.notifications.countAllUnread(lastPageURL);
+    if (count != null) {
+      dispatch({
+        type: 'COUNT_ALL_UNREAD_NOTIFS_OK',
+        count,
+      });
+    }
+  };
+}
+
 export function pollNotifications(): AsyncThunk {
   return async (dispatch, getState, context) => {
     dispatch({ type: 'POLL_NOTIFS_START' });
@@ -49,28 +63,12 @@ export function pollNotifications(): AsyncThunk {
         });
 
         const lastPageURL = res.links ? res.links.last : undefined;
-        countAllUnreadNotifs(github, lastPageURL, res.notifs);
+        dispatch(countAllUnreadNotifs(res.notifs.length, lastPageURL));
 
         lastModified = res.lastModified;
         interval = res.interval * 1000;
       }
       setTimeout(() => poll(interval, lastModified), interval);
-    };
-
-    const countAllUnreadNotifs = async (
-      github: GitHubClient,
-      lastPageURL: string | undefined,
-      notifs: NotificationJSON[],
-    ) => {
-      const count = lastPageURL == null
-        ? notifs.length
-        : await github.notifications.countAllUnread(lastPageURL);
-      if (count != null) {
-        dispatch({
-          type: 'COUNT_ALL_UNREAD_NOTIFS_OK',
-          count,
-        });
-      }
     };
 
     poll(0);
