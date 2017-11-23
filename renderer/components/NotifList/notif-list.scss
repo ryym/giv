@@ -128,6 +128,7 @@
 
   & .notif-list_item-check {
     color: var(--cl-gray-dd);
+    outline: 0;
 
     > i {
       animation: 0.3s ease-out notif-list_item-check_read;

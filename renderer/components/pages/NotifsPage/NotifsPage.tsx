@@ -94,7 +94,9 @@ export class NotifsPage extends React.PureComponent<AllProps, PageState> {
   }
 
   markAsRead = (notif: Notification) => {
-    this.props.dispatch(markAsRead(notif));
+    if (notif.unread) {
+      this.props.dispatch(markAsRead(notif));
+    }
   }
 
   refreshNotifs = () => {
