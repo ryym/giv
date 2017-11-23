@@ -29,7 +29,7 @@ export default async function handleIPCEvents(ipcMain, {
     if (!app.dock || !count) {
       return;
     }
-    const badge = count < 100 ? String(count) : '99+';
+    const badge = count < 1000 ? String(count) : '999+';
     app.dock.setBadge(badge);
   });
 }
