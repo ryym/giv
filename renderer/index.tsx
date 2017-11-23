@@ -6,6 +6,7 @@ import App from './components/App';
 import createHashHistory from 'history/createHashHistory';
 import configureStore from './store';
 import { loadUserConfig } from './store/login/actions';
+import registerSideEffects from './effects';
 
 import './common.scss';
 
@@ -16,6 +17,8 @@ if (config.NODE_ENV === 'development' && typeof window === 'object') {
   // So that we can inspect the store from the developer console.
   (window as any)._store = store;
 }
+
+registerSideEffects(store);
 
 const renderView = () => {
   render(

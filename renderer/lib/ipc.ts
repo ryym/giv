@@ -24,3 +24,7 @@ export const logout = (): Promise<void> => new Promise((resolve) => {
 export const openExternal = (url: string) => {
   ipcRenderer.send(ipc.OPEN_URL_EXTERNAL, url);
 };
+
+export const updateAppIconState = (count: number) => {
+  ipcRenderer.send(ipc.UPDATE_APP_ICON_STATE, { count });
+};

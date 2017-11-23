@@ -23,6 +23,7 @@ export default function bootstrap(options) {
     }
 
     handleIPCEvents(ipcMain, {
+      app,
       initSettings,
       config,
     });

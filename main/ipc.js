@@ -2,6 +2,7 @@ import { shell } from 'electron';
 import * as ipc from '../shared/ipc-messages';
 
 export default async function handleIPCEvents(ipcMain, {
+  app,
   initSettings,
   config,
 }) {
@@ -21,5 +22,14 @@ export default async function handleIPCEvents(ipcMain, {
 
   ipcMain.on(ipc.OPEN_URL_EXTERNAL, (event, url) => {
     shell.openExternal(url);
+  });
+
+  ipcMain.on(ipc.UPDATE_APP_ICON_STATE, (event, { count }) => {
+    count = Number(count);
+    if (!app.dock || !count) {
+      return;
+    }
+    const badge = count < 100 ? String(count) : '99+';
+    app.dock.setBadge(badge);
   });
 }
