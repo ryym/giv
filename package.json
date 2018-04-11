@@ -39,7 +39,7 @@
     "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.27.3",
-    "electron": "^1.7.11",
+    "electron": "^1.8.3",
     "electron-packager": "^8.6.0",
     "eslint": "^3.18.0",
     "eslint-config-ryym": "^1.4.0",
